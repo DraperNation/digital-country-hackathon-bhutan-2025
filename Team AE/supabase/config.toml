@@ -1,0 +1,14 @@
+
+project_id = "ayeyyfhypqefyyybshjb"
+
+[functions.blockchain-notary]
+verify_jwt = false
+
+[functions.lightning-invoice]  
+verify_jwt = false
+
+[functions.carbon-credits]
+verify_jwt = false
+
+[functions.web3-identity]
+verify_jwt = false
