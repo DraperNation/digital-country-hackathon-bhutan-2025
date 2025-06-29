@@ -22,6 +22,10 @@ link -  https://www.loom.com/share/d43331fc61e94dceb406498190827064?sid=ca853c85
 
 link - https://docs.google.com/presentation/d/1Z_VjyE4jxijK8HpaC9zP_m9mSqdPTdTI/edit?usp=sharing&ouid=115064074122063352579&rtpof=true&sd=true
 
+## Live APP link 
+
+link - http://13.61.33.234:5000/
+
 ## APP Showcase
 
 ![alt text](app_showcase-1.png)
