@@ -20,7 +20,7 @@ link -  https://www.loom.com/share/d43331fc61e94dceb406498190827064?sid=ca853c85
 
 ## PPT link
 
-link - 
+link - https://docs.google.com/presentation/d/1Z_VjyE4jxijK8HpaC9zP_m9mSqdPTdTI/edit?usp=sharing&ouid=115064074122063352579&rtpof=true&sd=true
 
 ## APP Showcase
 
