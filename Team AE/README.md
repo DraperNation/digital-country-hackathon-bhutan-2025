@@ -15,6 +15,15 @@ Built using the latest modern stack and thoughtfully designed with Bhutanese aes
 
 ---
 
+## 🎥 Prototype Demo (with Audio)
+
+Watch our prototype demo walkthrough on Loom:  
+🔗 [Click here to view](https://www.loom.com/share/a165aeef3904458db7aac089f6118520?sid=8af1eb0e-44b4-4d62-9e7b-39485efd58bb)
+
+> 🎙️ This video includes a guided audio explanation of the core features and flows.
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: React + Vite + TailwindCSS
@@ -54,7 +63,7 @@ Built using the latest modern stack and thoughtfully designed with Bhutanese aes
 
 ## 📸 UI Preview
 
-> *(Add screenshots or video demo links here if available)*
+> *(Add screenshots or UI gifs here if available)*
 
 ---
 
@@ -82,10 +91,3 @@ We are Team AE, passionate about building the decentralized future with culture 
 - MetaMask extension
 - Internet connection
 
-### Installation
-
-```bash
-git clone https://github.com/your-repo/druk-e-residency.git
-cd druk-e-residency
-npm install
-npm run dev
