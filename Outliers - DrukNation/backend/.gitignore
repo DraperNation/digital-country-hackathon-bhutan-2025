@@ -15,8 +15,6 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
-# Uploaded files
-uploads/
 
 # Build output
 /dist

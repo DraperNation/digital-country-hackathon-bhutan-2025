@@ -1,5 +1,5 @@
 // pages/api/ask.ts
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = process.env.BACKEND_URL || "https://druk-nation-api.vercel.app";
 
 export async function POST(req: Request) {
   try {

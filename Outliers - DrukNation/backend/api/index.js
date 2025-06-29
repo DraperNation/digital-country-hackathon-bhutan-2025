@@ -8,17 +8,24 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 // Gemini API configuration
 const GEMINI_API_KEY =
   process.env.GEMINI_API_KEY || "YOUR_GEMINI_API_KEY_PLACEHOLDER";
-const PDF_PATH = path.join(__dirname, "uploads", "Bhutan-Penal-Code.pdf");
+
+// Try multiple possible paths for the PDF
+const possiblePDFPaths = [
+  path.join(process.cwd(), "uploads", "Bhutan-Penal-Code.pdf"),
+  path.join(__dirname, "..", "uploads", "Bhutan-Penal-Code.pdf"),
+  path.join(process.cwd(), "Bhutan-Penal-Code.pdf"),
+  "/tmp/Bhutan-Penal-Code.pdf",
+];
 
 // Initialize Gemini AI
 let genAI;
 let model;
 let isInitialized = false;
+let initializationError = null;
 
 // Storage for legal documents
 let bhutanLawData = {
@@ -27,6 +34,9 @@ let bhutanLawData = {
   combinedContext: "",
   lastUpdated: null,
 };
+
+// Lazy initialization promise
+let initPromise = null;
 
 // Middleware
 app.use(express.json());
@@ -52,6 +62,19 @@ function initializeGemini() {
     console.error("✗ Failed to initialize Gemini API:", error.message);
     return false;
   }
+}
+
+// Find PDF file
+function findPDFFile() {
+  for (const pdfPath of possiblePDFPaths) {
+    if (fs.existsSync(pdfPath)) {
+      console.log(`✓ PDF found at: ${pdfPath}`);
+      return pdfPath;
+    }
+  }
+  console.log("✗ PDF file not found at any of these paths:");
+  possiblePDFPaths.forEach((path) => console.log(`  - ${path}`));
+  return null;
 }
 
 // Extract text from PDF
@@ -128,7 +151,7 @@ Please provide a detailed answer based on the legal documents provided. If the q
   }
 }
 
-// Initialize all documents on startup
+// Initialize all documents (modified for serverless)
 async function initializeDocuments() {
   console.log("🚀 Initializing Bhutan Law Server...");
 
@@ -141,9 +164,18 @@ async function initializeDocuments() {
       );
     }
 
-    // Load PDF
+    // Try to load PDF
     console.log("📄 Loading Bhutan Penal Code PDF...");
-    bhutanLawData.penalCode = await extractPDFText(PDF_PATH);
+    const pdfPath = findPDFFile();
+
+    if (pdfPath) {
+      bhutanLawData.penalCode = await extractPDFText(pdfPath);
+    } else {
+      console.warn(
+        "⚠️  PDF file not found, continuing with Wikipedia content only"
+      );
+      bhutanLawData.penalCode = "PDF file not available in this deployment.";
+    }
 
     // Load Wikipedia content
     console.log("🌐 Loading Wikipedia content...");
@@ -157,6 +189,7 @@ async function initializeDocuments() {
 
     bhutanLawData.lastUpdated = new Date().toISOString();
     isInitialized = true;
+    initializationError = null;
 
     console.log("✅ Server initialization completed successfully!");
     console.log(
@@ -164,51 +197,86 @@ async function initializeDocuments() {
     );
   } catch (error) {
     console.error("❌ Server initialization failed:", error.message);
-    process.exit(1);
+    initializationError = error.message;
+    // Don't call process.exit() in serverless environment
+    // Just set the error and continue
   }
+}
+
+// Ensure initialization (lazy loading for serverless)
+async function ensureInitialized() {
+  if (!initPromise) {
+    initPromise = initializeDocuments();
+  }
+  await initPromise;
 }
 
 // Routes
 
 // Health check endpoint
-app.get("/", (req, res) => {
-  res.json({
-    status: "online",
-    service: "Bhutan Law API Server",
-    version: "1.0.0",
-    initialized: isInitialized,
-    timestamp: new Date().toISOString(),
-  });
+app.get("/", async (req, res) => {
+  try {
+    await ensureInitialized();
+
+    res.json({
+      status: "online",
+      service: "Bhutan Law API Server",
+      version: "1.0.0",
+      initialized: isInitialized,
+      initializationError: initializationError,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      error: error.message,
+      initialized: false,
+      timestamp: new Date().toISOString(),
+    });
+  }
 });
 
 // Detailed status endpoint
-app.get("/status", (req, res) => {
-  res.json({
-    server: {
-      status: "running",
-      initialized: isInitialized,
-      uptime: process.uptime(),
-      timestamp: new Date().toISOString(),
-    },
-    gemini: {
-      initialized: !!model,
-      apiKey:
-        GEMINI_API_KEY !== "YOUR_GEMINI_API_KEY_PLACEHOLDER"
-          ? "configured"
-          : "placeholder",
-    },
-    documents: {
-      penalCodeLoaded: bhutanLawData.penalCode.length > 0,
-      wikipediaLoaded: bhutanLawData.wikiContent.length > 0,
-      totalContextLength: bhutanLawData.combinedContext.length,
-      lastUpdated: bhutanLawData.lastUpdated,
-    },
-  });
+app.get("/status", async (req, res) => {
+  try {
+    await ensureInitialized();
+
+    res.json({
+      server: {
+        status: "running",
+        initialized: isInitialized,
+        initializationError: initializationError,
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString(),
+      },
+      gemini: {
+        initialized: !!model,
+        apiKey:
+          GEMINI_API_KEY !== "YOUR_GEMINI_API_KEY_PLACEHOLDER"
+            ? "configured"
+            : "placeholder",
+      },
+      documents: {
+        penalCodeLoaded: bhutanLawData.penalCode.length > 0,
+        wikipediaLoaded: bhutanLawData.wikiContent.length > 0,
+        totalContextLength: bhutanLawData.combinedContext.length,
+        lastUpdated: bhutanLawData.lastUpdated,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to get status",
+      details: error.message,
+      success: false,
+    });
+  }
 });
 
 // Ask question endpoint
 app.post("/ask", async (req, res) => {
   try {
+    await ensureInitialized();
+
     const { question } = req.body;
 
     // Validation
@@ -219,9 +287,10 @@ app.post("/ask", async (req, res) => {
       });
     }
 
-    if (!isInitialized) {
+    if (initializationError) {
       return res.status(503).json({
-        error: "Server is still initializing. Please try again later.",
+        error: "Server initialization failed",
+        details: initializationError,
         success: false,
       });
     }
@@ -267,10 +336,19 @@ app.post("/ask", async (req, res) => {
 app.post("/reload", async (req, res) => {
   try {
     console.log("🔄 Manual document reload requested...");
-    await initializeDocuments();
+
+    // Reset initialization state
+    isInitialized = false;
+    initializationError = null;
+    initPromise = null;
+
+    await ensureInitialized();
+
     res.json({
       success: true,
       message: "Documents reloaded successfully",
+      initialized: isInitialized,
+      error: initializationError,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
@@ -284,23 +362,34 @@ app.post("/reload", async (req, res) => {
 });
 
 // Get document info endpoint
-app.get("/documents", (req, res) => {
-  res.json({
-    penalCode: {
-      loaded: bhutanLawData.penalCode.length > 0,
-      length: bhutanLawData.penalCode.length,
-      preview: bhutanLawData.penalCode.substring(0, 200) + "...",
-    },
-    wikipedia: {
-      loaded: bhutanLawData.wikiContent.length > 0,
-      length: bhutanLawData.wikiContent.length,
-      preview: bhutanLawData.wikiContent.substring(0, 200) + "...",
-    },
-    combined: {
-      length: bhutanLawData.combinedContext.length,
-      lastUpdated: bhutanLawData.lastUpdated,
-    },
-  });
+app.get("/documents", async (req, res) => {
+  try {
+    await ensureInitialized();
+
+    res.json({
+      penalCode: {
+        loaded: bhutanLawData.penalCode.length > 0,
+        length: bhutanLawData.penalCode.length,
+        preview: bhutanLawData.penalCode.substring(0, 200) + "...",
+      },
+      wikipedia: {
+        loaded: bhutanLawData.wikiContent.length > 0,
+        length: bhutanLawData.wikiContent.length,
+        preview: bhutanLawData.wikiContent.substring(0, 200) + "...",
+      },
+      combined: {
+        length: bhutanLawData.combinedContext.length,
+        lastUpdated: bhutanLawData.lastUpdated,
+      },
+      initializationError: initializationError,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to get document info",
+      details: error.message,
+      success: false,
+    });
+  }
 });
 
 // Error handling middleware
@@ -328,40 +417,5 @@ app.use((req, res) => {
   });
 });
 
-// Start server
-async function startServer() {
-  try {
-    // Initialize documents before starting server
-    await initializeDocuments();
-
-    app.listen(port, () => {
-      console.log(`🌟 Bhutan Law API Server running on port ${port}`);
-      console.log(`🔗 Health check: http://localhost:${port}/`);
-      console.log(`📋 Status: http://localhost:${port}/status`);
-      console.log(`❓ Ask questions: POST http://localhost:${port}/ask`);
-      console.log("\n📝 Required dependencies:");
-      console.log(
-        "npm install express pdf-parse axios cheerio @google/generative-ai"
-      );
-    });
-  } catch (error) {
-    console.error("❌ Failed to start server:", error);
-    process.exit(1);
-  }
-}
-
-// Graceful shutdown
-process.on("SIGINT", () => {
-  console.log("\n🛑 Received SIGINT. Shutting down gracefully...");
-  process.exit(0);
-});
-
-process.on("SIGTERM", () => {
-  console.log("\n🛑 Received SIGTERM. Shutting down gracefully...");
-  process.exit(0);
-});
-
-// Start the server
-startServer();
-
+// Export the Express app for Vercel
 module.exports = app;
