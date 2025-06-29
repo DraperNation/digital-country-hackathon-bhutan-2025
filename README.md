@@ -1,51 +1,159 @@
-# Digital Country Hackathon: Building a Digital Bhutan 🇧🇹
 
-The E-Bhutan Hackathon is an innovative 24-hour hybrid event designed to develop foundational digital tools that support Bhutan’s vision for a borderless digital economy. Known for its Gross National Happiness, Bhutan is embracing cutting-edge technologies like Bitcoin mining and public digital infrastructure to enhance national sovereignty and economic resilience. This hackathon offers participants the opportunity to create impactful solutions aligned with Bhutan’s digital future.
+---
 
-- **Date**: 28–29 June 2025
-- **Location**: [Draper Startup House Bangalore](https://draperstartuphouse.com/bangalore), India 🇮🇳 ([Google Maps](https://maps.app.goo.gl/4DJxza88WFr9KY6s7))
-- **Format**: Hybrid (In-person & Online)
-- **Apply here**: [draper-nation.gitbook.io/e-bhutan](https://draper-nation.gitbook.io/e-bhutan)
+# 🇧🇹 Druk eResidency: Bhutan's eResidency & Sovereign AI Assistant
 
-## Tracks
+> **Track:** Soveraign AI & Eresidency Platform
+> 
+> **Team Codename:** 100meters
+>
+> **Team Members** Vineet Nag V, Sachin Bhat
+> 
+> **Location:** Draper Startup House, Bangalore, India 🇮🇳
+> 
+> **Hackathon:** E-Bhutan Hackathon 
+---
 
-- **Bitcoin-Backed Currency:**  
-  Develop a stablecoin or digital currency backed by Bhutan’s Bitcoin reserves.  
-  _Technical Focus:_ Multi-sig treasury wallets, transparent reserve dashboards, pegging mechanisms, open-source smart contracts, global wallet interoperability.  
-  _National Benefit:_ Creates a globally trusted, tradable asset to strengthen international trade and monetary resilience.
+## 🛑 Problem Statement
 
-- **eResidency Platform:**  
-  Build a digital eResidency system to enable global individuals to become digital residents of Bhutan.  
-  _Technical Focus:_ KYC/AML onboarding, cryptographic identity credentials, legal formation workflows, integration with tax and incorporation systems.  
-  _National Benefit:_ Positions Bhutan as a trusted business hub, attracting global companies and boosting national revenue.
+**How can we empower global citizens to digitally engage with Bhutan’s government services while preserving cultural identity and ensuring sovereign control?**
 
-- **Sovereign AI:**  
-  Prototype an open-source AI system tailored to Bhutanese law, language, and cultural values.  
-  _Technical Focus:_ Fine-tuning open-source large language models (LLMs), integrating Dzongkha language support, building public service tools, ensuring transparency and safety.  
-  _National Benefit:_ Preserves cultural autonomy, deploys AI agents as digital civil servants, and trains local talent in advanced technologies.
+* **Bhutan** has an opportunity to become a digital leader by offering **borderless eResidency** and AI-powered government services.
+* Current systems lack an accessible, globally integrated **citizenship portal** for non-residents.
+* Bhutan’s **unique cultural governance** requires a system that can respond in alignment with Gross National Happiness (GNH) values.
 
-## Prizes & Benefits
+---
 
-- **$10,000 in prize money** for top projects
-- Exclusive swag for all participants
-- Opportunity to co-create tools for real-world government adoption
-- Projects become part of a global open-source library powering digital governance
-- Continued support from Draper Nation’s ecosystem
+## ✅ Solution Overview: DruRes
 
-## Deliverables & Submission Guidelines
+**Druk eRes** is a unified platform combining a **Bhutanese eResidency portal** with a **Sovereign Agentic AI Assistant** built using cutting-edge agent frameworks.
 
-- **Prototype / Proof of Concept:** A working solution addressing a core challenge in the chosen track
-- **GitHub Documentation:** Should include problem statement, solution overview, tech stack, and all project assets
+Our system enables:
 
-Teams should submit their projects as a Pull Request to this repository by the deadline (to be announced).
+* 🌍 **Global eResidency Access:** Anyone worldwide can become a digital resident of Bhutan through a streamlined online process.
+* 🤖 **Sovereign AI Assistant:** Citizens and eResidents can interact with Bhutan's AI-powered civil servants for real-time information and services.
+* 🏛️ **Culturally Aligned Governance:** Multi-agent AI system that respects Bhutanese governance, GNH values, and provides multilingual responses (English, Dzongkha, Hindi, Nepali).
+* 🔗 **Portal-AI Integration:** While the AI model runs independently, the eResidency portal provides direct access to the AI assistant through a seamless redirect.
 
-PRs must contain a folder named after the team codename, including a README with instructions on usage and project details.
+---
 
-## Venue
+## 🛠️ Features
 
-Draper Startup House (DSH), Bangalore, India  
-DSH builds startup societies globally through community, investment, and education. [More info](https://draperstartuphouse.com/bangalore)
+### eResidency Portal
 
-## License
+* **Multi-Tier KYC/AML Onboarding**
+* **Real-Time Name Availability Checking & Account Creation**
+* **Legal Entity Registration:** LLC, Corporation, Non-Profit
+* **Real-Time Document Processing with Status Updates**
+* **Tax Calculator & Compliance Dashboard**
+* **Integrated Banking & Financial Services Hub**
+* **Smart Document Vault with Auto-Organization**
+* **Gamification:** Progress tracking, badges, and tax incentives for learning Bhutanese laws & governance
+* **Language Toggle:** One-click switch between English and Dzongkha
+* **Mobile App & PWA Support:** Fully responsive, accessible, and cross-browser compatible
 
-By participating in the E-Bhutan Hackathon, you agree to open-source your code submissions under the [Creative Commons Attribution-ShareAlike 4.0 International license](https://creativecommons.org/licenses/by-sa/4.0/).
+### Sovereign AI Assistant
+
+* **Agentic AI System:** Powered by Mistral-7B Instruct v0.2 & Autogen Framework
+* **Multi-Agent Coordination:** Specialized digital civil servants per government department
+* **Knowledge Base Integration:** Bhutanese law, constitution, government policies
+* **Multilingual Support:** English, Dzongkha, Hindi, Nepali
+* **Cultural Alignment:** AI decisions respect Gross National Happiness principles
+* **Direct Access Link:** Provided within the eResidency portal for seamless AI interaction
+
+---
+
+## 🏗️ Tech Stack
+
+| Technology                | Purpose                           |
+| ------------------------- | --------------------------------- |
+| Python                    | Backend & Agent Coordination      |
+| Gradio                    | AI Assistant Frontend UI          |
+| Mistral-7B Instruct v0.2  | Sovereign AI Reasoning Model      |
+| Microsoft Autogen         | Agentic AI Multi-Agent Framework  |
+| Hugging Face Transformers | Model Hosting & API Integration   |
+| Node.js + React           | eResidency Portal Frontend        |
+| Google Cloud Storage      | Document Vault                    |
+| GitHub Pages              | Documentation Hosting             |
+
+---
+
+## 🎯 Key Innovations
+
+* **First Sovereign Agentic AI Assistant** with culturally aligned multi-agent responses.
+* **Bhutanese eResidency** solution inspired by Estonia, enabling digital globalization.
+* **Gamified Legal Learning:** Users can reduce fee rates by completing learning modules.
+* **Seamless Integration:** Portal + AI accessible through a unified experience.
+
+---
+
+## 🚀 How to Run the Project
+
+### eResidency Portal (Frontend)
+
+1. `cd drures-portal`
+2. `npm install`
+3. `npm start`
+
+### AI Assistant (Backend)
+
+1. `cd drures-sovereign-ai`
+2. Create a new Python environment:
+
+   ```bash
+   conda create -n drures_ai python=3.10
+   conda activate drures_ai
+   ```
+3. Install required packages:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run Gradio app:
+
+   ```bash
+   python app.py
+   ```
+
+### Access
+
+* **Portal UI:** `http://localhost:3000`
+* **AI Assistant UI:** `http://localhost:7860`
+* **Integrated Link:** Provided on the portal dashboard as "Ask Bhutan's AI Assistant"
+
+---
+
+## 📝 Folder Structure
+
+```
+DrukeRes/
+├── drukeres-portal/              # eResidency React App
+│   ├── src/
+│   └── README.md
+├── drukeres-sovereign-ai/        # Sovereign AI Gradio App
+│   ├── app.py
+│   ├── requirements.txt
+│   └── README.md
+└── README.md                   # Project Overview
+```
+
+---
+
+## 🌟 Hackathon Deliverables
+
+* ✅ **Problem Statement**
+* ✅ **Solution Overview**
+* ✅ **Tech Stack**
+* ✅ **Working eResidency Portal Prototype**
+* ✅ **Fully Functioning Sovereign AI System**
+* ✅ **Direct Integration via Secure Link**
+* ✅ **Documentation & Demo-Ready UI**
+
+---
+
+## 📜 License
+
+By participating in the E-Tibet hackathon, this project is open-sourced under the **Creative Commons Attribution-ShareAlike 4.0 International license.**
+
+---
+
