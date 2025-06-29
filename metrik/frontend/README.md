@@ -4,6 +4,20 @@ Welcome to the **Metrik** frontend! This is the user interface for the Metrik De
 
 ---
 
+## Working Demo Video
+
+-- https://youtu.be/j2aNxS7d7nU?si=oCcGfGA3RcnlnKZt
+
+## Working Prototype
+
+https://metriklandingpage.vercel.app/
+
+-- Click on Launch APP too test -- Use these two token contract addresses
+
+METRIK Token :- 0x1318B4eC51774271e56D2A7DE244E8d51A2528b9
+ERC20 USDC Token :- 0x02F47A52AC94d1D51cC21865e730Cf314fF5C01B
+-- Ping me here I will fund the wallet with these tokens.
+
 ## 🚀 Project Purpose
 Metrik is a decentralized finance (DeFi) platform that enables:
 - **Suppliers** to stake tokens, create invoices, borrow against invoices, and repay loans.
