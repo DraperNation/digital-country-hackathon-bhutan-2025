@@ -93,7 +93,7 @@ DrukNation is a full-stack web application for Bhutan's e-Residency, property, a
 <div align="center">
 
 ### Dashboard Overview
-![Dashboard](https://via.placeholder.com/800x500/1F2937/FFFFFF?text=User+Dashboard+Screenshot)
+![Dashboard](https://github.com/AdityaAnandCodes/digital-country-hackathon-bhutan-2025/blob/main/Outliers%20-%20DrukNation/showcase/dashboard.png)
 
 ### KYC Verification Process
 ![KYC Process](https://github.com/raksha-bv/DrukNation/blob/main/showcase/KYC_Verification.png)
