@@ -28,7 +28,7 @@
 
 ---
 
-## ✅ Solution Overview: DruRes
+## ✅ Solution Overview: Druk eRes
 
 **Druk eRes** is a unified platform combining a **Bhutanese eResidency portal** with a **Sovereign Agentic AI Assistant** built using cutting-edge agent frameworks.
 
