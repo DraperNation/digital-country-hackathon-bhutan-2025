@@ -1,6 +1,10 @@
 # Refer to each of the individual READMEs in the seperate indiviaual folders for more details
 ---
 
+## [Loom Demo](https://www.loom.com/share/370d416c4c73467abaacf8dfff86f300?sid=5dfb9282-4630-40aa-acd9-8e63b8a0df3c)
+
+## [Pitch Deck](https://www.canva.com/design/DAGrsi4sdCQ/G4Z4lxAYvH-dwCUPNaJNhA/edit?utm_content=DAGrsi4sdCQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
 # 🇧🇹 Druk eResidency: Bhutan's eResidency & Sovereign AI Assistant
 
 > **Track:** Soveraign AI & Eresidency Platform
