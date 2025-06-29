@@ -34,53 +34,34 @@ export const NAV_DATA = [
         ],
       },
       {
-        title: "Digital Identity",
+        title: "Digital Identity & Reputation",
         url: "/dashboard/identity",
         icon: Icons.User,
         items: [
-          {
-            title: "My DID",
-            url: "/dashboard/identity/did",
-          },
-          {
-            title: "Digital Passport",
-            url: "/dashboard/identity/passport",
-          },
-          {
-            title: "Verifiable Credentials",
-            url: "/dashboard/identity/credentials",
-          },
-          {
-            title: "Biometric Auth",
-            url: "/dashboard/identity/biometric",
-          },
-          {
-            title: "KYC Verification",
-            url: "/dashboard/identity/kyc",
-          },
-        ],
-      },
-      {
-        title: "Reputation & Trust",
-        url: "/dashboard/reputation",
-        icon: Icons.User,
-        items: [
-          {
-            title: "My Reputation Score",
-            url: "/dashboard/reputation/score",
-          },
+          { title: "DID", url: "/dashboard/identity/did" },
+          { title: "Passport", url: "/dashboard/identity/passport" },
+          { title: "Credentials", url: "/dashboard/identity/credentials" },
+          { title: "Verify Credential", url: "/dashboard/identity/verify" },
           {
             title: "Proof of Personhood",
-            url: "/dashboard/reputation/pop",
+            url: "/dashboard/identity/proof-of-personhood",
           },
+          { title: "Reputation Score", url: "/dashboard/identity/reputation" },
           {
             title: "Attestations",
-            url: "/dashboard/reputation/attestations",
+            url: "/dashboard/identity/reputation#attestations",
           },
           {
             title: "Community Contributions",
-            url: "/dashboard/reputation/contributions",
+            url: "/dashboard/identity/reputation#contributions",
           },
+          { title: "Vault", url: "/dashboard/identity/vault" },
+          {
+            title: "Selective Disclosure",
+            url: "/dashboard/identity/selective-disclosure",
+          },
+          { title: "ZK-Proof Demo", url: "/dashboard/identity/zk-demo" },
+          { title: "Audit Log", url: "/dashboard/identity/audit-log" },
         ],
       },
       {
@@ -130,21 +111,17 @@ export const NAV_DATA = [
         url: "/dashboard/business",
         icon: Icons.User,
         items: [
+          { title: "My Business", url: "/dashboard/business" },
+          { title: "Register Company", url: "/dashboard/business/register" },
+          { title: "Tax Services", url: "/dashboard/business/tax" },
+          { title: "Business Documents", url: "/dashboard/business/documents" },
           {
-            title: "My Business",
-            url: "/dashboard/business",
+            title: "Issued Credentials",
+            url: "/dashboard/business/issued-credentials",
           },
           {
-            title: "Register Company",
-            url: "/dashboard/business/register",
-          },
-          {
-            title: "Tax Services",
-            url: "/dashboard/business/tax",
-          },
-          {
-            title: "Business Documents",
-            url: "/dashboard/business/documents",
+            title: "Organization Dashboard",
+            url: "/dashboard/business/organization-dashboard",
           },
         ],
       },

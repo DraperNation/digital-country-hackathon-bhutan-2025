@@ -130,6 +130,18 @@ export default function IdentityPage() {
         </p>
       </div>
 
+      {/* Catchy Welcome Banner */}
+      <div className="mb-8 animate-pulse rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-6 text-white shadow-lg">
+        <h2 className="mb-2 flex items-center gap-2 text-2xl font-bold">
+          🚀 Welcome to Your Digital Identity & Reputation Hub!
+        </h2>
+        <p className="text-lg">
+          Manage your decentralized identity, credentials, and reputation in one
+          place. Explore new features like ZK-Proofs, Selective Disclosure, and
+          more!
+        </p>
+      </div>
+
       {/* Identity Overview */}
       <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white shadow-lg">
@@ -571,6 +583,84 @@ export default function IdentityPage() {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Add animated cards for each feature */}
+      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Link
+          href="/dashboard/identity/zk-demo"
+          className="rounded-xl border-2 border-dashed border-purple-400 bg-white p-6 shadow-lg transition-transform duration-200 hover:scale-105 hover:border-purple-600"
+        >
+          <div className="mb-4 flex items-center">
+            <div className="mr-3 animate-bounce text-3xl">🧮</div>
+            <div>
+              <h3 className="text-xl font-bold text-purple-800">
+                ZK-Proof Demo
+              </h3>
+              <p className="text-sm text-gray-600">
+                Try privacy-preserving proofs
+              </p>
+            </div>
+          </div>
+          <p className="text-gray-700">
+            Prove facts about yourself without revealing sensitive data. See how
+            zero-knowledge proofs work in action!
+          </p>
+        </Link>
+        <Link
+          href="/dashboard/identity/selective-disclosure"
+          className="rounded-xl border-2 border-dashed border-blue-400 bg-white p-6 shadow-lg transition-transform duration-200 hover:scale-105 hover:border-blue-600"
+        >
+          <div className="mb-4 flex items-center">
+            <div className="mr-3 animate-spin text-3xl">🔒</div>
+            <div>
+              <h3 className="text-xl font-bold text-blue-800">
+                Selective Disclosure
+              </h3>
+              <p className="text-sm text-gray-600">Share only what you want</p>
+            </div>
+          </div>
+          <p className="text-gray-700">
+            Control your privacy by sharing only specific attributes from your
+            credentials.
+          </p>
+        </Link>
+        <Link
+          href="/dashboard/identity/reputation"
+          className="rounded-xl border-2 border-dashed border-green-400 bg-white p-6 shadow-lg transition-transform duration-200 hover:scale-105 hover:border-green-600"
+        >
+          <div className="mb-4 flex items-center">
+            <div className="mr-3 animate-pulse text-3xl">🌟</div>
+            <div>
+              <h3 className="text-xl font-bold text-green-800">
+                Reputation & Attestations
+              </h3>
+              <p className="text-sm text-gray-600">Earn badges & trust</p>
+            </div>
+          </div>
+          <p className="text-gray-700">
+            Showcase your achievements, contributions, and trust score with
+            verifiable attestations.
+          </p>
+        </Link>
+        <Link
+          href="/dashboard/identity/vault"
+          className="rounded-xl border-2 border-dashed border-pink-400 bg-white p-6 shadow-lg transition-transform duration-200 hover:scale-105 hover:border-pink-600"
+        >
+          <div className="mb-4 flex items-center">
+            <div className="mr-3 animate-bounce text-3xl">🗄️</div>
+            <div>
+              <h3 className="text-xl font-bold text-pink-800">
+                Document Vault
+              </h3>
+              <p className="text-sm text-gray-600">Store & share securely</p>
+            </div>
+          </div>
+          <p className="text-gray-700">
+            Upload, store, and share important documents on decentralized
+            storage.
+          </p>
+        </Link>
       </div>
     </div>
   );
