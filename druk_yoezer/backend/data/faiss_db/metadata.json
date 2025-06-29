@@ -1,0 +1,50 @@
+[
+  {
+    "id": "business_reg_001",
+    "title": "Business Registration Requirements for Foreign Entrepreneurs",
+    "document_type": "regulation",
+    "department": "Department of Industry",
+    "last_updated": "2024-01-15",
+    "category": "business_registration"
+  },
+  {
+    "id": "eresidency_001",
+    "title": "eResidency Program Guidelines and Benefits",
+    "document_type": "program_guide",
+    "department": "Department of Immigration",
+    "last_updated": "2024-02-01",
+    "category": "eresidency"
+  },
+  {
+    "id": "gnh_principles_001",
+    "title": "Gross National Happiness Principles in Business Practice",
+    "document_type": "policy_framework",
+    "department": "Centre for Bhutan Studies & GNH Research",
+    "last_updated": "2024-01-10",
+    "category": "gnh_principles"
+  },
+  {
+    "id": "tax_guide_001",
+    "title": "Tax Guide for Digital Nomads and Remote Workers",
+    "document_type": "tax_guide",
+    "department": "Department of Revenue and Customs",
+    "last_updated": "2024-01-20",
+    "category": "taxation"
+  },
+  {
+    "id": "tourism_business_001",
+    "title": "Tourism Business Licensing and Cultural Guidelines",
+    "document_type": "licensing_guide",
+    "department": "Tourism Council of Bhutan",
+    "last_updated": "2024-01-25",
+    "category": "tourism"
+  },
+  {
+    "id": "passport_renewal_001",
+    "title": "Passport Renewal Process for Bhutanese Citizens",
+    "document_type": "procedure_guide",
+    "department": "Department of Immigration",
+    "last_updated": "2024-02-05",
+    "category": "citizen_services"
+  }
+]
