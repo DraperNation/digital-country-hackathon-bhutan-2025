@@ -17,8 +17,23 @@
 
 DrukNation is a full-stack web application for Bhutan's e-Residency, property, and business registration ecosystem. It leverages blockchain smart contracts, wallet integration, and a modern UI/UX to provide a seamless digital residency and business experience.
 
+<div align="center">  
+  
+### 🎥 Project Demo  
+
+---
+
 <div align="center">
 
+[![DrukNation Demo Video](https://github.com/AdityaAnandCodes/digital-country-hackathon-bhutan-2025/raw/main/Outliers%20-%20DrukNation/showcase/Thumbnail.png)](https://www.loom.com/share/fdf3d593d0834943ac9ecd7040e13105?sid=8e6a3f42-7088-4ca1-827c-5e04a6349154)
+
+**🔥 Watch the complete DrukNation platform walkthrough above!**
+
+*Click the thumbnail to see the full demo of e-Residency application, KYC verification, NFT minting, and more.*
+
+</div>
+
+---
 ![Hero Image](https://github.com/raksha-bv/DrukNation/blob/main/showcase/HeroSection.png)
 
 </div>
