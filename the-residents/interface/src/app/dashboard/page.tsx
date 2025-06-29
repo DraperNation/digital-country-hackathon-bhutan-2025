@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { injected } from 'wagmi/connectors';
+
 import { useNFTMint } from '@/hooks/useNFTMint';
 import { useCompanyRegistry } from '@/hooks/useCompanyRegistry';
 
@@ -183,7 +182,7 @@ export default function Dashboard() {
 
         // Check if user has existing company registration
         try {
-          const companyResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/company/user/${userId}`);
+          const companyResponse = await fetch(`http://localhost:8000/api/company/user/${userId}`);
           console.log('Fetching company data for user:', userId);
           console.log('Company response status:', companyResponse.status);
           
@@ -361,7 +360,7 @@ You can try again later from the company details page.`);
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/company/certificate/${companyId}`, {
+      const response = await fetch(`http://localhost:8000/api/company/certificate/${companyId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/pdf',
@@ -1419,7 +1418,7 @@ You can try again later from the company details page.`);
                         Entity Information
                       </h1>
                       <p className="text-sm text-gray-600 mb-6">
-                        Register your digital entity in Bhutan's innovative business environment.
+                        Register your digital entity in Bhutan&apos;s innovative business environment.
                       </p>
                       
                       <div className="bg-gray-50 rounded-lg p-6 mb-6 border border-gray-200">
@@ -1679,7 +1678,7 @@ You can try again later from the company details page.`);
                                 className="mt-1 mr-3"
                               />
                               <label htmlFor="termsAccepted" className="text-sm text-gray-700">
-                                I agree to Bhutan's digital incorporation rules and understand that this registration will be recorded on the blockchain for transparency and verification purposes.
+                                I agree to Bhutan&apos;s digital incorporation rules and understand that this registration will be recorded on the blockchain for transparency and verification purposes.
                               </label>
                             </div>
                           </div>
@@ -1811,7 +1810,7 @@ You can try again later from the company details page.`);
                           Entity Registered Successfully!
                         </h2>
                         <p className="text-sm text-gray-600">
-                          Your entity has been incorporated in Bhutan's digital registry.
+                          Your entity has been incorporated in Bhutan&apos;s digital registry.
                         </p>
                       </div>
 
