@@ -1,10 +1,15 @@
-# Druk e-Portal — The Operating System for Digital Bhutan
+# Druk e-Portal - Estonia walked so Bhutan could build the upgrade
 
-Think e-Estonia, but rebuilt for the era of sovereign identity, modular governance, and borderless incorporation.
+Estonia proved that e-residency can unlock national income and global trust. But their system is Web2-native — centralized, government-controlled, and opaque.
 
-Druk e-Portal is a digital residency and business formation platform designed for the Kingdom of Bhutan — and compatible with emerging network states like Draper Nation. It allows any global citizen to become a digital resident, receive cryptographic credentials, mint a non-transferable Residency NFT, and register a business — all online, with optional Web3 components.
+It doesn't support self-sovereign identity, programmable entities, or modular governance. It wasn’t built for an AI-native, blockchain-integrated world.
 
-## 🌐 What It Does
+Governments need a foundational operating system that’s verifiable, privacy-respecting, and future-proof.
+
+Druk e-Portal is that system.
+It’s not a prototype — it’s a modular, configurable stack ready to serve the Bhutanese state today, and scale globally tomorrow.
+
+## 🌐 What It Does (functional)
 
 - **Digital Residency** — Apply from anywhere, get verified, and receive sovereign credentials.
 - **Verifiable Credentials** — Standards-based identity issued with DID & VC (JSON-LD).
@@ -13,13 +18,13 @@ Druk e-Portal is a digital residency and business formation platform designed fo
 - **Public Directory** — Browse verified residents and entities without revealing private identity data.
 - **Verifier API** — Validate credentials without exposing private data.
 - **Real ZK Proofs** — Circom circuits + SnarkJS for Bhutan nationality verification without revealing identity.
-- **Admin Panel** — Manage KYC approvals and residency requests.
+- **Admin Panel** — Manage KYC approvals and residency requests, furhter integrate third party APIs or agent to automate back office.
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js + Tailwind CSS
-- **Backend**: Node.js (Express) or Python (FastAPI)
-- **Database**: MongoDB
+- **Backend**: Node.js (Express)
+- **Database**: Primarily Polygon; MongoDB used in a few places due to Polygon free-tier limits. Ready for full Polygon integration in production.
 - **Web3**: Solidity, Hardhat, Polygon Mumbai (testnet)
 - **Standards**: W3C Verifiable Credentials (VC), Decentralized Identifiers (DID)
 - **Zero-Knowledge**: Circom circuits, SnarkJS, Groth16 protocol
@@ -59,11 +64,21 @@ eResidency-MVP/
 - Proves Bhutan citizenship without revealing name, DOB, or other personal data
 
 
-## 💡 Vision
+## 💡 The Future
 
-Druk e-Portal isn't just a hackathon project — it's a blueprint for a digital nation-state infrastructure. Bhutan can lead in trust, compliance, and institutional clarity. Platforms like Draper Nation can extend it into experimental digital sovereignty.
+Druk e‑Portal is not just a hackathon build — it’s a production-grade blueprint for digital nation-state infrastructure.
 
-Let users choose their digital citizenship, control their identity, and build borderless businesses — all through a single, open-source, future-ready platform.
+Bhutan can lead the world in trust, compliance, and institutional clarity.
+
+Draper Nation and other network states can extend this into experimental digital sovereignty.
+
+Every module is configurable, built with scalability in mind — from governance rules to identity issuance.
+
+Ready to integrate with third-party APIs, AI agents, and compliance systems.
+
+Open-source and modular by design, allowing nations and platforms to plug in or fork as needed.
+
+Empowers users to choose digital citizenship, control identity, and launch borderless ventures — all through a single, sovereign platform.
 
 ## 👥 Credits
 
