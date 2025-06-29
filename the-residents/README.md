@@ -7,7 +7,11 @@ It lacks self-sovereign identity, transparent credentialing, and modular governa
 Governments today need a verifiable, privacy-respecting, and secure-by-design digital operating system.
 
 Druk e‑Portal is that system.
-It’s not a prototype — it’s a modular, configurable stack ready for Bhutan now, and scalable for any digital nation tomorrow.
+It's not a prototype — it's a modular, configurable stack ready for Bhutan now, and scalable for any digital nation tomorrow.
+
+## 🎥 Demo Video
+
+<div style="position: relative; padding-bottom: 64.98194945848375%; height: 0;"><iframe src="https://www.loom.com/embed/4e04841cfa3648248967972fe110a6d8?sid=e1a99573-3741-4062-b468-f8eb1aeaf838" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## 🌐 What It Does (Functional)
 
@@ -67,7 +71,7 @@ eResidency-MVP/
 
 ## 💡 The Future
 
-Druk e‑Portal is not just a hackathon build — it’s a production-grade blueprint for digital nation-state infrastructure.
+Druk e‑Portal is not just a hackathon build — it's a production-grade blueprint for digital nation-state infrastructure.
 
 Bhutan can lead the world in trust, compliance, and institutional clarity.
 
