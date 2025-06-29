@@ -3,6 +3,31 @@
 import Link from "next/link";
 import { useState } from "react";
 
+const mockBusinesses = [
+  {
+    name: "Bhutan Tech Solutions Pvt Ltd",
+    registrationNumber: "BTN-2023-001",
+    status: "Verified",
+    type: "Private Limited",
+    incorporationDate: "2023-04-15",
+    address: "Thimphu, Bhutan",
+    directors: ["Karma Dorji", "Sonam Wangmo"],
+    email: "info@bhutantech.bt",
+    phone: "+975-2-123456",
+  },
+  {
+    name: "Himalayan Exports",
+    registrationNumber: "BTN-2022-045",
+    status: "Verified",
+    type: "Export Business",
+    incorporationDate: "2022-09-10",
+    address: "Phuentsholing, Bhutan",
+    directors: ["Jigme Tenzin"],
+    email: "contact@himalayanexports.bt",
+    phone: "+975-5-654321",
+  },
+];
+
 export default function BusinessPage() {
   const [businessData] = useState({
     activeBusinesses: 2,
@@ -13,6 +38,68 @@ export default function BusinessPage() {
 
   return (
     <div className="p-6">
+      {/* My Business Section */}
+      <div className="mb-10">
+        <h2 className="mb-4 flex items-center gap-2 text-2xl font-bold text-gray-800">
+          <span>🏢</span> My Business
+        </h2>
+        {mockBusinesses.length === 0 ? (
+          <div className="text-gray-500">You have no verified businesses.</div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
+            {mockBusinesses.map((biz) => (
+              <div
+                key={biz.registrationNumber}
+                className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg"
+              >
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="text-xl font-semibold text-blue-800">
+                    {biz.name}
+                  </h3>
+                  <span className="rounded bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                    {biz.status}
+                  </span>
+                </div>
+                <div className="mb-2 text-sm text-gray-700">
+                  Reg. No:{" "}
+                  <span className="font-mono">{biz.registrationNumber}</span>
+                </div>
+                <div className="mb-2 text-sm text-gray-700">
+                  Type: {biz.type}
+                </div>
+                <div className="mb-2 text-sm text-gray-700">
+                  Incorporated: {biz.incorporationDate}
+                </div>
+                <div className="mb-2 text-sm text-gray-700">
+                  Address: {biz.address}
+                </div>
+                <div className="mb-2 text-sm text-gray-700">
+                  Directors: {biz.directors.join(", ")}
+                </div>
+                <div className="mb-2 text-sm text-gray-700">
+                  Email:{" "}
+                  <a
+                    href={`mailto:${biz.email}`}
+                    className="text-blue-600 underline"
+                  >
+                    {biz.email}
+                  </a>
+                </div>
+                <div className="mb-2 text-sm text-gray-700">
+                  Phone:{" "}
+                  <a
+                    href={`tel:${biz.phone}`}
+                    className="text-blue-600 underline"
+                  >
+                    {biz.phone}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800">
           🏢 My Business Services

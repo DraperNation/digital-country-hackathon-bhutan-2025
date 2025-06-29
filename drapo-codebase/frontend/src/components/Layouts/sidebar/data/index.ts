@@ -131,6 +131,10 @@ export const NAV_DATA = [
         icon: Icons.User,
         items: [
           {
+            title: "My Business",
+            url: "/dashboard/business",
+          },
+          {
             title: "Register Company",
             url: "/dashboard/business/register",
           },
