@@ -843,13 +843,13 @@ You can try again later from the company details page.`);
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200/60">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-600 font-medium text-sm">
-                    OS
+                    {userData.fullName.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm font-medium text-gray-900 truncate">Oliur Sahin</p>
+                      <p className="text-sm font-medium text-gray-900 truncate">{userData.fullName}</p>
                     </div>
-                    <p className="text-xs text-gray-500 truncate">oliursahin@gmail.com</p>
+                    <p className="text-xs text-gray-500 truncate">{userData.email}</p>
                     <div className="flex items-center gap-1.5 mt-1.5">
                       <span className="inline-flex items-center gap-1 text-xs text-gray-600 bg-gray-100 px-2 py-0.5 rounded-md">
                         e-Resident

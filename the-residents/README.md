@@ -1,83 +1,70 @@
-# Bhutan eResidency: Digital Residency for the World
+# Druk e-Portal — The Operating System for Digital Bhutan
 
-## 🌍 Problem
+Think e-Estonia, but rebuilt for the era of sovereign identity, modular governance, and borderless incorporation.
 
-Entrepreneurs worldwide face barriers when incorporating companies in trustworthy jurisdictions. Bhutan, like Estonia, has the potential to become a global hub for remote businesses—but lacks a digital residency offering.
+Druk e-Portal is a digital residency and business formation platform designed for the Kingdom of Bhutan — and compatible with emerging network states like Draper Nation. It allows any global citizen to become a digital resident, receive cryptographic credentials, mint a non-transferable Residency NFT, and register a business — all online, with optional Web3 components.
 
-## 💡 Solution
+## 🌐 What It Does
 
-A digital eResidency platform that enables anyone to:
-- Apply for Bhutanese digital residency
-- Get verified through a KYC flow (mocked for demo)
-- Receive a digital residency ID as an NFT
-- View and share residency credentials via a personal dashboard
-
-## 🚀 Project Flow
-
-1. User visits site → fills basic form (name, passport, country)
-2. Submits → identity verification (mocked with 5s delay)
-3. After verification, issue eResident ID
-   - Minted as NFT on Polygon Mumbai Testnet
-   - Generates a digital ID card with user data
-4. User dashboard displays:
-   - Name, status (approved), ID issued
-   - QR code or NFT link
-   - Digital ID card
+- **Digital Residency** — Apply from anywhere, get verified, and receive sovereign credentials.
+- **Verifiable Credentials** — Standards-based identity issued with DID & VC (JSON-LD).
+- **Residency NFT** — Soulbound digital passport minted on-chain.
+- **Business Formation** — Register your DAO, SoloOp, or virtual company.
+- **Public Directory** — Browse verified residents and entities without revealing private identity data.
+- **Verifier API** — Validate credentials without exposing private data.
+- **Real ZK Proofs** — Circom circuits + SnarkJS for Bhutan nationality verification without revealing identity.
+- **Admin Panel** — Manage KYC approvals and residency requests.
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- Next.js
-- Tailwind CSS
-- Thirdweb SDK
+- **Frontend**: Next.js + Tailwind CSS
+- **Backend**: Node.js (Express) or Python (FastAPI)
+- **Database**: MongoDB
+- **Web3**: Solidity, Hardhat, Polygon Mumbai (testnet)
+- **Standards**: W3C Verifiable Credentials (VC), Decentralized Identifiers (DID)
+- **Zero-Knowledge**: Circom circuits, SnarkJS, Groth16 protocol
 
-### Backend
-- Node.js API
-- Mocked KYC verification
-- NFT minting endpoint
-
-### Blockchain
-- Polygon Mumbai Testnet
-- ERC-721 NFTs
-- IPFS for metadata storage
-
-## 🏗️ Project Structure
+## 📦 Project Structure
 
 ```
-/bhutan-eresidency
-├── /frontend          # Next.js application
-├── /backend           # Node.js API server
-├── /smart-contracts   # Solidity contracts
-└── README.md          # Project documentation
+eResidency-MVP/
+├── frontend/            # React + Tailwind
+├── backend/             # FastAPI / Express
+├── smart-contracts/     # Solidity (NFT contract)
+├── zk-proof/           # Circom circuits + SnarkJS proofs
+├── scripts/             # Deployment & test helpers
 ```
 
-## 🚀 Getting Started
+## ⚙️ Core Flows
 
-### Prerequisites
-- Node.js 16+
-- npm or yarn
-- MetaMask wallet (for blockchain interactions)
+- **KYC Onboarding** → Upload ID, selfie, basic info → Pending/Approved
+- **Mint eResidency NFT** → Wallet connect + on-chain soulbound NFT
+- **Issue Verifiable Credential** → DID + VC JSON (viewable + verifiable)
+- **Register Business Entity** → Create DAO / company with PDF certificate
+- **Public Directory** → Browse residents/entities with privacy controls (opt-in public profiles)
+- **ZK Nationality Proof** → Prove Bhutan citizenship without revealing personal data (Circom + SnarkJS)
+- **Verifier Portal** → Paste VC → Get validation result (ZK-ready toggle)
 
-### Installation
+## 🔐 Smart Contracts & ZK Circuits
 
-1. Clone the repository
-2. Set up the backend:
-   ```bash
-   cd backend
-   npm install
-   ```
-3. Set up the frontend:
-   ```bash
-   cd frontend
-   npm install
-   ```
-4. Start the development servers
+**eResidencyNFT.sol (ERC-721 Soulbound)**
+- One-time mint
+- Metadata includes DID, issue date, residency details
+- Non-transferable (soulbound logic)
 
-## 📝 License
+**ZK Proof System (Circom + SnarkJS)**
+- `nationality_check.circom` — Full identity verification with Poseidon hashing
+- `nationality_simple.circom` — Simplified nationality proof with commitment scheme
+- Groth16 protocol for efficient proof generation and verification
+- Proves Bhutan citizenship without revealing name, DOB, or other personal data
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 💡 Vision
 
-- Inspired by Estonia's e-Residency program
-- Built for the Bhutan Tech Hackathon 2024
+Druk e-Portal isn't just a hackathon project — it's a blueprint for a digital nation-state infrastructure. Bhutan can lead in trust, compliance, and institutional clarity. Platforms like Draper Nation can extend it into experimental digital sovereignty.
+
+Let users choose their digital citizenship, control their identity, and build borderless businesses — all through a single, open-source, future-ready platform.
+
+## 👥 Credits
+
+Built by [@oliursahin](https://oliursahin.co.uk) & [@sajdakabir](https://github.com/sajdakabir).
