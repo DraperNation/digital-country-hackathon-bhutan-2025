@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask Druk - Your Bhutanese AI Citizen Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #FFD700 75%, #228B22 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Dzongkha font support */
+        .dzongkha {
+            font-family: 'Noto Sans Tibetan', 'Microsoft Himalaya', 'Jomolhari', 'DDC Uchen', sans-serif;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FF6B35;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dragon-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.2rem;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #FF6B35;
+            background: white;
+            color: #FF6B35;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn.active {
+            background: #FF6B35;
+            color: white;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            height: calc(100vh - 120px);
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-services {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .service-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .service-btn:hover {
+            background: #FF6B35;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .chat-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .user .message-avatar {
+            background: #007bff;
+            color: white;
+        }
+
+        .assistant .message-avatar {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+        }
+
+        .message-content {
+            background: white;
+            padding: 1rem 1.25rem;
+            border-radius: 18px;
+            max-width: 70%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
+        }
+
+        .user .message-content {
+            background: #007bff;
+            color: white;
+        }
+
+        .suggestions {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .suggestion-btn {
+            background: #e9f4ff;
+            border: 1px solid #007bff;
+            color: #007bff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-btn:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #FF6B35;
+            border-radius: 50%;
+            animation: typing 1.5s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .input-container {
+            padding: 1.5rem;
+            background: white;
+            border-top: 1px solid #eee;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .input-field {
+            flex: 1;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+            min-height: 50px;
+            max-height: 150px;
+        }
+
+        .input-field:focus {
+            border-color: #FF6B35;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+        }
+
+        .welcome-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .welcome-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .sample-questions {
+            display: grid;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .sample-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .sample-question:hover {
+            background: #FF6B35;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .emergency-contacts {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #fff3cd;
+            border-radius: 12px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .emergency-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+
+        .emergency-list {
+            font-size: 0.9rem;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                height: auto;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .chat-container {
+                height: 70vh;
+                order: 1;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Dzongkha-specific styling */
+        body.dzongkha-mode .dzongkha {
+            display: block;
+        }
+        
+        body.dzongkha-mode .english {
+            display: none;
+        }
+        
+        body:not(.dzongkha-mode) .dzongkha {
+            display: none;
+        }
+        
+        body:not(.dzongkha-mode) .english {
+            display: block;
+        }
+
+        /* Language transition animations */
+        .lang-transition {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .lang-transition.fade-out {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="dragon-icon">🐉</div>
+                <div>
+                    <div class="title">
+                        <span class="english">Ask Druk</span>
+                        <span class="dzongkha">འདྲི་འབྲུག</span>
+                    </div>
+                    <div class="subtitle">
+                        <span class="english">Bhutan's AI Citizen Assistant</span>
+                        <span class="dzongkha">འབྲུག་གི་རྒྱལ་ཁབ་སྤྱི་མཐུན་གི་ཀླད་པ་རིག་ནུས་རོགས་པ།</span>
+                    </div>
+                </div>
+            </div>
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="dz">འབྲུག་ཁ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="quick-services">
+                <div class="section-title">
+                    <span class="english">🏛️ Popular Services</span>
+                    <span class="dzongkha">🏛️ སྤྱོད་མང་བའི་ཞབས་ཏོག</span>
+                </div>
+                <button class="service-btn" data-service="passport">
+                    <span class="english">🛂 Passport Application</span>
+                    <span class="dzongkha">🛂 འགྲོ་བའི་ལག་ཁྱེར་གསུ་ཞུ</span>
+                </button>
+                <button class="service-btn" data-service="license">
+                    <span class="english">🚗 Driving License</span>
+                    <span class="dzongkha">🚗 གཏང་ཆོག་ཆིག་མཐུན</span>
+                </button>
+                <button class="service-btn" data-service="business">
+                    <span class="english">💼 Business Registration</span>
+                    <span class="dzongkha">💼 ཚོང་ལས་ཐོ་བཀོད</span>
+                </button>
+                <button class="service-btn" data-service="birth">
+                    <span class="english">📄 Birth Certificate</span>
+                    <span class="dzongkha">📄 སྐྱེ་བའི་ཡིག་ཆ</span>
+                </button>
+            </div>
+
+            <div class="rights-section">
+                <div class="section-title">
+                    <span class="english">⚖️ Know Your Rights</span>
+                    <span class="dzongkha">⚖️ ཁྱེད་རང་གི་ཐོབ་ཐང་ཤེས་རོགས</span>
+                </div>
+                <button class="service-btn" data-service="employment">
+                    <span class="english">👔 Employment Rights</span>
+                    <span class="dzongkha">👔 ལས་ཀའི་ཐོབ་ཐང</span>
+                </button>
+                <button class="service-btn" data-service="consumer">
+                    <span class="english">🛒 Consumer Rights</span>
+                    <span class="dzongkha">🛒 ཉོ་མཁན་གྱི་ཐོབ་ཐང</span>
+                </button>
+                <button class="service-btn" data-service="tenant">
+                    <span class="english">🏠 Tenant Rights</span>
+                    <span class="dzongkha">🏠 ཁྱིམ་པའི་ཐོབ་ཐང</span>
+                </button>
+            </div>
+
+            <div class="emergency-contacts">
+                <div class="emergency-title">
+                    <span class="english">Emergency Contacts</span>
+                    <span class="dzongkha">འཕྲལ་མྱུར་འབྲེལ་གཏུགས</span>
+                </div>
+                <div class="emergency-list">
+                    <span class="english">
+                        Police & General: 113<br>
+                        Fire: 110<br>
+                        Medical: 112<br>
+                        Traffic: 111<br>
+                        Disaster: 999
+                    </span>
+                    <span class="dzongkha">
+                        དམག་གསོ་དང་སྤྱིར་བཏང: ༡༡༣<br>
+                        མེ་འཇིམས: ༡༡༠<br>
+                        སམན་པ: ༡༡༢<br>
+                        འགྲུལ་སྐྱོད: ༡༡༡<br>
+                        ཆེན་པོའི་བརགལ་ལན: ༩༩༩
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="english">🐉 Druk is here to help!</span>
+                    <span class="dzongkha">🐉 འབྲུག་གིས་རོགས་པ་གནང་རུང་!</span>
+                </div>
+                <div class="chat-subtitle">
+                    <span class="english">Ask me about government services, your rights, or any questions about living in Bhutan</span>
+                    <span class="dzongkha">གཞུང་གི་ཞབས་ཏོག་གམ་ཁྱེད་རང་གི་ཐོབ་ཐང་ འབྲུག་ནང་འཚོ་བ་བྱེད་པའི་སྐོར་གང་འདྲས་འདྲིབ་གནང་རོགས།</span>
+                </div>
+            </div>
+
+            <div class="messages" id="messages">
+                <div class="welcome-message">
+                    <div class="welcome-icon">🐉</div>
+                    <div class="welcome-title">
+                        <span class="english">Kuzuzangpo! Welcome to Ask Druk</span>
+                        <span class="dzongkha">ཀུ་ཟུ་ཟང་པོ་ལགས! འདྲི་འབྲུག་ལ་དགའ་བསུ་ཞུ།</span>
+                    </div>
+                    <div class="welcome-description">
+                        <span class="english">
+                            I'm your friendly AI assistant for all things related to Bhutanese government services and citizen rights. 
+                            I'm here to help you navigate bureaucracy with simple, clear guidance in everyday language.
+                        </span>
+                        <span class="dzongkha">
+                            ང་ནི་འབྲུག་གི་གཞུང་གི་ཞབས་ཏོག་དང་སྤྱི་མི་ཐོབ་ཐང་འབྲེལ་བའི་གནད་དོན་ཚང་མའི་ཆེད་དུ་ཁྱེད་རང་གི་ཀླད་པ་རིག་ནུས་རོགས་པ་ཞིག་ཡིན། 
+                            ཉིན་རེའི་སྐད་ཆ་འདྲས་གསལ་བའི་ལམ་སྟོན་ཐོག་ནས་གོ་བ་ལེན་པའི་ཆེད་དུ་ང་ཡོད།
+                        </span>
+                    </div>
+                    <div class="sample-questions">
+                        <div class="sample-question" data-question-en="How do I apply for a passport?" data-question-dz="འགྲོ་བའི་ལག་ཁྱེར་ཇི་ལྟར་གསུ་ཞུ་དགོས་སམ།">
+                            <span class="english">🛂 How do I apply for a passport?</span>
+                            <span class="dzongkha">🛂 འགྲོ་བའི་ལག་ཁྱེར་ཇི་ལྟར་གསུ་ཞུ་དགོས་སམ།</span>
+                        </div>
+                        <div class="sample-question" data-question-en="I was fired from my job without warning. What are my rights?" data-question-dz="ངའི་ལས་ཀ་ནས་སྔོན་བརྡ་མེད་པར་ཕྱིར་བཏོན་སོང་། ངའི་ཐོབ་ཐང་གང་འདྲ་ཡོད་དམ།">
+                            <span class="english">⚖️ What are my employment rights?</span>
+                            <span class="dzongkha">⚖️ ངའི་ལས་ཀའི་ཐོབ་ཐང་གང་འདྲ་ཡོད་དམ།</span>
+                        </div>
+                        <div class="sample-question" data-question-en="How do I start a small business in Bhutan?" data-question-dz="འབྲུག་ནང་ཚོང་ལས་ཆུང་ཆུང་ཞིག་ཇི་ལྟར་འགོ་འཛུགས་དགོས་སམ།">
+                            <span class="english">💼 How do I register a business?</span>
+                            <span class="dzongkha">💼 ཚོང་ལས་ཇི་ལྟར་ཐོ་བཀོད་འབད་དགོས་སམ།</span>
+                        </div>
+                        <div class="sample-question" data-question-en="Where is the nearest immigration office?" data-question-dz="ཉེ་ཤོས་ཀྱི་ས་སྤོ་ལས་ཁུངས་གང་དུ་ཡོད་དམ།">
+                            <span class="english">📍 Find government offices</span>
+                            <span class="dzongkha">📍 གཞུང་གི་ལས་ཁུངས་རྙེད་རོགས</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="message-avatar assistant">🐉</div>
+                <div>
+                    <span class="english">Druk is thinking...</span>
+                    <span class="dzongkha">འབྲུག་གིས་བསམ་བློ་བཏང་བཞིན་ཡོད...</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="messageInput" 
+                        class="input-field" 
+                        placeholder="Ask me anything about government services or your rights..."
+                        rows="1"
+                    ></textarea>
+                    <button id="sendBtn" class="send-btn">
+                        ➤
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language system
+        const languages = {
+            en: {
+                placeholder: "Ask me anything about government services or your rights...",
+                questions: {
+                    passport: "How do I apply for a passport?",
+                    employment: "I was fired from my job without warning. What are my rights?",
+                    business: "How do I start a small business in Bhutan?",
+                    office: "Where is the nearest immigration office?",
+                    license: "How do I get a driving license?",
+                    birth: "How do I get a birth certificate?",
+                    consumer: "What are my consumer rights?",
+                    tenant: "What are my rights as a tenant?"
+                }
+            },
+            dz: {
+                placeholder: "གཞུང་གི་ཞབས་ཏོག་གམ་ཁྱེད་རང་གི་ཐོབ་ཐང་སྐོར་གང་འདྲས་འདྲིབ་གནང་རོགས...",
+                questions: {
+                    passport: "འགྲོ་བའི་ལག་ཁྱེར་ཇི་ལྟར་གསུ་ཞུ་དགོས་སམ།",
+                    employment: "ངའི་ལས་ཀ་ནས་སྔོན་བརྡ་མེད་པར་ཕྱིར་བཏོན་སོང་། ངའི་ཐོབ་ཐང་གང་འདྲ་ཡོད་དམ།",
+                    business: "འབྲུག་ནང་ཚོང་ལས་ཆུང་ཆུང་ཞིག་ཇི་ལྟར་འགོ་འཛུགས་དགོས་སམ།",
+                    office: "ཉེ་ཤོས་ཀྱི་ས་སྤོ་ལས་ཁུངས་གང་དུ་ཡོད་དམ།",
+                    license: "གཏང་ཆོག་ཆིག་མཐུན་ཇི་ལྟར་ལེན་དགོས་སམ།",
+                    birth: "སྐྱེ་བའི་ཡིག་ཆ་ཇི་ལྟར་ལེན་དགོས་སམ།",
+                    consumer: "ངའི་ཉོ་མཁན་གྱི་ཐོབ་ཐང་གང་འདྲ་ཡོད་དམ།",
+                    tenant: "ངའི་ཁྱིམ་པའི་ཐོབ་ཐང་གང་འདྲ་ཡོད་དམ།"
+                }
+            }
+        };
+
+        class DrukChatbot {
+            constructor() {
+                this.sessionId = this.generateSessionId();
+                this.messages = [];
+                this.isWelcomeShowing = true;
+                this.currentLanguage = 'en';
+                
+                this.initializeElements();
+                this.bindEvents();
+                this.initializeSession();
+                this.updateLanguage();
+            }
+            
+            generateSessionId() {
+                return 'session_' + Math.random().toString(36).substr(2, 9);
+            }
+            
+            initializeElements() {
+                this.messagesContainer = document.getElementById('messages');
+                this.messageInput = document.getElementById('messageInput');
+                this.sendBtn = document.getElementById('sendBtn');
+                this.typingIndicator = document.getElementById('typingIndicator');
+            }
+            
+            bindEvents() {
+                this.sendBtn.addEventListener('click', () => this.sendMessage());
+                this.messageInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+                
+                // Auto-resize textarea
+                this.messageInput.addEventListener('input', () => {
+                    this.messageInput.style.height = 'auto';
+                    this.messageInput.style.height = this.messageInput.scrollHeight + 'px';
+                });
+                
+                // Service buttons
+                document.querySelectorAll('.service-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const service = btn.dataset.service;
+                        this.handleServiceClick(service);
+                    });
+                });
+                
+                // Sample questions
+                document.querySelectorAll('.sample-question').forEach(question => {
+                    question.addEventListener('click', () => {
+                        const englishQuestion = question.dataset.questionEn;
+                        const displayQuestion = this.currentLanguage === 'en' 
+                            ? question.dataset.questionEn 
+                            : question.dataset.questionDz;
+                        
+                        this.messageInput.value = displayQuestion;
+                        
+                        if (this.currentLanguage === 'dz') {
+                            // Send English for processing but show Dzongkha to user
+                            this.sendMessageWithTranslation(englishQuestion, displayQuestion);
+                        } else {
+                            // English mode - send as normal
+                            this.sendMessage();
+                        }
+                    });
+                });
+                
+                // Language selector
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.currentLanguage = btn.dataset.lang;
+                        this.switchLanguage();
+                    });
+                });
+            }
+            
+            switchLanguage() {
+                // Add transition effect
+                document.body.classList.add('lang-transition');
+                
+                setTimeout(() => {
+                    if (this.currentLanguage === 'dz') {
+                        document.body.classList.add('dzongkha-mode');
+                    } else {
+                        document.body.classList.remove('dzongkha-mode');
+                    }
+                    
+                    this.updateLanguage();
+                    
+                    setTimeout(() => {
+                        document.body.classList.remove('lang-transition');
+                    }, 150);
+                }, 150);
+            }
+            
+            updateLanguage() {
+                const lang = languages[this.currentLanguage];
+                
+                // Update placeholder
+                this.messageInput.placeholder = lang.placeholder;
+                
+                // Update input field font for Dzongkha
+                if (this.currentLanguage === 'dz') {
+                    this.messageInput.classList.add('dzongkha');
+                } else {
+                    this.messageInput.classList.remove('dzongkha');
+                }
+            }
+            
+            async initializeSession() {
+                try {
+                    const response = await fetch('/initialize-session', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            session_id: this.sessionId,
+                            citizen_context: {
+                                language: this.currentLanguage === 'en' ? 'English' : 'Dzongkha',
+                                location: 'Thimphu'
+                            }
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    console.log('Session initialized:', data);
+                } catch (error) {
+                    console.error('Error initializing session:', error);
+                }
+            }
+            
+            handleServiceClick(service) {
+                // Always use English questions for processing, but display in current language
+                const englishQuestion = languages.en.questions[service];
+                const displayQuestion = languages[this.currentLanguage].questions[service];
+                
+                if (englishQuestion) {
+                    // Show the localized question in the input
+                    this.messageInput.value = displayQuestion;
+                    
+                    if (this.currentLanguage === 'dz') {
+                        // Dzongkha mode: send English for processing, request Dzongkha response
+                        this.sendMessageWithTranslation(englishQuestion, displayQuestion);
+                    } else {
+                        // English mode: send as normal
+                        this.sendMessage();
+                    }
+                }
+            }
+            
+            async sendMessage() {
+                const message = this.messageInput.value.trim();
+                if (!message) return;
+                
+                // In Dzongkha mode, handle translation differently
+                if (this.currentLanguage === 'dz') {
+                    // For manual input in Dzongkha mode, send as English for processing
+                    // but request Dzongkha response
+                    await this.sendMessageWithTranslation(message, message);
+                } else {
+                    // English mode - send as normal
+                    await this.sendRegularMessage(message);
+                }
+            }
+            
+            async sendMessageWithTranslation(englishMessage, displayMessage) {
+                // Clear welcome message if showing
+                if (this.isWelcomeShowing) {
+                    this.messagesContainer.innerHTML = '';
+                    this.isWelcomeShowing = false;
+                }
+                
+                // Add user message (show the display version)
+                this.addMessage(displayMessage, 'user');
+                this.messageInput.value = '';
+                this.messageInput.style.height = 'auto';
+                
+                // Show typing indicator
+                this.showTypingIndicator();
+                
+                // Disable send button
+                this.sendBtn.disabled = true;
+                
+                try {
+                    // Step 1: Get English response from RAG system
+                    const chatResponse = await fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            session_id: this.sessionId,
+                            message: englishMessage,  // Send clean English message
+                            language: 'en'  // Process as English
+                        })
+                    });
+                    
+                    const chatData = await chatResponse.json();
+                    
+                    // Step 2: Translate the English response to Dzongkha
+                    const translationResponse = await fetch('/translate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            text: chatData.response,
+                            target_language: 'dzongkha'
+                        })
+                    });
+                    
+                    const translationData = await translationResponse.json();
+                    
+                    // Hide typing indicator
+                    this.hideTypingIndicator();
+                    
+                    // Add translated response
+                    const finalResponse = translationData.status === 'success' 
+                        ? translationData.translated_text 
+                        : chatData.response;  // Fallback to English if translation fails
+                    
+                    this.addMessage(finalResponse, 'assistant');
+                    
+                    // Add suggested actions if available (translate them too if needed)
+                    if (chatData.suggested_actions && chatData.suggested_actions.length > 0) {
+                        this.addSuggestions(chatData.suggested_actions);
+                    }
+                    
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                    this.hideTypingIndicator();
+                    const errorMessage = 'སྐུ་དགོངས་སེལ་ཞུ། ད་ལྟ་ལན་འདེབས་ནང་དཀའ་ངལ་ཡོད་པ་འདྲ། ཏོག་ཙམ་སྒུག་སྟེ་ཡང་བསྐྱར་ཚོད་ལྟ་གནང་རོགས།';
+                    this.addMessage(errorMessage, 'assistant');
+                } finally {
+                    this.sendBtn.disabled = false;
+                }
+            }
+            
+            async sendRegularMessage(message) {
+                // Clear welcome message if showing
+                if (this.isWelcomeShowing) {
+                    this.messagesContainer.innerHTML = '';
+                    this.isWelcomeShowing = false;
+                }
+                
+                // Add user message
+                this.addMessage(message, 'user');
+                this.messageInput.value = '';
+                this.messageInput.style.height = 'auto';
+                
+                // Show typing indicator
+                this.showTypingIndicator();
+                
+                // Disable send button
+                this.sendBtn.disabled = true;
+                
+                try {
+                    const response = await fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            session_id: this.sessionId,
+                            message: message,
+                            language: this.currentLanguage
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    // Hide typing indicator
+                    this.hideTypingIndicator();
+                    
+                    // Add assistant response
+                    this.addMessage(data.response, 'assistant');
+                    
+                    // Add suggested actions if available
+                    if (data.suggested_actions && data.suggested_actions.length > 0) {
+                        this.addSuggestions(data.suggested_actions);
+                    }
+                    
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                    this.hideTypingIndicator();
+                    const errorMessage = 'I apologize, but I\'m having trouble responding right now. Please try again in a moment.';
+                    this.addMessage(errorMessage, 'assistant');
+                } finally {
+                    this.sendBtn.disabled = false;
+                }
+            }
+            
+            addMessage(content, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.textContent = sender === 'user' ? '👤' : '🐉';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                
+                // Apply Dzongkha font if current language is Dzongkha
+                if (this.currentLanguage === 'dz') {
+                    messageContent.classList.add('dzongkha');
+                }
+                
+                messageContent.innerHTML = this.formatMessage(content);
+                
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+                
+                this.messagesContainer.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+            
+            addSuggestions(suggestions) {
+                const suggestionsDiv = document.createElement('div');
+                suggestionsDiv.className = 'suggestions';
+                
+                suggestions.forEach(suggestion => {
+                    const btn = document.createElement('button');
+                    btn.className = 'suggestion-btn';
+                    btn.textContent = suggestion;
+                    
+                    if (this.currentLanguage === 'dz') {
+                        btn.classList.add('dzongkha');
+                    }
+                    
+                    btn.addEventListener('click', () => {
+                        this.messageInput.value = suggestion;
+                        this.sendMessage();
+                    });
+                    suggestionsDiv.appendChild(btn);
+                });
+                
+                const lastMessage = this.messagesContainer.lastElementChild;
+                const messageContent = lastMessage.querySelector('.message-content');
+                messageContent.appendChild(suggestionsDiv);
+            }
+            
+            formatMessage(content) {
+                // First handle headers before converting line breaks
+                content = content.replace(/^### (.+)$/gm, '<h3 style="color: #FF6B35; font-size: 1.1em; font-weight: bold; margin: 10px 0 5px 0; border-bottom: 2px solid #FF6B35; padding-bottom: 3px;">$1</h3>');
+                
+                // Handle bold text
+                content = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                
+                // Convert line breaks to HTML
+                content = content.replace(/\n/g, '<br>');
+                
+                // Format numbered lists
+                content = content.replace(/<br>(\d+)\. (.+?)(?=<br>|$)/g, '<br><div style="font-weight: bold; color: #333; margin: 8px 0 3px 0;">$1. $2</div>');
+                
+                // Format bullet points with dash
+                content = content.replace(/<br>- (.+?)(?=<br>|$)/g, '<div style="margin-left: 20px; margin-bottom: 5px; line-height: 1.4;">• $1</div>');
+                
+                // Format sub-bullet points (with spaces before dash)
+                content = content.replace(/<br>  - (.+?)(?=<br>|$)/g, '<div style="margin-left: 40px; margin-bottom: 3px; line-height: 1.4;">◦ $1</div>');
+                
+                // Clean up multiple line breaks
+                content = content.replace(/<br>\s*<br>/g, '<br>');
+                content = content.replace(/^<br>/, '');
+                
+                return content;
+            }
+            
+            showTypingIndicator() {
+                this.typingIndicator.style.display = 'flex';
+                this.scrollToBottom();
+            }
+            
+            hideTypingIndicator() {
+                this.typingIndicator.style.display = 'none';
+            }
+            
+            scrollToBottom() {
+                setTimeout(() => {
+                    this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+                }, 100);
+            }
+        }
+        
+        // Initialize the chatbot when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new DrukChatbot();
+        });
+    </script>
+</body>
+</html>
