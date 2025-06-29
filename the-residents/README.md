@@ -58,12 +58,6 @@ eResidency-MVP/
 - Groth16 protocol for efficient proof generation and verification
 - Proves Bhutan citizenship without revealing name, DOB, or other personal data
 
-## 🔗 Live Links (If deployed)
-
-- Frontend
-- Backend API Docs
-- Smart Contract Explorer
-- Demo Credential JSON
 
 ## 💡 Vision
 
