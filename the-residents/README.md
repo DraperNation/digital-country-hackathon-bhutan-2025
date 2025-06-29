@@ -1,15 +1,15 @@
-# Druk e-Portal - Estonia walked so Bhutan could build the upgrade
+Druk e‑Portal — Estonia walked so Bhutan could build the upgrade
 
-Estonia proved that e-residency can unlock national income and global trust. But their system is Web2-native — centralized, government-controlled, and opaque.
+Estonia proved that e-residency drives national income and global trust. But its system is Web2-native — centralized, opaque, and vulnerable to data leaks and security breaches.
 
-It doesn't support self-sovereign identity, programmable entities, or modular governance. It wasn’t built for an AI-native, blockchain-integrated world.
+It lacks self-sovereign identity, transparent credentialing, and modular governance — all essential for a blockchain- and AI-native future.
 
-Governments need a foundational operating system that’s verifiable, privacy-respecting, and future-proof.
+Governments today need a verifiable, privacy-respecting, and secure-by-design digital operating system.
 
-Druk e-Portal is that system.
-It’s not a prototype — it’s a modular, configurable stack ready to serve the Bhutanese state today, and scale globally tomorrow.
+Druk e‑Portal is that system.
+It’s not a prototype — it’s a modular, configurable stack ready for Bhutan now, and scalable for any digital nation tomorrow.
 
-## 🌐 What It Does (functional)
+## 🌐 What It Does (Functional)
 
 - **Digital Residency** — Apply from anywhere, get verified, and receive sovereign credentials.
 - **Verifiable Credentials** — Standards-based identity issued with DID & VC (JSON-LD).
@@ -23,16 +23,7 @@ It’s not a prototype — it’s a modular, configurable stack ready to serve t
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js + Tailwind CSS
-- **Backend**: Node.js (Express) or Python (FastAPI)Druk e‑Portal — Estonia walked so Bhutan could build the upgrade
-
-Estonia proved that e-residency drives national income and global trust. But its system is Web2-native — centralized, opaque, and vulnerable to data leaks and security breaches.
-
-It lacks self-sovereign identity, transparent credentialing, and modular governance — all essential for a blockchain- and AI-native future.
-
-Governments today need a verifiable, privacy-respecting, and secure-by-design digital operating system.
-
-Druk e‑Portal is that system.
-It’s not a prototype — it’s a modular, configurable stack ready for Bhutan now, and scalable for any digital nation tomorrow.
+- **Backend**: Node.js (Express) or Python (FastAPI)Druk e‑Portal — 
 
 - **Database**: Primarily Polygon; MongoDB used in a few places due to Polygon free-tier limits. Ready for full Polygon integration in production.
 - **Web3**: Solidity, Hardhat, Polygon Mumbai (testnet)
@@ -43,7 +34,7 @@ It’s not a prototype — it’s a modular, configurable stack ready for Bhutan
 
 ```
 eResidency-MVP/
-├── frontend/            # React + Tailwind
+├── frontend/            # Next Js + Tailwind
 ├── backend/             # FastAPI / Express
 ├── smart-contracts/     # Solidity (NFT contract)
 ├── zk-proof/           # Circom circuits + SnarkJS proofs
