@@ -1,0 +1,122 @@
+🇧🇹 BHUTAN TRANSLATION SERVICE - COMPLETE SETUP TUTORIAL
+================================================================
+
+This tutorial will guide you through setting up a translation service that converts 
+between English and Dzongkha (Bhutanese) using Google Cloud Translate API.
+
+PREREQUISITES:
+- Python 3.7+ installed
+- Google Cloud CLI (gcloud) installed
+- Google account with access to Google Cloud Platform
+
+📋 STEP-BY-STEP SETUP INSTRUCTIONS:
+
+1. GOOGLE CLOUD AUTHENTICATION SETUP
+=====================================
+
+# Switch to your Google account
+gcloud auth list
+gcloud config set account your-email@gmail.com
+
+# List available projects
+gcloud projects list
+
+# Set your project (replace 'your-project-id' with your actual project)
+gcloud config set project your-project-id
+
+# Enable the Translation API
+gcloud services enable translate.googleapis.com
+
+2. CREATE SERVICE ACCOUNT & CREDENTIALS
+=======================================
+
+# Create a service account for the translation service
+gcloud iam service-accounts create bhutan-translator --display-name="Bhutan Translation Service"
+
+# Grant translation permissions to the service account
+gcloud projects add-iam-policy-binding your-project-id \
+  --member="serviceAccount:bhutan-translator@your-project-id.iam.gserviceaccount.com" \
+  --role="roles/cloudtranslate.user"
+
+# Create and download credentials JSON key
+gcloud iam service-accounts keys create bhutan-translator-key.json \
+  --iam-account=bhutan-translator@your-project-id.iam.gserviceaccount.com
+
+3. PYTHON ENVIRONMENT SETUP
+============================
+
+# Install required Python packages
+pip install -r requirements.txt
+
+# Set environment variables
+export GOOGLE_CLOUD_PROJECT_ID=your-project-id
+export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/bhutan-translator-key.json"
+
+4. CONFIGURATION
+================
+
+# Update .env file with your project ID
+# Edit .env and replace 'your-google-cloud-project-id' with your actual project ID
+
+5. TESTING THE SETUP
+=====================
+
+# Test the translation service
+python test_translation.py
+
+# Expected output: Successful translations between English and Dzongkha
+
+6. RUNNING THE TRANSLATOR
+==========================
+
+# Option A: Use the shell script (recommended)
+./run_translator.sh
+
+# Option B: Run directly with environment variables
+export GOOGLE_CLOUD_PROJECT_ID=your-project-id
+export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/bhutan-translator-key.json"
+python translate_bhutan.py
+
+🎯 USAGE EXAMPLES:
+
+Interactive Commands:
+- 'en2dz Hello, welcome to Bhutan!'     → Translate English to Dzongkha
+- 'dz2en སྐུ་གཟུགས་བཟང་པོ།'                → Translate Dzongkha to English  
+- 'auto Hello world'                   → Auto-detect language and translate
+- 'quit'                               → Exit the program
+
+🔧 TROUBLESHOOTING:
+
+Problem: "Your default credentials were not found"
+Solution: Make sure GOOGLE_APPLICATION_CREDENTIALS points to the JSON key file
+
+Problem: "404 Invalid 'parent'"
+Solution: Verify GOOGLE_CLOUD_PROJECT_ID is set to your actual project ID
+
+Problem: "Permission denied"
+Solution: Ensure the service account has the cloudtranslate.user role
+
+Problem: "API not enabled"
+Solution: Run 'gcloud services enable translate.googleapis.com'
+
+📁 FILES INCLUDED:
+- translate_bhutan.py     → Main translation service
+- test_translation.py     → Test script
+- requirements.txt        → Python dependencies
+- .env                   → Environment configuration
+- run_translator.sh      → Startup script
+- tutorial.txt           → This tutorial
+
+🌟 FEATURES:
+- Bidirectional English ↔ Dzongkha translation
+- Auto-language detection
+- Interactive CLI interface
+- Comprehensive error handling
+- Production-ready authentication
+
+💡 TIPS:
+- Keep your bhutan-translator-key.json file secure and never commit it to version control
+- The free tier includes 500,000 characters per month
+- Use the run_translator.sh script for the easiest startup experience
+
+Happy translating! 🎉 
