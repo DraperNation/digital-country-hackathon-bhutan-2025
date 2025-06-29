@@ -6,7 +6,7 @@ The **E-Bhutan Digital Identity & Citizenship Platform** is a comprehensive dece
 
 ## Pitch Deck & Loom
 
-docs/pitch.pptx
+[Pitch Deck (PowerPoint)](docs/pitch.pptx)
 
 Loom video: https://www.loom.com/share/63f2e307a07843d89ae3a7894998293b
 
