@@ -14,6 +14,14 @@
 ### 🎯 Mission
 To democratize access to government services while preserving and promoting Bhutan's unique Gross National Happiness philosophy, making bureaucratic processes more accessible, efficient, and human-centered.
 
+## Video Link
+
+link -  https://www.loom.com/share/d43331fc61e94dceb406498190827064?sid=ca853c85-9137-4192-bcca-56a7496562fa
+
+## PPT link
+
+link - 
+
 ## APP Showcase
 
 ![alt text](app_showcase-1.png)
