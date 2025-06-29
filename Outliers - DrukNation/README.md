@@ -24,6 +24,10 @@ DrukNation is a full-stack web application for Bhutan's e-Residency, property, a
 ---
 
 <div align="center">
+  
+[🔗 Visit Live Platform](https://druk-nation.vercel.app/)  
+*Try out DrukNation live on Vercel*
+
 
 [![DrukNation Demo Video](https://github.com/AdityaAnandCodes/digital-country-hackathon-bhutan-2025/raw/main/Outliers%20-%20DrukNation/showcase/Thumbnail.png)](https://www.loom.com/share/fdf3d593d0834943ac9ecd7040e13105?sid=8e6a3f42-7088-4ca1-827c-5e04a6349154)
 
