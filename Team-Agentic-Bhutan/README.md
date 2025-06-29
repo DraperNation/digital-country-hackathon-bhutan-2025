@@ -19,6 +19,9 @@ A comprehensive AI-powered system designed to bridge language barriers and impro
   - Government service requirements
   - Step-by-step guidance
 
+## Presentation
+https://www.canva.com/design/DAGrs_2auiI/HRTTEc_f5Kz74PdHZfFkNA/edit?utm_content=DAGrs_2auiI&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ## 🏗️ System Architecture
 
 ```
