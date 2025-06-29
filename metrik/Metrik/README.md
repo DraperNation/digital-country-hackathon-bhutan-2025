@@ -2,6 +2,17 @@
 
 A decentralized credit protocol that allows suppliers to tokenize invoices into NFTs and borrow against them from a shared lending pool.
 
+## The Working Demo
+
+https://metriklandingpage.vercel.app/
+
+-- Click on Launch APP too test 
+-- Use these two token contract addresses 
+  1. METRIK Token :- 0x1318B4eC51774271e56D2A7DE244E8d51A2528b9
+  2. ERC20 USDC Token :- 0x02F47A52AC94d1D51cC21865e730Cf314fF5C01B
+
+-- Ping me here I will fund the wallet with these tokens.
+
 ## Overview
 
 The protocol consists of several key components:
