@@ -7,6 +7,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Mic, MicOff, Globe, MessageCircle, Settings, HelpCircle, Bot, Send, Sparkles } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+import DocumentsSidebar from "../components/DocumentsSidebar";
 
 // Message interface
 interface Message {
@@ -21,8 +22,8 @@ interface Message {
 const LANGUAGES = [
   { code: "dz", name: "Dzongkha", flag: "🇧🇹" },
   { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "ne", name: "Nepali", flag: "🇳🇵" },
-  { code: "sh", name: "Sharchop", flag: "🇧🇹" },
+  // { code: "ne", name: "Nepali", flag: "🇳🇵" },
+  // { code: "sh", name: "Sharchop", flag: "🇧🇹" },
 ];
 
 // Modern typing animation
@@ -136,64 +137,39 @@ const ChatbotPage = () => {
     }
   };
 
-  const sendMessageToOpenAI = async (userMessage: string) => {
+  const sendMessageToNgrok = async (userMessage: string) => {
     setIsLoading(true);
     try {
-      const languageNames = {
-        dz: "Dzongkha",
-        en: "English", 
-        ne: "Nepali",
-        sh: "Sharchop"
-      };
-
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      // Send the text message to the ngrok API (same as used for voice)
+      const response = await fetch('https://cors-anywhere-d4lv.onrender.com/https://a22a-106-51-68-85.ngrok-free.app/api/translate_audio', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENAI_API_KEY}`
         },
-        body: JSON.stringify({
-          model: "gpt-4",
-          messages: [
-            {
-              role: "system",
-              content: `You are BhutanAI, a helpful AI assistant for Bhutan. Always respond in ${languageNames[selectedLanguage as keyof typeof languageNames]} language. Be culturally appropriate and helpful. Keep responses concise and friendly.`
-            },
-            {
-              role: "user",
-              content: userMessage
-            }
-          ],
-          max_tokens: 500,
-          temperature: 0.7
-        })
+        body: JSON.stringify({ question: userMessage }),
       });
-
       const data = await response.json();
-      
-      if (data.choices && data.choices[0]) {
-        const botResponse = data.choices[0].message.content;
-        
-        // Check if the response contains English text and convert to speech
+      if (data.success && data.dzongkha) {
+        // Add the user message
+        setMessages(prev => [...prev, { sender: 'user', text: userMessage }]);
+        // Convert English translation to speech if available
         let ttsAudioUrl = null;
-        if (selectedLanguage === "en" || botResponse.includes("English:")) {
-          // Extract English text if it's in the response
-          const englishMatch = botResponse.match(/English:\s*(.+)/);
-          const textToConvert = englishMatch ? englishMatch[1] : botResponse;
-          ttsAudioUrl = await convertTextToSpeech(textToConvert);
+        if (data.gemini_english) {
+          ttsAudioUrl = await convertTextToSpeech(data.gemini_english);
         }
-        
-        setMessages(prev => [...prev, { 
-          sender: "bot", 
-          text: botResponse,
+        // Add the Dzongkha translation as a bot response
+        setMessages(prev => [...prev, {
+          sender: 'bot',
+          text: data.dzongkha,
+          englishTranslation: data.gemini_english,
           ttsAudioUrl: ttsAudioUrl
         }]);
       } else {
-        throw new Error('No response from OpenAI');
+        setMessages(prev => [...prev, { sender: 'bot', text: 'Sorry, I could not get a response.' }]);
       }
     } catch (error) {
-      console.error('Error calling OpenAI:', error);
-      setMessages(prev => [...prev, { sender: "bot", text: "Sorry, I'm having trouble connecting right now. Please try again." }]);
+      console.error('Error calling ngrok API:', error);
+      setMessages(prev => [...prev, { sender: 'bot', text: "Sorry, I'm having trouble connecting right now. Please try again." }]);
     } finally {
       setIsLoading(false);
     }
@@ -292,7 +268,7 @@ const ChatbotPage = () => {
       const formData = new FormData();
       formData.append('audio', file, fileName);
 
-      const response = await fetch('https://cors-anywhere-d4lv.onrender.com/https://b9af-106-51-68-85.ngrok-free.app/api/translate_audio', {
+      const response = await fetch('https://cors-anywhere-d4lv.onrender.com/https://a22a-106-51-68-85.ngrok-free.app/api/translate_audio', {
         method: 'POST',
         body: formData,
       });
@@ -374,19 +350,18 @@ const ChatbotPage = () => {
     e.preventDefault();
     if (input.trim() && !isLoading) {
       const userMessage = input.trim();
-      setMessages(prev => [...prev, { sender: "user", text: userMessage }]);
       setInput("");
-      await sendMessageToOpenAI(userMessage);
+      await sendMessageToNgrok(userMessage);
     }
   };
 
-  const viewLaws = () => {
+  const viewLaws = () => { 
     navigate('/laws');
   };
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Modern Sidebar */}
+      {/* Modern Sidebar (left) */}
       <div className="w-80 bg-white/80 backdrop-blur-xl border-r border-white/20 shadow-xl flex flex-col">
         {/* Sidebar Header */}
         <div className="p-8 border-b border-white/20">
@@ -601,54 +576,29 @@ const ChatbotPage = () => {
 
         {/* Input Area */}
         <div className="p-8 border-t border-white/20 bg-white/40 backdrop-blur-sm">
-          <form
-            className="flex items-center gap-4"
-            onSubmit={handleSubmit}
-          >
-            <div className="flex-1 relative">
-              <Input
-                className="w-full bg-white/80 border-white/30 focus:border-blue-500 focus:ring-blue-500/20 rounded-2xl px-6 py-4 text-base shadow-lg backdrop-blur-sm"
-                placeholder="Type your message or ask about Bhutan..."
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                disabled={isLoading || isRecording}
-                autoFocus
-              />
-            </div>
-            
-            {/* Voice Recording Button */}
+          {/* Only show the mic button, centered and styled */}
+          <div className="flex items-center justify-center gap-4">
             <Button
               type="button"
               onClick={toggleVoice}
               disabled={isLoading}
               variant="outline"
               size="icon"
-              className={`w-14 h-14 rounded-2xl transition-all duration-300 shadow-lg backdrop-blur-sm ${
+              className={`w-20 h-20 rounded-full transition-all duration-300 shadow-2xl backdrop-blur-sm text-white text-3xl flex items-center justify-center bg-gradient-to-br from-red-500 via-pink-500 to-purple-500 border-4 border-white/40 hover:scale-110 hover:from-red-600 hover:to-purple-700 animate-pulse ${
                 isRecording
-                  ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white border-red-500 hover:from-red-600 hover:to-pink-600 animate-pulse'
-                  : 'bg-white/80 border-white/30 hover:bg-white hover:border-blue-500 hover:scale-105'
+                  ? 'ring-4 ring-red-300 animate-pulse'
+                  : 'hover:ring-4 hover:ring-purple-300'
               }`}
-              title="Click to record voice message"
+              title="Hold to record voice message"
             >
-              {isRecording ? <MicOff size={24} /> : <Mic size={24} />}
+              {isRecording ? <MicOff size={40} /> : <Mic size={40} />}
             </Button>
-
-            {/* Recording Timer */}
             {isRecording && (
-              <div className="text-lg text-red-500 font-mono font-bold bg-white/80 px-4 py-2 rounded-xl shadow-lg">
+              <div className="text-lg text-red-500 font-mono font-bold bg-white/80 px-4 py-2 rounded-xl shadow-lg animate-pulse">
                 {formatTime(recordingTime)}
               </div>
             )}
-
-            <Button
-              type="submit"
-              disabled={isLoading || !input.trim() || isRecording}
-              className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-2xl transition-all duration-300 shadow-lg hover:scale-105 disabled:opacity-50 disabled:hover:scale-100"
-            >
-              <Send size={20} />
-            </Button>
-          </form>
-          
+          </div>
           {/* Recording Status */}
           {isRecording && (
             <div className="mt-4 text-center">
@@ -658,7 +608,6 @@ const ChatbotPage = () => {
               </div>
             </div>
           )}
-          
           {/* Processing Status */}
           {isLoading && !isRecording && (
             <div className="mt-4 text-center">
@@ -670,6 +619,9 @@ const ChatbotPage = () => {
           )}
         </div>
       </div>
+
+      {/* Documents Sidebar (right) */}
+      <DocumentsSidebar />
 
       {/* Voice Indicator */}
       <VoiceIndicator isActive={isVoiceActive} />
