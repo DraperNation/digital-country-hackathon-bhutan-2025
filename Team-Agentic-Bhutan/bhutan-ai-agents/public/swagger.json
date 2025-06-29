@@ -1,0 +1,532 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bhindi Agent Starter Kit API",
+    "description": "Complete API collection for the Calculator + GitHub Agent - a TypeScript-based service that demonstrates both public calculator tools and authenticated GitHub tools.\n\n## Authentication\n- **Calculator Tools**: No authentication required (public)\n- **GitHub Tools**: Bearer token required (GitHub Personal Access Token)\n\n## Available Tools\n### Calculator Tools (Public)\n1. **add** - Add two numbers\n2. **subtract** - Subtract two numbers (requires confirmation)\n3. **multiply** - Multiply two numbers\n4. **divide** - Divide two numbers\n5. **power** - Calculate power (a^b)\n6. **sqrt** - Calculate square root\n7. **percentage** - Calculate percentage\n8. **factorial** - Calculate factorial (requires confirmation)\n9. **countCharacter** - Count character occurrences in text\n\n### GitHub Tools (Authenticated)\n10. **listUserRepositories** - List user's GitHub repositories",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Bhindi Agent API"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local Development"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "GitHub Personal Access Token",
+        "description": "GitHub Personal Access Token with repo and user scopes (only required for GitHub tools)"
+      }
+    }
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Health & Discovery"
+        ],
+        "summary": "Health Check",
+        "description": "Check if the API is running and healthy. Shows authentication requirements for different tool types.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Calculator + GitHub Agent is running!"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "tools": {
+                      "type": "object",
+                      "properties": {
+                        "calculator": {
+                          "type": "string",
+                          "example": "No authentication required"
+                        },
+                        "github": {
+                          "type": "string",
+                          "example": "Bearer token authentication required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools": {
+      "get": {
+        "tags": [
+          "Health & Discovery"
+        ],
+        "summary": "Get Available Tools",
+        "description": "Retrieve the list of all available tools (calculator + GitHub) with their parameters and descriptions.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "List of available tools",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tools": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "parameters": {
+                            "type": "object"
+                          },
+                          "confirmationRequired": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/add": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Add Two Numbers",
+        "description": "Add two numbers together. No authentication required.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["a", "b"],
+                "properties": {
+                  "a": {
+                    "type": "number",
+                    "description": "First number"
+                  },
+                  "b": {
+                    "type": "number",
+                    "description": "Second number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Addition result"
+          }
+        }
+      }
+    },
+    "/tools/subtract": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Subtract Two Numbers",
+        "description": "Subtract second number from first number. ⚠️ Requires confirmation for demonstration purposes.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["a", "b"],
+                "properties": {
+                  "a": {
+                    "type": "number",
+                    "description": "Number to subtract from"
+                  },
+                  "b": {
+                    "type": "number",
+                    "description": "Number to subtract"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Subtraction result"
+          }
+        }
+      }
+    },
+    "/tools/multiply": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Multiply Two Numbers",
+        "description": "Multiply two numbers together. No authentication required.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["a", "b"],
+                "properties": {
+                  "a": {
+                    "type": "number",
+                    "description": "First number"
+                  },
+                  "b": {
+                    "type": "number",
+                    "description": "Second number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Multiplication result"
+          }
+        }
+      }
+    },
+    "/tools/divide": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Divide Two Numbers",
+        "description": "Divide first number by second number. Includes division by zero error handling.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["a", "b"],
+                "properties": {
+                  "a": {
+                    "type": "number",
+                    "description": "Dividend (number to be divided)"
+                  },
+                  "b": {
+                    "type": "number",
+                    "description": "Divisor (number to divide by, cannot be zero)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Division result"
+          },
+          "400": {
+            "description": "Division by zero error"
+          }
+        }
+      }
+    },
+    "/tools/power": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Calculate Power",
+        "description": "Calculate a number raised to a power (a^b). Supports negative exponents.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["base", "exponent"],
+                "properties": {
+                  "base": {
+                    "type": "number",
+                    "description": "Base number"
+                  },
+                  "exponent": {
+                    "type": "number",
+                    "description": "Exponent"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Power calculation result"
+          }
+        }
+      }
+    },
+    "/tools/sqrt": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Calculate Square Root",
+        "description": "Calculate the square root of a number. Includes error handling for negative numbers.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["number"],
+                "properties": {
+                  "number": {
+                    "type": "number",
+                    "description": "Number to calculate square root of (must be non-negative)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Square root result"
+          },
+          "400": {
+            "description": "Negative number error"
+          }
+        }
+      }
+    },
+    "/tools/percentage": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Calculate Percentage",
+        "description": "Calculate percentage of a number (a% of b). Handles decimal percentages.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["percentage", "of"],
+                "properties": {
+                  "percentage": {
+                    "type": "number",
+                    "description": "Percentage value"
+                  },
+                  "of": {
+                    "type": "number",
+                    "description": "Number to calculate percentage of"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Percentage calculation result"
+          }
+        }
+      }
+    },
+    "/tools/factorial": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Calculate Factorial",
+        "description": "Calculate factorial of a number (n!). ⚠️ Expensive operation - requires confirmation. Maximum recommended value: 20.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["number"],
+                "properties": {
+                  "number": {
+                    "type": "number",
+                    "description": "Non-negative integer to calculate factorial of (recommended max: 20)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Factorial calculation result"
+          },
+          "400": {
+            "description": "Invalid number (negative or non-integer) or overflow error"
+          }
+        }
+      }
+    },
+    "/tools/countCharacter": {
+      "post": {
+        "tags": [
+          "Calculator Tools"
+        ],
+        "summary": "Count Character Occurrences",
+        "description": "Count the number of times a specific character appears in text. Case-sensitive matching.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["character", "text"],
+                "properties": {
+                  "character": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1,
+                    "description": "Character to count (single character)"
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "Text to search in"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Character count result"
+          },
+          "400": {
+            "description": "Invalid character parameter (must be exactly one character)"
+          }
+        }
+      }
+    },
+    "/tools/listUserRepositories": {
+      "post": {
+        "tags": [
+          "GitHub Tools"
+        ],
+        "summary": "List User Repositories",
+        "description": "List repositories for the authenticated GitHub user. 🔐 Requires Bearer token authentication.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "per_page": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 10,
+                    "description": "Number of repositories to return"
+                  },
+                  "sort": {
+                    "type": "string",
+                    "enum": [
+                      "created",
+                      "updated",
+                      "pushed",
+                      "full_name"
+                    ],
+                    "default": "updated",
+                    "description": "Sort repositories by"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "default": "desc",
+                    "description": "Sort direction"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "all",
+                      "owner",
+                      "public",
+                      "private",
+                      "member"
+                    ],
+                    "default": "owner",
+                    "description": "Repository type filter"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of user repositories"
+          },
+          "401": {
+            "description": "Authentication required - Bearer token missing or invalid"
+          },
+          "403": {
+            "description": "GitHub API rate limit exceeded or insufficient permissions"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Health & Discovery",
+      "description": "Basic endpoints for health checking and tool discovery."
+    },
+    {
+      "name": "Calculator Tools",
+      "description": "Mathematical operations that require no authentication. Perfect for learning basic agent concepts."
+    },
+    {
+      "name": "GitHub Tools",
+      "description": "🔐 GitHub API operations that require Bearer token authentication. Demonstrates authenticated agent patterns."
+    }
+  ]
+}

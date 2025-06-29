@@ -1,0 +1,631 @@
+{
+	"info": {
+		"_postman_id": "agent-api-collection",
+		"name": "Bhindi Agent API",
+		"description": "Complete API collection for the Calculator + GitHub Agent - a TypeScript-based service that demonstrates both public calculator tools and authenticated GitHub tools.\n\n## Authentication\n- **Calculator Tools**: No authentication required (public)\n- **GitHub Tools**: Bearer token required (GitHub Personal Access Token)\n\n## Base URL\n- **Local Development**: `http://localhost:3000`\n- **Production/Staging**: Update the `base_url` variable\n\n## Available Tools\n### Calculator Tools (Public - No Auth)\n1. **add** - Add two numbers\n2. **subtract** - Subtract two numbers (requires confirmation)\n3. **multiply** - Multiply two numbers\n4. **divide** - Divide two numbers\n5. **power** - Calculate power (a^b)\n6. **sqrt** - Calculate square root\n7. **percentage** - Calculate percentage\n8. **factorial** - Calculate factorial (requires confirmation)\n9. **countCharacter** - Count character occurrences in text\n\n### GitHub Tools (Authenticated - Bearer Token)\n10. **listUserRepositories** - List user's GitHub repositories",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health & Discovery",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check if the API is running and healthy. Shows authentication requirements for different tool types."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Tools",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tools",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools"
+							]
+						},
+						"description": "Retrieve the list of all available tools (calculator + GitHub) with their parameters and descriptions."
+					},
+					"response": []
+				}
+			],
+			"description": "Basic endpoints for health checking and tool discovery."
+		},
+		{
+			"name": "Calculator Tools (Public)",
+			"item": [
+				{
+					"name": "Add Numbers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a\": 15,\n  \"b\": 25\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"add"
+							]
+						},
+						"description": "Add two numbers together. No authentication required."
+					},
+					"response": []
+				},
+				{
+					"name": "Subtract Numbers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a\": 100,\n  \"b\": 35\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/subtract",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"subtract"
+							]
+						},
+						"description": "Subtract second number from first number. ⚠️ Requires confirmation for demonstration purposes."
+					},
+					"response": []
+				},
+				{
+					"name": "Multiply Numbers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a\": 7,\n  \"b\": 8\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/multiply",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"multiply"
+							]
+						},
+						"description": "Multiply two numbers together. No authentication required."
+					},
+					"response": []
+				},
+				{
+					"name": "Divide Numbers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a\": 84,\n  \"b\": 12\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/divide",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"divide"
+							]
+						},
+						"description": "Divide first number by second number. Includes division by zero error handling."
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Power",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"base\": 2,\n  \"exponent\": 8\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/power",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"power"
+							]
+						},
+						"description": "Calculate a number raised to a power (base^exponent). Supports negative exponents."
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Square Root",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"number\": 144\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/sqrt",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"sqrt"
+							]
+						},
+						"description": "Calculate the square root of a number. Includes error handling for negative numbers."
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Percentage",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"percentage\": 15,\n  \"of\": 200\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/percentage",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"percentage"
+							]
+						},
+						"description": "Calculate percentage of a number (15% of 200). Handles decimal percentages."
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Factorial",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"number\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/factorial",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"factorial"
+							]
+						},
+						"description": "Calculate factorial of a number (5! = 120). Requires confirmation."
+					},
+					"response": []
+				},
+				{
+					"name": "Count Character Occurrences",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"character\": \"l\",\n  \"text\": \"Hello World! This is a sample text.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/countCharacter",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"countCharacter"
+							]
+						},
+						"description": "Count the number of times a specific character appears in text. Case-sensitive matching."
+					},
+					"response": []
+				}
+			],
+			"description": "Mathematical operations that require no authentication. Perfect for learning basic agent concepts."
+		},
+		{
+			"name": "GitHub Tools (Authenticated)",
+			"item": [
+				{
+					"name": "List User Repositories",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{github_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"per_page\": 10,\n  \"sort\": \"updated\",\n  \"direction\": \"desc\",\n  \"type\": \"owner\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/listUserRepositories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"listUserRepositories"
+							]
+						},
+						"description": "List repositories for the authenticated GitHub user. 🔐 Requires Bearer token authentication."
+					},
+					"response": []
+				},
+				{
+					"name": "List User Repositories (Minimal)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{github_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/listUserRepositories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"listUserRepositories"
+							]
+						},
+						"description": "List repositories with default parameters (owner repositories, sorted by updated, descending order)."
+					},
+					"response": []
+				}
+			],
+			"description": "🔐 GitHub API operations that require Bearer token authentication. Demonstrates authenticated agent patterns."
+		},
+		{
+			"name": "Error Testing",
+			"item": [
+				{
+					"name": "Division by Zero",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a\": 10,\n  \"b\": 0\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/divide",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"divide"
+							]
+						},
+						"description": "Test division by zero error handling. Should return 400 error."
+					},
+					"response": []
+				},
+				{
+					"name": "Square Root of Negative Number",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"number\": -25\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/sqrt",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"sqrt"
+							]
+						},
+						"description": "Test square root of negative number error handling. Should return 400 error."
+					},
+					"response": []
+				},
+				{
+					"name": "Missing Bearer Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/listUserRepositories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"listUserRepositories"
+							]
+						},
+						"description": "Test error handling when Bearer token is missing for GitHub tool. Should return 401 error."
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Tool Name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/invalidTool",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"invalidTool"
+							]
+						},
+						"description": "Test error handling for unknown tool names. Should return 400 error with available tools list."
+					},
+					"response": []
+				},
+				{
+					"name": "Missing Required Parameters",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a\": 10\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"add"
+							]
+						},
+						"description": "Test error handling when required parameters are missing (b parameter missing). Should return 400 error."
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid GitHub Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid-token-here",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/listUserRepositories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"listUserRepositories"
+							]
+						},
+						"description": "Test error handling when GitHub token is invalid. Should return 401 error."
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Character Parameter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"character\": \"hello\",\n  \"text\": \"Sample text\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tools/countCharacter",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tools",
+								"countCharacter"
+							]
+						},
+						"description": "Test error handling when character parameter is not a single character. Should return 400 error."
+					},
+					"response": []
+				}
+			],
+			"description": "Test requests for verifying error handling, input validation, and authentication patterns."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Auto-generate timestamp for requests",
+					"pm.globals.set('timestamp', new Date().toISOString());"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"description": "Base URL for the Agent API"
+		},
+		{
+			"key": "github_token",
+			"value": "your-github-token-here",
+			"description": "GitHub personal access token with repo and user scopes (only needed for GitHub tools)"
+		}
+	]
+} 
