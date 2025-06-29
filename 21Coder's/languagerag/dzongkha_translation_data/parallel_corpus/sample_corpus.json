@@ -1,0 +1,62 @@
+[
+  {
+    "dzongkha": "ཁྱེད་རང་བདེ་མོ་ཡིན་ནམ།",
+    "english": "Are you well?",
+    "domain": "greeting",
+    "source": "common_phrases"
+  },
+  {
+    "dzongkha": "ང་ལ་བཀྲིས་བདེ་ལེགས་ཞུ།",
+    "english": "I wish you good fortune.",
+    "domain": "greeting",
+    "source": "formal_greetings"
+  },
+  {
+    "dzongkha": "འབྲུག་གི་རྩ་ཁྲིམས་ཆེན་མོ།",
+    "english": "The Constitution of Bhutan",
+    "domain": "legal",
+    "source": "legal_documents"
+  },
+  {
+    "dzongkha": "གཞུང་དང་མི་སེར།",
+    "english": "Government and citizens",
+    "domain": "political",
+    "source": "governance"
+  },
+  {
+    "dzongkha": "ཁྲིམས་དང་འགལ་བ།",
+    "english": "Against the law",
+    "domain": "legal",
+    "source": "legal_terms"
+  },
+  {
+    "dzongkha": "འབྲུག་ཡུལ་གྱི་མི་སེར།",
+    "english": "Citizens of Bhutan",
+    "domain": "citizenship",
+    "source": "legal_documents"
+  },
+  {
+    "dzongkha": "དཔལ་ལྡན་འབྲུག་པ།",
+    "english": "Glorious Bhutan",
+    "domain": "patriotic",
+    "source": "national_terms"
+  },
+  {
+    "dzongkha": "ཆོས་དང་འཇིག་རྟེན་གཉིས་ལྡན།",
+    "english": "The dual system of religion and politics",
+    "domain": "governance",
+    "source": "political_system"
+  },
+  {
+    "dzongkha": "རང་བཙན་རིང་ལུགས།",
+    "english": "Democratic system",
+    "domain": "political",
+    "source": "democracy"
+  },
+  {
+    "dzongkha": "ཁྲིམས་དང་མཐུན་པ།",
+    "english": "In accordance with the law",
+    "domain": "legal",
+    "source": "legal_phrases"
+  }
+]

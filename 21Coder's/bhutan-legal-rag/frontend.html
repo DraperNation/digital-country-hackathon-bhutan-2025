@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhutan Legal Document Downloader</title>
+    <!-- Markdown rendering library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .btn-danger {
+            background: #e74c3c;
+        }
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .document-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f9f9f9;
+        }
+        .document-card.downloaded {
+            border-color: #27ae60;
+            background: #e8f5e8;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-downloaded {
+            background: #27ae60;
+            color: white;
+        }
+        .status-pending {
+            background: #f39c12;
+            color: white;
+        }
+        .logs {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .storage-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        .error {
+            background: #e74c3c;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #27ae60;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .chat-container {
+            max-width: 100%;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+        }
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .user-message {
+            background: #667eea;
+            color: white;
+            margin-left: 20%;
+        }
+        .ai-message {
+            background: white;
+            border-left: 4px solid #667eea;
+            margin-right: 20%;
+        }
+        /* Markdown styles for AI responses */
+        .ai-message h1, .ai-message h2, .ai-message h3, .ai-message h4, .ai-message h5, .ai-message h6 {
+            color: #2c3e50;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+        }
+        .ai-message h2 {
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.3em;
+        }
+        .ai-message ul, .ai-message ol {
+            margin: 0.5em 0;
+            padding-left: 1.5em;
+        }
+        .ai-message li {
+            margin: 0.3em 0;
+            line-height: 1.4;
+        }
+        .ai-message strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .ai-message em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .ai-message code {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+        .ai-message pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 1em;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .ai-message blockquote {
+            border-left: 4px solid #667eea;
+            margin: 1em 0;
+            padding: 0.5em 1em;
+            background: #f8f9fa;
+            color: #555;
+            font-style: italic;
+        }
+        .ai-message p {
+            margin: 0.8em 0;
+            line-height: 1.6;
+        }
+        .message-content {
+            margin: 0;
+        }
+        .message-content > strong {
+            display: block;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+        }
+        .message-sources {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+        }
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+        .chat-input input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+        .chat-input button {
+            border-radius: 25px;
+            padding: 12px 24px;
+        }
+        .chat-suggestions {
+            margin-bottom: 20px;
+        }
+        .suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .suggestion-btn {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 12px;
+            text-align: left;
+        }
+        .suggestion-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+        }
+        .typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            30% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🇧🇹 Bhutan Legal Document Downloader</h1>
+        <p>Flask API Frontend</p>
+    </div>
+
+    <div class="card">
+        <h2>Quick Actions</h2>
+        <button class="btn" onclick="fetchDocuments()">Refresh Documents</button>
+        <button class="btn" onclick="startDownload()" id="downloadBtn">Start Download All</button>
+        <button class="btn" onclick="checkStatus()">Check Status</button>
+        <button class="btn" onclick="fetchLogs()">View Logs</button>
+        <button class="btn" onclick="getStorageInfo()">Storage Info</button>
+        <button class="btn" onclick="setupRAG()" id="ragSetupBtn">Setup AI Chat</button>
+        <button class="btn" onclick="checkRAGStatus()">Check AI Status</button>
+    </div>
+
+    <div class="card">
+        <h2>Download Status</h2>
+        <div id="downloadStatus">
+            <p>Status: <span id="statusText">Idle</span></p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <p id="progressText">Ready to download</p>
+            <p>Current Document: <span id="currentDoc">None</span></p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Storage Information</h2>
+        <div class="storage-info" id="storageInfo">
+            <div class="stat-card">
+                <span class="stat-number" id="totalFiles">-</span>
+                <span>Downloaded Files</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="totalSize">-</span>
+                <span>Total Size (MB)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="availableDocs">-</span>
+                <span>Available Documents</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🤖 AI Legal Assistant Status</h2>
+        <div id="ragStatus">
+            <p>Status: <span id="ragStatusText">Not Setup</span></p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="ragProgressFill" style="width: 0%"></div>
+            </div>
+            <p id="ragProgressText">AI system not initialized</p>
+            <p>Stage: <span id="ragStage">None</span></p>
+        </div>
+    </div>
+
+    <div class="card" id="chatCard" style="display: none;">
+        <h2>💬 Chat with Legal AI</h2>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message ai-message">
+                    <div class="message-content">
+                        <strong>🤖 Legal AI:</strong> Hello! I'm your Bhutan Legal Assistant. Ask me anything about Bhutan's laws and legal system.
+                    </div>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <span>🤖 AI is thinking</span>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-suggestions" id="chatSuggestions">
+                <h4>💡 Try asking:</h4>
+                <div class="suggestions-grid" id="suggestionsGrid">
+                    Loading suggestions...
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask about Bhutan's laws..." onkeypress="handleChatKeyPress(event)">
+                <button class="btn" onclick="sendChatMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Documents</h2>
+        <div class="document-grid" id="documentsGrid">
+            Loading documents...
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Download Logs</h2>
+        <div class="logs" id="logsContainer">
+            Click "View Logs" to see download logs...
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        let statusInterval;
+
+        function showMessage(message, type = 'info') {
+            const container = document.querySelector('.card');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'error' ? 'error' : 'success';
+            messageDiv.textContent = message;
+            container.insertBefore(messageDiv, container.firstChild);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        async function fetchDocuments() {
+            try {
+                const response = await fetch(`${API_BASE}/documents`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayDocuments(data.documents);
+                    updateStorageInfo(data);
+                } else {
+                    showMessage('Failed to fetch documents: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Error fetching documents: ' + error.message, 'error');
+            }
+        }
+
+        function displayDocuments(documents) {
+            const grid = document.getElementById('documentsGrid');
+            
+            if (documents.length === 0) {
+                grid.innerHTML = '<p>No documents available</p>';
+                return;
+            }
+
+            grid.innerHTML = documents.map(doc => `
+                <div class="document-card ${doc.is_downloaded ? 'downloaded' : ''}">
+                    <h4>${doc.display_name}</h4>
+                    <p><span class="status-badge ${doc.is_downloaded ? 'status-downloaded' : 'status-pending'}">
+                        ${doc.is_downloaded ? 'Downloaded' : 'Pending'}
+                    </span></p>
+                    ${doc.is_downloaded ? `<p>Size: ${(doc.file_size / 1024 / 1024).toFixed(2)} MB</p>` : ''}
+                    <p>Sources: ${doc.urls.length}</p>
+                    <div>
+                        ${doc.is_downloaded ? `
+                            <button class="btn" onclick="downloadFile('${doc.name}')">Download File</button>
+                            <button class="btn btn-danger" onclick="deleteDocument('${doc.name}')">Delete</button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function startDownload() {
+            try {
+                document.getElementById('downloadBtn').disabled = true;
+                const response = await fetch(`${API_BASE}/download/start`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Download started!', 'success');
+                    startStatusUpdates();
+                } else {
+                    showMessage('Failed to start download: ' + data.error, 'error');
+                    document.getElementById('downloadBtn').disabled = false;
+                }
+            } catch (error) {
+                showMessage('Error starting download: ' + error.message, 'error');
+                document.getElementById('downloadBtn').disabled = false;
+            }
+        }
+
+        async function checkStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/download/status`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateStatusDisplay(data.status);
+                } else {
+                    showMessage('Failed to check status: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Error checking status: ' + error.message, 'error');
+            }
+        }
+
+        function updateStatusDisplay(status) {
+            document.getElementById('statusText').textContent = status.is_downloading ? 'Downloading' : 'Idle';
+            document.getElementById('progressFill').style.width = status.progress + '%';
+            document.getElementById('progressText').textContent = 
+                `${status.successful_downloads}/${status.total_documents} documents downloaded (${status.progress}%)`;
+            document.getElementById('currentDoc').textContent = status.current_document || 'None';
+            
+            if (!status.is_downloading) {
+                document.getElementById('downloadBtn').disabled = false;
+                stopStatusUpdates();
+                fetchDocuments(); // Refresh documents after download
+            }
+        }
+
+        function startStatusUpdates() {
+            statusInterval = setInterval(checkStatus, 2000);
+        }
+
+        function stopStatusUpdates() {
+            if (statusInterval) {
+                clearInterval(statusInterval);
+                statusInterval = null;
+            }
+        }
+
+        async function fetchLogs() {
+            try {
+                const response = await fetch(`${API_BASE}/download/logs`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const logsContainer = document.getElementById('logsContainer');
+                    logsContainer.innerHTML = data.logs.join('\n') || 'No logs available';
+                    logsContainer.scrollTop = logsContainer.scrollHeight;
+                } else {
+                    showMessage('Failed to fetch logs: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Error fetching logs: ' + error.message, 'error');
+            }
+        }
+
+        async function getStorageInfo() {
+            try {
+                const response = await fetch(`${API_BASE}/storage/info`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateStorageDisplay(data.storage);
+                } else {
+                    showMessage('Failed to get storage info: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Error getting storage info: ' + error.message, 'error');
+            }
+        }
+
+        function updateStorageDisplay(storage) {
+            document.getElementById('totalFiles').textContent = storage.total_files;
+            document.getElementById('totalSize').textContent = storage.total_size_mb;
+            document.getElementById('availableDocs').textContent = storage.available_documents;
+        }
+
+        function updateStorageInfo(data) {
+            document.getElementById('totalFiles').textContent = data.downloaded_count;
+            document.getElementById('availableDocs').textContent = data.total_count;
+        }
+
+        async function downloadFile(docName) {
+            try {
+                const response = await fetch(`${API_BASE}/documents/${docName}/download`);
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${docName}.pdf`;
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                } else {
+                    const data = await response.json();
+                    showMessage('Failed to download file: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Error downloading file: ' + error.message, 'error');
+            }
+        }
+
+        async function deleteDocument(docName) {
+            if (!confirm(`Are you sure you want to delete ${docName}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/documents/${docName}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(`${docName} deleted successfully`, 'success');
+                    fetchDocuments(); // Refresh documents
+                } else {
+                    showMessage('Failed to delete document: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Error deleting document: ' + error.message, 'error');
+            }
+        }
+
+        // RAG System Functions
+        let ragStatusInterval;
+
+        async function setupRAG() {
+            try {
+                document.getElementById('ragSetupBtn').disabled = true;
+                const response = await fetch(`${API_BASE}/rag/setup`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('AI system setup started!', 'success');
+                    startRAGStatusUpdates();
+                } else {
+                    showMessage('Failed to start AI setup: ' + data.error, 'error');
+                    document.getElementById('ragSetupBtn').disabled = false;
+                }
+            } catch (error) {
+                showMessage('Error starting AI setup: ' + error.message, 'error');
+                document.getElementById('ragSetupBtn').disabled = false;
+            }
+        }
+
+        async function checkRAGStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/rag/status`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateRAGStatusDisplay(data.status);
+                } else {
+                    showMessage('Failed to check AI status: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Error checking AI status: ' + error.message, 'error');
+            }
+        }
+
+        function updateRAGStatusDisplay(status) {
+            document.getElementById('ragStatusText').textContent = 
+                status.is_setup ? 'Ready' : 
+                status.is_setting_up ? 'Setting up...' : 
+                status.error ? 'Error' : 'Not Setup';
+            
+            document.getElementById('ragProgressFill').style.width = status.setup_progress + '%';
+            document.getElementById('ragProgressText').textContent = 
+                status.is_setup ? 'AI system ready for chat!' : 
+                status.error ? `Error: ${status.error}` : 
+                `Setting up... ${status.setup_progress}%`;
+            
+            document.getElementById('ragStage').textContent = status.setup_stage || 'None';
+            
+            if (status.is_setup) {
+                document.getElementById('ragSetupBtn').disabled = true;
+                document.getElementById('chatCard').style.display = 'block';
+                stopRAGStatusUpdates();
+                loadChatSuggestions();
+            } else if (!status.is_setting_up) {
+                document.getElementById('ragSetupBtn').disabled = false;
+                stopRAGStatusUpdates();
+            }
+        }
+
+        function startRAGStatusUpdates() {
+            ragStatusInterval = setInterval(checkRAGStatus, 2000);
+        }
+
+        function stopRAGStatusUpdates() {
+            if (ragStatusInterval) {
+                clearInterval(ragStatusInterval);
+                ragStatusInterval = null;
+            }
+        }
+
+        // Chat Functions
+        async function loadChatSuggestions() {
+            try {
+                const response = await fetch(`${API_BASE}/chat/suggestions`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayChatSuggestions(data.suggestions);
+                }
+            } catch (error) {
+                console.error('Error loading suggestions:', error);
+            }
+        }
+
+        function displayChatSuggestions(suggestions) {
+            const grid = document.getElementById('suggestionsGrid');
+            grid.innerHTML = suggestions.slice(0, 6).map(suggestion => `
+                <div class="suggestion-btn" onclick="sendSuggestedQuestion('${suggestion.replace(/'/g, "\\'")}')">
+                    ${suggestion}
+                </div>
+            `).join('');
+        }
+
+        function sendSuggestedQuestion(question) {
+            document.getElementById('chatInput').value = question;
+            sendChatMessage();
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const question = input.value.trim();
+            
+            if (!question) return;
+            
+            // Add user message to chat
+            addChatMessage(question, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            try {
+                const response = await fetch(`${API_BASE}/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ question: question })
+                });
+                
+                const data = await response.json();
+                
+                hideTypingIndicator();
+                
+                if (data.success) {
+                    const result = data.result;
+                    addChatMessage(result.answer, 'ai', result.sources, result.relevant_excerpts);
+                } else {
+                    if (data.setup_required) {
+                        addChatMessage('❌ AI system not setup. Please click "Setup AI Chat" first.', 'ai');
+                    } else {
+                        addChatMessage('❌ Error: ' + data.error, 'ai');
+                    }
+                }
+            } catch (error) {
+                hideTypingIndicator();
+                addChatMessage('❌ Error: ' + error.message, 'ai');
+            }
+        }
+
+        function addChatMessage(content, type, sources = null, excerpts = null) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${type}-message`;
+            
+            let sourcesHtml = '';
+            if (sources && sources.length > 0) {
+                sourcesHtml = `<div class="message-sources">📚 Sources: ${sources.join(', ')}</div>`;
+            }
+            
+            // Render markdown for AI messages
+            let processedContent = content;
+            if (type === 'ai' && typeof marked !== 'undefined') {
+                // Configure marked options for better rendering
+                marked.setOptions({
+                    breaks: true,  // Convert \n to <br>
+                    gfm: true,     // GitHub Flavored Markdown
+                    sanitize: false, // Allow HTML (safe in this context)
+                    smartypants: true // Smart quotes and typography
+                });
+                
+                try {
+                    processedContent = marked.parse(content);
+                } catch (error) {
+                    console.warn('Markdown parsing failed, using plain text:', error);
+                    processedContent = content; // Fallback to plain text
+                }
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <strong>${type === 'user' ? '👤 You' : '🤖 Legal AI'}:</strong> 
+                    ${type === 'ai' ? processedContent : content}
+                    ${sourcesHtml}
+                </div>
+            `;
+            
+            // Insert before typing indicator
+            const typingIndicator = document.getElementById('typingIndicator');
+            messagesContainer.insertBefore(messageDiv, typingIndicator);
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'flex';
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchDocuments();
+            getStorageInfo();
+            checkStatus();
+            checkRAGStatus();
+            
+            // Check if marked library loaded successfully
+            if (typeof marked === 'undefined') {
+                console.warn('Markdown library (marked.js) failed to load. AI responses will be displayed as plain text.');
+            } else {
+                console.log('✅ Markdown rendering enabled for AI responses');
+            }
+        });
+    </script>
+</body>
+</html> 
