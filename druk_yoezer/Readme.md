@@ -14,6 +14,10 @@
 ### 🎯 Mission
 To democratize access to government services while preserving and promoting Bhutan's unique Gross National Happiness philosophy, making bureaucratic processes more accessible, efficient, and human-centered.
 
+## APP Showcase
+
+![alt text](app_showcase-1.png)
+
 ## ✨ Key Features
 
 ### 🤖 Multi-Agent AI Architecture
