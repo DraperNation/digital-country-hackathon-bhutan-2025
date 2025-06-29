@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrukYul Chat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD700 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            background: linear-gradient(90deg, #8B4513 0%, #A0522D 50%, #CD853F 100%);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .app-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .dragon-container, .takin-container {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #FFD700;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .takin-container {
+            animation-delay: -1.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .dragon, .takin {
+            font-size: 3rem;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 255, 255, 0.9) 100%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 20px;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            color: white;
+            border-bottom-left-radius: 5px;
+        }
+
+        .input-container {
+            padding: 20px;
+            background: linear-gradient(90deg, #8B4513 0%, #A0522D 100%);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .send-button {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #8B4513;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #8B4513;
+            font-style: italic;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            border: 2px dashed #FFD700;
+        }
+
+        /* Decorative elements */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FF6B35, #F7931E);
+        }
+
+        .prayer-flags {
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                #FF0000 0px,
+                #FF0000 20px,
+                #FFFF00 20px,
+                #FFFF00 40px,
+                #0000FF 40px,
+                #0000FF 60px,
+                #FFFFFF 60px,
+                #FFFFFF 80px,
+                #00FF00 80px,
+                #00FF00 100px
+            );
+            opacity: 0.7;
+        }
+
+        .chatbot-toggle {
+            position: absolute;
+            top: 50%;
+            right: 120px;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: #8B4513;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4);
+            font-size: 14px;
+        }
+
+        .chatbot-toggle:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
+        }
+
+        .chatbot-toggle.active {
+            background: linear-gradient(135deg, #00FF00, #32CD32);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 3px 10px rgba(0, 255, 0, 0.4); }
+            50% { box-shadow: 0 5px 20px rgba(0, 255, 0, 0.8); }
+        }
+
+        .mode-indicator {
+            position: absolute;
+            top: 15px;
+            left: 120px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #8B4513;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .mode-indicator.chatbot-mode {
+            background: rgba(0, 255, 0, 0.2);
+            color: #006400;
+        }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="prayer-flags"></div>
+    <div class="header">
+      <div class="dragon-container">
+        <div class="dragon">🐉</div>
+      </div>
+      <div class="mode-indicator" id="modeIndicator">💬 Chat Mode</div>
+      <h1 class="app-title">DrukYul</h1>
+      <button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">
+        🤖 AI Bot
+      </button>
+      <div class="takin-container">
+        <div class="takin">🦌</div>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="welcome-message">
+        🙏 Welcome to DrukYul! Chat in the spirit of the Thunder Dragon Kingdom 🏔️
+      </div>
+    </div>
+
+    <div class="input-container">
+      <input type="text" class="message-input" id="messageInput" placeholder="Type your message here..." />
+      <button class="send-button" onclick="sendMessage()">Send 🕊️</button>
+    </div>
+  </div>
+
+  <script>
+    const chatMessages = document.getElementById('chatMessages');
+    const messageInput = document.getElementById('messageInput');
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const modeIndicator = document.getElementById('modeIndicator');
+
+    let isChatbotMode = false;
+
+    const botResponses = [
+      "Tashi Delek! How can I help you today? 🙏",
+      "May the wisdom of the mountains guide our conversation 🏔️",
+      "In the spirit of Gross National Happiness, what brings you joy? 😊",
+      "The Thunder Dragon brings good fortune to our chat! 🐉",
+      "Like the prayer flags in the wind, your message is heard 🎌",
+      "May your path be as clear as the Himalayan sky ⛅",
+      "The Takin shares its wisdom with you today 🦌"
+    ];
+
+    function addMessage(text, isUser, isTyping = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+      messageDiv.textContent = text;
+      if (isTyping) {
+        messageDiv.classList.add('typing');
+      }
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendMessage() {
+      const userInput = messageInput.value.trim();
+      if (userInput === '') return;
+
+      addMessage(userInput, true);
+      messageInput.value = '';
+
+      if (isChatbotMode) {
+        // Show typing indicator
+        addMessage("🤖 DrukYul AI is typing...", false, true);
+
+        fetch('http://127.0.0.1:8000/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user_message: userInput,
+            user_language: "english"
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          document.querySelectorAll('.typing').forEach(el => el.remove());
+          addMessage(data.bot_reply || "Sorry, the AI didn't reply.", false);
+        })
+        .catch(err => {
+          console.error(err);
+          document.querySelectorAll('.typing').forEach(el => el.remove());
+          addMessage("⚠️ Oops! Something went wrong talking to the AI.", false);
+        });
+
+      } else {
+        setTimeout(() => {
+          const response = botResponses[Math.floor(Math.random() * botResponses.length)];
+          addMessage(response, false);
+        }, 1000);
+      }
+    }
+
+    function toggleChatbot() {
+  isChatbotMode = !isChatbotMode;
+
+  if (isChatbotMode) {
+    chatbotToggle.textContent = '🤖 AI Active';
+    chatbotToggle.classList.add('active');
+    modeIndicator.textContent = '🤖 AI Bot Mode';
+    modeIndicator.classList.add('chatbot-mode');
+
+    chatMessages.innerHTML = '';
+
+    addMessage("🤖 DrukYul AI activated! Starting the GNH questionnaire!", false);
+    sendMessage("start");
+  } else {
+    chatbotToggle.textContent = '🤖 AI Bot';
+    chatbotToggle.classList.remove('active');
+    modeIndicator.textContent = '💬 Chat Mode';
+    modeIndicator.classList.remove('chatbot-mode');
+
+    chatMessages.innerHTML = '';
+    addMessage("💬 Regular chat mode restored. Simple responses and casual conversation!", false);
+  }
+}
+
+function sendMessage(msg = null) {
+  const userInput = msg !== null ? msg : messageInput.value.trim();
+  if (userInput === '') return;
+
+  addMessage(userInput, true);
+  messageInput.value = '';
+
+  if (isChatbotMode) {
+    addMessage("🤖 DrukYul AI is typing...", false, true);
+
+    fetch('http://127.0.0.1:8000/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_message: userInput
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        document.querySelectorAll('.typing').forEach(el => el.remove());
+
+        addMessage(data.bot_reply || "Sorry, the AI didn't reply.", false);
+
+        if (data.options && data.options.length > 0) {
+          data.options.forEach((opt, i) => {
+            addMessage(`[${i + 1}] ${opt}`, false);
+          });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        document.querySelectorAll('.typing').forEach(el => el.remove());
+        addMessage("⚠️ Oops! Something went wrong talking to the AI.", false);
+      });
+  } else {
+    setTimeout(() => {
+      const response = botResponses[Math.floor(Math.random() * botResponses.length)];
+      addMessage(response, false);
+    }, 1000);
+  }
+}
+
+
+    messageInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    setTimeout(() => {
+      addMessage("Hello! Welcome to Bhutan's digital realm! Click the AI Bot button to activate intelligent responses 🤖", false);
+    }, 500);
+  </script>
+</body>
+</html>
