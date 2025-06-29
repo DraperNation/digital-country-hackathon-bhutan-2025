@@ -1,3 +1,7 @@
+![bhu1](https://github.com/user-attachments/assets/e67d86ad-7a46-44bf-a847-6779b5f5c5fa)
+![bhu2](https://github.com/user-attachments/assets/bcc6fd63-ff15-4716-b9f4-636c6e49892e)
+![bhu3](https://github.com/user-attachments/assets/018ba5ee-6f4f-4ab5-bd47-e7d1ab2f0c77)
+![bhu4](https://github.com/user-attachments/assets/694a3e20-9c92-4053-93db-3ef7122d7315)
 # Digital Country Hackathon: Building a Digital Bhutan 🇧🇹
 
 The E-Bhutan Hackathon is an innovative 24-hour hybrid event designed to develop foundational digital tools that support Bhutan’s vision for a borderless digital economy. Known for its Gross National Happiness, Bhutan is embracing cutting-edge technologies like Bitcoin mining and public digital infrastructure to enhance national sovereignty and economic resilience. This hackathon offers participants the opportunity to create impactful solutions aligned with Bhutan’s digital future.
