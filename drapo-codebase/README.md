@@ -4,9 +4,11 @@
 
 The **E-Bhutan Digital Identity & Citizenship Platform** is a comprehensive decentralized digital identity and reputation system for Bhutanese citizens. It enables users to securely prove personhood, access verifiable credentials, and build social credibility through blockchain-based attestations, while providing government services and digital currency management.
 
-## Pitch Deck
+## Pitch Deck & Loom
 
 docs/pitch.pptx
+
+Loom video: https://www.loom.com/share/63f2e307a07843d89ae3a7894998293b
 
 ## Team Members
 
