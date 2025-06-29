@@ -1,6 +1,6 @@
 # BTNX - Bhutan Bitcoin Currency
 
-The world's first sovereign Bitcoin-backed digital currency with transparent reserves, multi-signature security, and global interoperability.
+The world's first sovereign Bitcoin-backed digital currency with transparent reserves, multi-signature security, and global interoperability..
 
 > 📹 **Demo Video:** [Watch on Loom](https://www.loom.com/share/your-loom-link-here)
 
