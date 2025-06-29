@@ -1,4 +1,4 @@
-
+#Refer to each of the individual READMEs on in the seperate indiviaual folders for more details
 ---
 
 # 🇧🇹 Druk eResidency: Bhutan's eResidency & Sovereign AI Assistant
