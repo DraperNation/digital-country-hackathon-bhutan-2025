@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "chatbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node chatbot.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.10.0",
+    "cheerio": "^1.1.0",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "multer": "^2.0.1",
+    "path": "^0.12.7",
+    "pdf-parse": "^1.1.1"
+  }
+}
