@@ -102,9 +102,11 @@ app.post("/api/redeem", async (req, res) => {
     // Calculate BTNX reward using 200% collateral ratio
     // Formula: BTNX = BTC_Amount / 2 
     // Where 2 represents the 200% collateral ratio (2 BTC = 1 BTNX)
-    const rewardAmount = parsedBtc / 2; // 200% collateral ratio: 2 BTC = 1 BTNX
+    let rewardAmount = parsedBtc / 2; // 200% collateral ratio: 2 BTC = 1 BTNX
+
+    rewardAmount /= 0.00000932
     
-    const rewardWei = ethers.parseUnits(rewardAmount.toString(), 18);
+    const rewardWei = ethers.parseUnits(rewardAmount.toFixed(18), 18);
     console.log("BTNX reward calculated:", { 
       btcAmount: parsedBtc,
       btcPrice: bitcoinPrice,
