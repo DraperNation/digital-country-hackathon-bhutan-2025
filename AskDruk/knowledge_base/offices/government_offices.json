@@ -1,0 +1,189 @@
+{
+  "offices": [
+    {
+      "name": "Immigration Office",
+      "services": ["passport", "visa", "work_permit", "residence_permit"],
+      "address": "Kawangjangsa, Thimphu, Bhutan",
+      "contact": "+975-2-322526",
+      "email": "immigration@mofa.gov.bt",
+      "hours": "9:00 AM - 5:00 PM (Monday-Friday)",
+      "dzongkhag": "Thimphu",
+      "coordinates": {
+        "latitude": "27.4712",
+        "longitude": "89.6339"
+      },
+      "services_details": {
+        "passport": "Regular passport services (Nu. 1,000). Emergency travel documents available.",
+        "visa": "Tourist and business visa processing",
+        "work_permit": "Work permit applications for foreign nationals",
+        "residence_permit": "Residence permit for long-term stays"
+      }
+    },
+    {
+      "name": "Road Safety and Transport Authority (RSTA)",
+      "services": ["driving_license", "vehicle_registration", "road_permits"],
+      "address": "Lungtenphu, Thimphu, Bhutan",
+      "contact": "+975-2-323862",
+      "email": "info@rsta.gov.bt",
+      "hours": "9:00 AM - 5:00 PM (Monday-Friday)",
+      "dzongkhag": "Thimphu",
+      "coordinates": {
+        "latitude": "27.4784",
+        "longitude": "89.6319"
+      },
+      "services_details": {
+        "driving_license": "Written and practical driving tests, license issuance",
+        "vehicle_registration": "New vehicle registration and renewals",
+        "road_permits": "Permits for road construction and maintenance"
+      }
+    },
+    {
+      "name": "Ministry of Industry, Commerce & Employment",
+      "services": ["employment_disputes", "work_permits", "labour_complaints"],
+      "address": "Thongsel Lam, Lower Motithang, Thimphu, Bhutan",
+      "contact": "+975-2-328236/324845/333867",
+      "email": "info@moice.gov.bt",
+      "hours": "9:00 AM - 5:00 PM (Monday-Friday)",
+      "dzongkhag": "Thimphu",
+      "coordinates": {
+        "latitude": "27.4712",
+        "longitude": "89.6339"
+      },
+      "services_details": {
+        "employment_disputes": "Mediation and resolution of workplace conflicts",
+        "work_permits": "Work permit processing for citizens and foreigners",
+        "labour_complaints": "Filing and investigating labour law violations"
+      }
+    },
+    {
+      "name": "Department of Trade",
+      "services": ["business_registration", "trade_licenses", "import_export"],
+      "address": "Ministry of Industry, Commerce & Employment, Thimphu",
+      "contact": "+975-2-322463",
+      "email": "trade@moice.gov.bt",
+      "website": "www.moice.gov.bt",
+      "hours": "9:00 AM - 5:00 PM (Monday-Friday)",
+      "dzongkhag": "Thimphu",
+      "coordinates": {
+        "latitude": "27.4712",
+        "longitude": "89.6339"
+      },
+      "services_details": {
+        "business_registration": "New business registration and renewals",
+        "trade_licenses": "Various trade and commercial licenses",
+        "import_export": "Import and export permit processing"
+      }
+    },
+    {
+      "name": "Civil Registration Office",
+      "services": ["birth_certificate", "death_certificate", "marriage_certificate"],
+      "address": "Department of Civil Registration, Thimphu",
+      "contact": "+975-2-323856",
+      "email": "dcr@moha.gov.bt",
+      "hours": "9:00 AM - 5:00 PM (Monday-Friday)",
+      "dzongkhag": "Thimphu",
+      "coordinates": {
+        "latitude": "27.4712",
+        "longitude": "89.6339"
+      },
+      "services_details": {
+        "birth_certificate": "Birth registration and certificate issuance",
+        "death_certificate": "Death registration and certificate issuance",
+        "marriage_certificate": "Marriage registration and certificate issuance"
+      }
+    },
+    {
+      "name": "Office of Consumer Protection",
+      "services": ["consumer_complaints", "product_safety", "fair_trading"],
+      "address": "Ministry of Industry, Commerce & Employment, Thimphu",
+      "contact": "support@moea.gov.bt",
+      "email": "support@moea.gov.bt",
+      "website": "www.moea.gov.bt",
+      "hours": "9:00 AM - 5:00 PM (Monday-Friday)",
+      "dzongkhag": "Thimphu",
+      "coordinates": {
+        "latitude": "27.4712",
+        "longitude": "89.6339"
+      },
+      "services_details": {
+        "consumer_complaints": "Filing and resolving consumer complaints",
+        "product_safety": "Ensuring product safety and quality standards",
+        "fair_trading": "Monitoring fair trade practices and preventing exploitation"
+      }
+    }
+  ],
+  "emergency_contacts": [
+    {
+      "service": "Police & General Emergency",
+      "number": "113",
+      "available": "24/7"
+    },
+    {
+      "service": "Fire Department",
+      "number": "110",
+      "available": "24/7"
+    },
+    {
+      "service": "Medical/Ambulance",
+      "number": "112",
+      "available": "24/7"
+    },
+    {
+      "service": "Traffic Emergency",
+      "number": "111",
+      "available": "24/7"
+    },
+    {
+      "service": "Disaster Helpline",
+      "number": "999",
+      "available": "24/7"
+    },
+    {
+      "service": "Tourist Helpline",
+      "number": "+975-2-323251",
+      "available": "Office hours"
+    },
+    {
+      "service": "COVID-19 Hotline",
+      "number": "2121",
+      "available": "24/7"
+    },
+    {
+      "service": "National Commission for Women and Children",
+      "number": "1098",
+      "available": "Office hours"
+    },
+    {
+      "service": "Youth Support Services (Nazhoen Helpline)",
+      "number": "214",
+      "available": "Office hours"
+    }
+  ],
+  "utility_contacts": [
+    {
+      "service": "Electricity",
+      "number": "1250",
+      "available": "24/7"
+    },
+    {
+      "service": "Drukair",
+      "number": "1300",
+      "available": "Office hours"
+    },
+    {
+      "service": "Tashi Air",
+      "number": "1234",
+      "available": "Office hours"
+    },
+    {
+      "service": "Bhutan Telecom",
+      "number": "1600",
+      "available": "Office hours"
+    },
+    {
+      "service": "Tashi Cell",
+      "number": "7700",
+      "available": "Office hours"
+    }
+  ]
+}
