@@ -130,13 +130,12 @@ Our system enables:
 ## 📝 Folder Structure
 
 ```
-DrukeRes/
-├── drukeres-portal/              # eResidency React App
+100meters/
+├── eResidency Platform/ # eResidency React App
 │   ├── src/
 │   └── README.md
-├── drukeres-sovereign-ai/        # Sovereign AI Gradio App
+├── SovereignAI/        # Sovereign AI Gradio App
 │   ├── app.py
-│   ├── requirements.txt
 │   └── README.md
 └── README.md                   # Project Overview
 ```
