@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@reown/appkit-adapter-wagmi": "^1.7.11"
+  }
+}
