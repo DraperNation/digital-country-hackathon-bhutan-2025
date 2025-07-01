@@ -1,0 +1,12 @@
+**/node_modules
+**/dist
+**/build
+**/logs
+**/coverage
+**/test-results
+**/test-reports
+**/test-coverage
+**/test-reports
+
+**/.env
+**/**.log

@@ -1,0 +1,98 @@
+<div class="trading-container">
+  <h1 class="app-title">Hedge Lords</h1>
+
+  <div class="grid grid-cols-2 grid-rows-2 gap-4 h-full">
+    <div class="bg-gray-100 p-4 rounded-md shadow-sm">
+      <div class="chart-wrapper">
+        <app-straddle-chart></app-straddle-chart>
+      </div>
+    </div>
+    <div class="bg-gray-100 p-4 rounded-md shadow-sm">
+      <h2 class="text-xl font-bold">Simulation Results</h2>
+      <div class="overflow-x-auto mt-4">
+        <table
+          class="min-w-full text-sm text-left border border-gray-300 bg-white rounded"
+        >
+          <thead>
+            <tr>
+              <th class="px-4 py-2 border-b font-semibold">Metric</th>
+              <th class="px-4 py-2 border-b font-semibold">Expected Value</th>
+              <th class="px-4 py-2 border-b font-semibold">Expected Price</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="simulationResult$ | async as result">
+            <tr>
+              <td class="px-4 py-2 border-b">Mean</td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_values?.mean ?? "-" }}
+              </td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_prices?.mean ?? "-" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Median</td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_values?.median ?? "-" }}
+              </td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_prices?.median ?? "-" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Max</td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_values?.max ?? "-" }}
+              </td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_prices?.max ?? "-" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">Min</td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_values?.min ?? "-" }}
+              </td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_prices?.min ?? "-" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border-b">5th Percentile</td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_values?.percentile_5 ?? "-" }}
+              </td>
+              <td class="px-4 py-2 border-b">
+                {{ result.expected_prices?.percentile_5 ?? "-" }}
+              </td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2">95th Percentile</td>
+              <td class="px-4 py-2">
+                {{ result.expected_values?.percentile_95 ?? "-" }}
+              </td>
+              <td class="px-4 py-2">
+                {{ result.expected_prices?.percentile_95 ?? "-" }}
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="!(simulationResult$ | async)">
+            <tr>
+              <td class="px-4 py-2 border-b" colspan="3">
+                No simulation results available.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="p-4 overflow-hidden bg-white rounded-md shadow-sm">
+      <h2 class="text-xl font-bold mb-2">Options Chain</h2>
+      <app-options-chain></app-options-chain>
+    </div>
+    <div class="p-4 overflow-hidden bg-white rounded-md shadow-sm">
+      <h2 class="text-xl font-bold mb-2">Position Analysis</h2>
+      <app-position-analysis></app-position-analysis>
+    </div>
+  </div>
+</div>

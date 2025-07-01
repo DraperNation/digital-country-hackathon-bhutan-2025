@@ -1,0 +1,24 @@
+<div class="data-display">
+
+  <div class="chart-container">
+    <apx-chart
+      *ngIf="chartOptions.series"
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [title]="chartOptions.title"
+      [stroke]="chartOptions.stroke"
+      [dataLabels]="chartOptions.dataLabels"
+      [annotations]="chartOptions.annotations"
+
+    ></apx-chart>
+  </div>
+
+  <div class="button-group">
+  
+    <button class="refresh-button" (click)="refreshData()">
+      Refresh
+    </button>
+  </div>
+</div>

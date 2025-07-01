@@ -1,0 +1,6 @@
+{
+  "nationality": "1234567",
+  "secret": "9876543",
+  "expectedNationality": "1234567",
+  "commitmentHash": "98765432098765"
+} 

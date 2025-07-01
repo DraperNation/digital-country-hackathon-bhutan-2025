@@ -1,0 +1,13 @@
+<div class="app-container">
+  <div class="sidebar" [class.open]="sidebarOpen">
+    <app-settings></app-settings>
+  </div>
+  
+  <div class="sidebar-toggle" (click)="toggleSidebar()">
+    <mat-icon>{{ sidebarOpen ? 'chevron_left' : 'menu' }}</mat-icon>
+  </div>
+  
+  <div class="main-content" [class.sidebar-open]="sidebarOpen">
+    <app-trading></app-trading>
+  </div>
+</div>

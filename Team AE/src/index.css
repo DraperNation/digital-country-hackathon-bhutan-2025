@@ -1,0 +1,113 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 346 77% 49%;
+    --primary-foreground: 355 7% 97%;
+
+    --secondary: 240 5% 26%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 237 13% 13%;
+    --muted-foreground: 240 5% 64%;
+
+    --accent: 12 76% 61%;
+    --accent-foreground: 355 7% 97%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 85% 97%;
+
+    --border: 240 6% 20%;
+    --input: 240 6% 20%;
+    --ring: 346 77% 49%;
+
+    --radius: 0.5rem;
+
+    /* Bhutan-inspired colors with high contrast */
+    --druk-crimson: 0 70% 45%;
+    --druk-gold: 45 90% 55%;
+    --druk-sapphire: 220 85% 55%;
+    --druk-emerald: 142 70% 45%;
+    --druk-amber: 35 85% 60%;
+    --druk-ruby: 350 80% 50%;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 346 77% 49%;
+    --primary-foreground: 355 7% 97%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 45%;
+
+    --accent: 12 76% 61%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 346 77% 49%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(240 8% 8%) 100%);
+  }
+}
+
+@layer components {
+  .btn-druk {
+    @apply bg-gradient-to-r from-druk-crimson via-druk-ruby to-druk-gold text-white font-bold py-4 px-8 rounded-xl shadow-2xl hover:shadow-druk-gold/25 hover:scale-105 transform transition-all duration-300 border-2 border-druk-gold/30;
+  }
+  
+  .card-druk {
+    @apply bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-lg rounded-2xl shadow-2xl border-2 border-druk-gold/20 p-8 hover:shadow-druk-crimson/20 hover:border-druk-crimson/40 transition-all duration-500 hover:scale-[1.02];
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-druk-crimson via-druk-gold to-druk-sapphire bg-clip-text text-transparent font-bold;
+  }
+
+  .service-card {
+    @apply bg-gradient-to-br from-slate-800/90 via-slate-700/80 to-slate-800/90 backdrop-blur-xl rounded-3xl shadow-2xl border-2 border-gradient-to-r border-druk-amber/30 p-6 hover:shadow-druk-emerald/30 hover:border-druk-emerald/50 transition-all duration-500 hover:scale-105 transform;
+  }
+
+  .hero-gradient {
+    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
+  }
+}

@@ -1,0 +1,91 @@
+.settings-container {
+  height: 100%;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.settings-header {
+  padding: 1.5rem 1rem;
+  background: linear-gradient(90deg, #3f51b5 0%, #5c6bc0 100%);
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1rem;
+  
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+}
+
+.settings-accordion {
+  padding: 0 1rem;
+}
+
+.settings-panel {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.subscribe-button {
+  margin-top: 1rem;
+  background: linear-gradient(90deg, #4caf50 0%, #66bb6a 100%);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: linear-gradient(90deg, #43a047 0%, #5cb860 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  }
+}
+
+/* Button for updating lot size */
+.update-lot-size-button {
+  background: linear-gradient(90deg, #2196f3 0%, #42a5f5 100%);
+  transition: all 0.3s ease;
+  color: white;
+  
+  &:hover {
+    background: linear-gradient(90deg, #1e88e5 0%, #39a0f4 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+  }
+}
+
+/* Button for clearing scenario */
+.clear-scenario-button {
+  background: linear-gradient(90deg, #ea124f 0%, #ea0a2f 100%);
+  transition: all 0.3s ease;
+  color: white;
+  
+  &:hover {
+    background: linear-gradient(90deg, #e92727 0%, #fb0000 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+  }
+}
+
+/* Button for running Monte Carlo simulation */
+.run-simulation-button {
+  background: linear-gradient(90deg, #9c27b0 0%, #ba68c8 100%);
+  transition: all 0.3s ease;
+  color: white;
+  
+  &:hover {
+    background: linear-gradient(90deg, #8e24aa 0%, #ab47bc 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+  }
+}
+
+mat-form-field {
+  margin-bottom: 1rem;
+}

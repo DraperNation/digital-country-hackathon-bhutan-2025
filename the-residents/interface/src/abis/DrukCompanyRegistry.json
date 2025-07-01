@@ -1,0 +1,21 @@
+[
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "companyHash", "type": "bytes32" }
+    ],
+    "name": "registerEntity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "bytes32", "name": "companyHash", "type": "bytes32" },
+      { "indexed": true, "internalType": "address", "name": "by", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "NewEntityCreated",
+    "type": "event"
+  }
+] 

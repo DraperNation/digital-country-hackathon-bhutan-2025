@@ -1,0 +1,51 @@
+<div class="position-analysis">
+  <div class="header-actions">
+    <h3 class="text-lg font-semibold">Selected Positions</h3>
+    <div class="update-info">Last update: {{ lastUpdateTime }}</div>
+    <button mat-icon-button color="warn" (click)="clearAll()" *ngIf="livePositions.length > 0" 
+            matTooltip="Clear all positions">
+      <mat-icon>delete_sweep</mat-icon>
+    </button>
+  </div>
+  
+  <div class="empty-state" *ngIf="livePositions.length === 0">
+    <p>No positions selected. Click on option prices in the Options Chain to add them here.</p>
+  </div>
+  
+  <div class="positions-list" *ngIf="livePositions.length > 0">
+    <div class="position-card" *ngFor="let position of livePositions" 
+         [ngClass]="{'buy-position': position.action === 'buy', 'sell-position': position.action === 'sell'}">
+      <div class="position-row">
+        <span class="position-type" [ngClass]="{'call-type': position.type === 'call', 'put-type': position.type === 'put'}">
+          {{ position.type | uppercase }}
+        </span>
+        <span class="position-strike">{{ position.strikePrice }}</span>
+        
+        <div class="price-info">
+          <span class="bid">{{ position.bestBid ?? 'N/A' }}</span>
+          <span class="separator">/</span>
+          <span class="ask">{{ position.bestAsk ?? 'N/A' }}</span>
+        </div>
+        
+        <div class="action-radio-group">
+          <label class="buy-radio" [class.selected]="position.action === 'buy'">
+            <input type="radio" name="action_{{position.id}}" [value]="'buy'" 
+                  [checked]="position.action === 'buy'"
+                  (change)="onActionChange(position, 'buy')">
+            Buy
+          </label>
+          <label class="sell-radio" [class.selected]="position.action === 'sell'">
+            <input type="radio" name="action_{{position.id}}" [value]="'sell'" 
+                  [checked]="position.action === 'sell'"
+                  (change)="onActionChange(position, 'sell')">
+            Sell
+          </label>
+        </div>
+        
+        <button mat-icon-button color="warn" class="remove-btn" (click)="removePosition(position)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,252 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum KYCStatus {
+  APPLIED
+  PROCESSING
+  ON_HOLD
+  APPROVED
+  REJECTED
+}
+
+model KYCStatusHistory {
+  id        Int      @id @default(autoincrement())
+  kyc       KYC      @relation(fields: [kycId], references: [id])
+  kycId     Int
+  oldStatus String
+  newStatus String
+  changedAt DateTime @default(now())
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model CasbinRule {
+  id    Int     @id @default(autoincrement())
+  ptype String
+  v0    String?
+  v1    String?
+  v2    String?
+  v3    String?
+  v4    String?
+  v5    String?
+
+  @@map("casbin_rule")
+}
+
+// Add relation in KYC model
+model KYC {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  passportUrl  String
+  nationalIdUrl String?
+  proofOfAddressUrl String
+  photoUrl     String
+  otherDocuments Json? // [{name: string, url: string}]
+  fingerprintScanUrl String?
+  fingerprintImageUrl String?
+  signatureUrl String?
+  selfieUrl    String
+  status       KYCStatus @default(APPLIED)
+  submittedAt  DateTime @default(now())
+  verifiedAt   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id])
+  statusHistories KYCStatusHistory[]
+}
+
+// Identity-related models
+model DID {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @unique
+  did          String   @unique
+  status       String   @default("Pending")
+  lastVerified DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user         User     @relation(fields: [userId], references: [id])
+  publicKeys   DIDPublicKey[]
+  services     DIDService[]
+}
+
+model DIDPublicKey {
+  id            Int    @id @default(autoincrement())
+  didId         Int
+  type          String
+  publicKeyHex  String
+  controller    String
+  createdAt     DateTime @default(now())
+
+  did           DID    @relation(fields: [didId], references: [id])
+}
+
+model DIDService {
+  id              Int    @id @default(autoincrement())
+  didId           Int
+  type            String
+  serviceEndpoint String
+  createdAt       DateTime @default(now())
+
+  did             DID    @relation(fields: [didId], references: [id])
+}
+
+model Credential {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  type           String
+  issuer         String
+  description    String?
+  status         String   @default("pending")
+  issuedDate     DateTime @default(now())
+  expiryDate     DateTime?
+  credentialData Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user           User     @relation(fields: [userId], references: [id])
+}
+
+model Biometric {
+  id                  Int      @id @default(autoincrement())
+  userId              Int      @unique
+  status              String   @default("Not Enrolled")
+  faceEnrolled        Boolean  @default(false)
+  fingerprintEnrolled Boolean  @default(false)
+  irisEnrolled        Boolean  @default(false)
+  enrollmentDate      DateTime?
+  lastUpdated         DateTime @default(now())
+
+  user                User     @relation(fields: [userId], references: [id])
+}
+
+model Passport {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique
+  passportNumber  String   @unique
+  type            String
+  issuingCountry  String
+  issuedDate      DateTime
+  expiryDate      DateTime
+  status          String   @default("valid")
+  holderName      String
+  dateOfBirth     DateTime
+  nationality     String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+// Add relation in User model
+model User {
+  id        Int      @id @default(autoincrement())
+  uid      String?   @unique @db.Uuid @default(uuid())
+  did     String?   @unique
+  name      String
+  email     String   @unique
+  password String
+  image     String?
+  dateOfBirth String?
+  nationality String?
+  phone     String?
+  address   String?
+  city      String?
+  state     String?
+  postalCode String?
+  country   String?
+  mother    Json? // {fullName, dateOfBirth, nationality}
+  father    Json? // {fullName, dateOfBirth, nationality}
+  spouse    Json? // {fullName, dateOfBirth, nationality}
+  children  Json? // [{fullName, dateOfBirth, nationality}]
+  vc        Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  kycs      KYC[]
+  notifications Notification[]
+  userRoles UserRole[]
+  auditLogs AuditLog[]
+  legalEntities LegalEntity[]
+  // Identity relations
+  didRecord DID?
+  credentials Credential[]
+  biometric Biometric?
+  passport Passport?
+}
+
+model Role {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  users     UserRole[]
+  scopes    RoleScope[]
+}
+
+model Scope {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  roles     RoleScope[]
+}
+
+model UserRole {
+  id      Int   @id @default(autoincrement())
+  user    User  @relation(fields: [userId], references: [id])
+  userId  Int
+  role    Role  @relation(fields: [roleId], references: [id])
+  roleId  Int
+}
+
+model RoleScope {
+  id      Int   @id @default(autoincrement())
+  role    Role  @relation(fields: [roleId], references: [id])
+  roleId  Int
+  scope   Scope @relation(fields: [scopeId], references: [id])
+  scopeId Int
+
+  @@unique([roleId, scopeId])
+}
+
+model LegalEntity {
+  id          Int      @id @default(autoincrement())
+  name        String
+  type        String
+  address     String
+  director    String
+  status      String   @default("Pending")
+  documents   Json?    
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  ownerId     Int?
+  owner       User?    @relation(fields: [ownerId], references: [id])
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  entity    String
+  entityId  Int
+  details   String?
+  createdAt DateTime @default(now())
+}

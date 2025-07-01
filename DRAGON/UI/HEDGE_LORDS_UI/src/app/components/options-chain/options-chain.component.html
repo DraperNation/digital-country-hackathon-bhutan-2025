@@ -1,0 +1,55 @@
+<div class="options-chain">
+  <!-- Futures Data Display -->
+  <div *ngIf="futuresData" class="futures-data bg-gray-100 rounded-md">
+    <div class="grid grid-cols-4 gap-2">
+      <div>
+        <span class="text-xs font-semibold">{{ futuresData.symbol }}</span>
+      </div>
+      <div>
+        <span class="text-green-700 text-xs">Bid: {{ futuresData.best_bid }}</span>
+      </div>
+      <div>
+        <span class="text-red-500 text-xs">Ask: {{ futuresData.best_ask }}</span>
+      </div>
+      <div>
+        <span class="text-blue-600 text-xs">Spot: {{ futuresData.spot_price }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Options Chain Table -->
+  <div class="table-container">
+    <table class="w-full text-center border-table">
+      <thead>
+        <tr>
+          <th class="text-green-700">Call Bid</th>
+          <th class="text-red-500">Call Ask</th>
+          <th class="border-x">Strike</th>
+          <th class="text-green-700">Put Bid</th>
+          <th class="text-red-500">Put Ask</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let option of optionsData" class="option-row">
+          <td class="text-green-700 selectable" (click)="selectOption(option.call, 'call')" [class.has-data]="option.call">
+            {{ option.call?.best_bid ?? '-' }}
+          </td>
+          <td class="text-red-500 selectable" (click)="selectOption(option.call, 'call')" [class.has-data]="option.call">
+            {{ option.call?.best_ask ?? '-' }}
+          </td>
+          <td class="border-x font-bold selectable" 
+              (click)="selectStrikePrice(option)"
+              [class.has-data]="option.call || option.put">
+            {{ option.call?.strike_price ?? option.put?.strike_price ?? '-' }}
+          </td>
+          <td class="text-green-700 selectable" (click)="selectOption(option.put, 'put')" [class.has-data]="option.put">
+            {{ option.put?.best_bid ?? '-' }}
+          </td>
+          <td class="text-red-500 selectable" (click)="selectOption(option.put, 'put')" [class.has-data]="option.put">
+            {{ option.put?.best_ask ?? '-' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

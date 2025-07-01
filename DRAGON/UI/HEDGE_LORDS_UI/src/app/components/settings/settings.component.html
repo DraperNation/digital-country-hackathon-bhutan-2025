@@ -1,0 +1,116 @@
+<div
+  class="settings-container bg-zinc-50 w-full h-full p-4"
+  style="overflow-y: auto"
+>
+  <h1 class="text-3xl pb-4">Settings</h1>
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>General Settings</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field class="w-full">
+        <mat-label>Exchange</mat-label>
+        <mat-select
+          [(value)]="selectedExchange"
+          (selectionChange)="onExchangeChange()"
+        >
+          @for (item of exchanges | keyvalue; track item.key) {
+          <mat-option [value]="item.key">{{ item.key }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Coin Pair</mat-label>
+        <mat-select [(value)]="selectedCoin" (selectionChange)="onCoinChange()">
+          @for (coin of availableCoins; track coin) {
+          <mat-option [value]="coin">{{ coin }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Expiry Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedExpiryDate"
+          (dateChange)="onExpiryDateChange($event)"
+          placeholder="Choose a date"
+          title="Expiry Date"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div class="w-full flex justify-end">
+        <button
+          mat-fab
+          extended
+          color="primary"
+          class="subscribe-button"
+          (click)="onSubscribe()"
+        >
+          <mat-icon>download</mat-icon>
+          Subscribe
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br />
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Trade Settings </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field class="w-full">
+        <mat-label>Lot Size</mat-label>
+        <input
+          matInput
+          [(ngModel)]="selectedLotSize"
+          type="number"
+          step="0.0001"
+        />
+      </mat-form-field>
+      <div class="w-full flex justify-end">
+        <button
+          mat-fab
+          extended
+          class="update-lot-size-button mb-4"
+          (click)="updateLotSize()"
+        >
+          <mat-icon>save</mat-icon>
+          Update Lot Size
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br />
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Analytics Settings </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="w-full flex flex-col items-end gap-4 mb-4">
+        <button
+          mat-fab
+          extended
+          class="clear-scenario-button"
+          (click)="clearScenario()"
+        >
+          <mat-icon>delete</mat-icon>
+          Clear Scenario
+        </button>
+        <button
+          mat-fab
+          extended
+          class="run-simulation-button"
+          (click)="runSimulation()"
+        >
+          <mat-icon>trending_up</mat-icon>
+          Run Monte Carlo Analysis
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
