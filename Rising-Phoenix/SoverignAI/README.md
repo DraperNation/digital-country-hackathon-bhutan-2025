@@ -36,5 +36,20 @@ Core Pillars
 1. Create Environment: `python -m venv ebhutan`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Set up `config.env` with your Google API key
+```
+# Gemini API Configuration
+GOOGLE_API_KEY="AIzaSyCnbik8iwtfKnZxpcn_nNGJSZ4Z73jFBGs"
+
+# ChromaDB Configuration
+CHROMA_COLLECTION_NAME=bhutan_document_embeddings
+
+# Application Configuration
+RAW_DATA_PATH=./data/raw
+PROCESSED_DATA_PATH=./data/processed 
+```
 4. Set up `.env` in translator folder with your Google API key
+``` 
+export GOOGLE_CLOUD_PROJECT_ID=bhutan-464321
+export GOOGLE_APPLICATION_CREDENTIALS=bhutan-key.json
+```
 5. Run: `chainlit run chainlit_app.py`
