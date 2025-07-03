@@ -1,120 +1,51 @@
-# 🥟 ThukpaStack
+# Digital Country Hackathon: Building a Digital Bhutan 🇧🇹
 
-**Digital Gateway to Bhutan's Knowledge Universe**
+The E-Bhutan Hackathon is an innovative 24-hour hybrid event designed to develop foundational digital tools that support Bhutan’s vision for a borderless digital economy. Known for its Gross National Happiness, Bhutan is embracing cutting-edge technologies like Bitcoin mining and public digital infrastructure to enhance national sovereignty and economic resilience. This hackathon offers participants the opportunity to create impactful solutions aligned with Bhutan’s digital future.
 
-*Real Tech. Real Solutions. Real Impact.*
+- **Date**: 28–29 June 2025
+- **Location**: [Draper Startup House Bangalore](https://draperstartuphouse.com/bangalore), India 🇮🇳 ([Google Maps](https://maps.app.goo.gl/4DJxza88WFr9KY6s7))
+- **Format**: Hybrid (In-person & Online)
+- **Apply here**: [draper-nation.gitbook.io/e-bhutan](https://draper-nation.gitbook.io/e-bhutan)
 
----
+## Tracks
 
-## 🚀 What We Built
+- **Bitcoin-Backed Currency:**  
+  Develop a stablecoin or digital currency backed by Bhutan’s Bitcoin reserves.  
+  _Technical Focus:_ Multi-sig treasury wallets, transparent reserve dashboards, pegging mechanisms, open-source smart contracts, global wallet interoperability.  
+  _National Benefit:_ Creates a globally trusted, tradable asset to strengthen international trade and monetary resilience.
 
-**ThukpaStack** is a complete full-stack platform democratizing access to Bhutan's legal, cultural, and linguistic heritage through three integrated AI-powered modules.
+- **eResidency Platform:**  
+  Build a digital eResidency system to enable global individuals to become digital residents of Bhutan.  
+  _Technical Focus:_ KYC/AML onboarding, cryptographic identity credentials, legal formation workflows, integration with tax and incorporation systems.  
+  _National Benefit:_ Positions Bhutan as a trusted business hub, attracting global companies and boosting national revenue.
 
-### 🔍 **1. Legal RAG System**
-- **20+ legal documents** from Bhutan's complete corpus
-- **Sub-500ms query response** with semantic search
-- **95% accuracy** in legal information retrieval
-- **Source attribution** with exact act/section references
+- **Sovereign AI:**  
+  Prototype an open-source AI system tailored to Bhutanese law, language, and cultural values.  
+  _Technical Focus:_ Fine-tuning open-source large language models (LLMs), integrating Dzongkha language support, building public service tools, ensuring transparency and safety.  
+  _National Benefit:_ Preserves cultural autonomy, deploys AI agents as digital civil servants, and trains local talent in advanced technologies.
 
-### 🎓 **2. Cultural Learning Platform**
-- **Interactive 3D Dzong tours** using Three.js
-- **Gamified cultural education** with progress tracking
-- **Multimedia content delivery** for heritage preservation
-- **Progressive Web App** with offline capability
+## Prizes & Benefits
 
-### 🗣️ **3. Real-time Speech Translation**
-- **English ↔ Dzongkha translation** via Bhutan's official API
-- **Multi-format audio support** with FFmpeg processing
-- **File persistence system** for debugging and analytics
-- **<3 second end-to-end latency**
+- **$10,000 in prize money** for top projects
+- Exclusive swag for all participants
+- Opportunity to co-create tools for real-world government adoption
+- Projects become part of a global open-source library powering digital governance
+- Continued support from Draper Nation’s ecosystem
 
----
+## Deliverables & Submission Guidelines
 
+- **Prototype / Proof of Concept:** A working solution addressing a core challenge in the chosen track
+- **GitHub Documentation:** Should include problem statement, solution overview, tech stack, and all project assets
 
-## 🚦 Quick Start
+Teams should submit their projects as a Pull Request to this repository by the deadline (to be announced).
 
-```bash
-# Clone and setup
-git clone <repo-url>
-cd thukpa-stack
+PRs must contain a folder named after the team codename, including a README with instructions on usage and project details.
 
-# Install dependencies
-pip install -r requirements.txt
-cd frontend && npm install
+## Venue
 
-# Start services
-docker-compose up -d
+Draper Startup House (DSH), Bangalore, India  
+DSH builds startup societies globally through community, investment, and education. [More info](https://draperstartuphouse.com/bangalore)
 
-# Run development servers
-python backend/app.py        # Backend on :5000
-npm start                    # Frontend on :3000
-```
+## License
 
----
-
-## 📊 Data Sources
-
-- **Constitution of Bhutan, 2008** (Complete text vectorized)
-- **Penal Code of Bhutan, 2004** + Civil/Criminal Procedure Code
-- **100+ Parliamentary Acts** from Office of Attorney General
-- **Evidence Act 2005, Marriage Act, Companies Act** (All legislation)
-- **Bhutan Government Translation API** (nlp.cst.edu.bt)
-
----
-
-## 🎯 Key Features
-
-### Legal Query Example:
-```
-Query: "What are marriage requirements for foreigners?"
-Response: "According to the Marriage Act, Bhutanese citizens 
-          desiring to marry non-citizens must file a special 
-          court petition..."
-Sources: [Marriage Act Section X, Constitution Article Y]
-Time: 423ms
-```
-
-### Speech Translation:
-```
-Input: English speech/audio file
-Process: WebRTC → FFmpeg → Google Speech → Bhutan NMT → TTS
-Output: Dzongkha text + audio playback
-Latency: <3 seconds end-to-end
-```
-
----
-
-## 🏆 Achievements
-
-✅ **Production-ready architecture** with microservices  
-✅ **Real government API integration** with official systems  
-✅ **Complete file persistence** for debugging and analytics  
-✅ **130,000+ legal documents** processed and vectorized  
-✅ **Multi-format audio support** with professional conversion  
-✅ **Cultural preservation focus** with 3D interactive content  
-
----
-
-## 🎥 Demo
-
-
-**Video Pitch:** https://youtu.be/_VMAIN_RvxU 
-
-
----
-
-## 👥 Team
-
-Built in **48 hours** for [Hackathon Name]
-
-**Tech Stack Expertise:** Full-stack development, AI/ML, Audio processing, Vector databases, Government API integration
-
----
-
-## 📄 License
-
-MIT License - Built for Bhutan's digital future 🇧🇹
-
----
-
-*"Where Ancient Wisdom Meets Modern Technology"*
+By participating in the E-Bhutan Hackathon, you agree to open-source your code submissions under the [Creative Commons Attribution-ShareAlike 4.0 International license](https://creativecommons.org/licenses/by-sa/4.0/).
