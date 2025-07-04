@@ -1,0 +1,317 @@
+[
+  {
+    "dzongkha": "ཁྱེད་རང་བདེ་མོ་ཡིན་ནམ།",
+    "english": "are you well",
+    "domain": "greeting"
+  },
+  {
+    "dzongkha": "ང་བདེ་མོ་ཡིན།",
+    "english": "i am well",
+    "domain": "greeting"
+  },
+  {
+    "dzongkha": "ང་ལ་བཀྲིས་བདེ་ལེགས་ཞུ།",
+    "english": "i wish you good fortune",
+    "domain": "greeting"
+  },
+  {
+    "dzongkha": "བཀྲིས་བདེ་ལེགས།",
+    "english": "good luck",
+    "domain": "greeting"
+  },
+  {
+    "dzongkha": "གསུམ་ཆུ་དྲགས།",
+    "english": "good morning",
+    "domain": "greeting"
+  },
+  {
+    "dzongkha": "ཕར་ཞི་ལེགས་ཡོང་བ་ཞུ།",
+    "english": "goodbye",
+    "domain": "greeting"
+  },
+  {
+    "dzongkha": "ང་ཁྱེད་རང་ལ་དགའ་པོ་ཡོད།",
+    "english": "i love you",
+    "domain": "emotion"
+  },
+  {
+    "dzongkha": "ང་ལ་དགའ་པོ་ཡོད།",
+    "english": "i love",
+    "domain": "emotion"
+  },
+  {
+    "dzongkha": "དགའ་པོ་ཡོད།",
+    "english": "love",
+    "domain": "emotion"
+  },
+  {
+    "dzongkha": "ང་དགའ་པོ་ཆེན་པོ་ཡོད།",
+    "english": "i am very happy",
+    "domain": "emotion"
+  },
+  {
+    "dzongkha": "སེམས་པ་ཡག་པོ།",
+    "english": "good heart",
+    "domain": "emotion"
+  },
+  {
+    "dzongkha": "ལས་ཀ་བརྒྱབ།",
+    "english": "work",
+    "domain": "activity"
+  },
+  {
+    "dzongkha": "ལས་ཀ་བརྒྱབ་ནི།",
+    "english": "working",
+    "domain": "activity"
+  },
+  {
+    "dzongkha": "ང་ལས་ཀ་ལུ་དགའ་ཡི།",
+    "english": "i love working",
+    "domain": "activity"
+  },
+  {
+    "dzongkha": "ལས་ཀ་བརྒྱབ་མི།",
+    "english": "working person",
+    "domain": "activity"
+  },
+  {
+    "dzongkha": "ལས་ཀ་བརྒྱབ་མི་ཡག་པོ།",
+    "english": "good worker",
+    "domain": "activity"
+  },
+  {
+    "dzongkha": "ལས་ཀ་ཆེན་པོ།",
+    "english": "big work",
+    "domain": "activity"
+  },
+  {
+    "dzongkha": "ལས་ཀ་ལུ་དགའ།",
+    "english": "like work",
+    "domain": "activity"
+  },
+  {
+    "dzongkha": "མི།",
+    "english": "person",
+    "domain": "people"
+  },
+  {
+    "dzongkha": "མི་ཡག་པོ།",
+    "english": "good person",
+    "domain": "people"
+  },
+  {
+    "dzongkha": "ཨ་པ།",
+    "english": "father",
+    "domain": "family"
+  },
+  {
+    "dzongkha": "ཨ་མ།",
+    "english": "mother",
+    "domain": "family"
+  },
+  {
+    "dzongkha": "ནང་མི།",
+    "english": "family",
+    "domain": "family"
+  },
+  {
+    "dzongkha": "གྲོགས་པོ།",
+    "english": "friend",
+    "domain": "people"
+  },
+  {
+    "dzongkha": "ཞབས་ཏོག",
+    "english": "service",
+    "domain": "activity"
+  },
+  {
+    "dzongkha": "འབྲུག་གི་རྩ་ཁྲིམས་ཆེན་མོ།",
+    "english": "constitution of bhutan",
+    "domain": "legal"
+  },
+  {
+    "dzongkha": "རྩ་ཁྲིམས།",
+    "english": "constitution",
+    "domain": "legal"
+  },
+  {
+    "dzongkha": "ཁྲིམས།",
+    "english": "law",
+    "domain": "legal"
+  },
+  {
+    "dzongkha": "གཞུང་།",
+    "english": "government",
+    "domain": "political"
+  },
+  {
+    "dzongkha": "གཞུང་དང་མི་སེར།",
+    "english": "government and citizens",
+    "domain": "political"
+  },
+  {
+    "dzongkha": "མི་སེར།",
+    "english": "citizen",
+    "domain": "political"
+  },
+  {
+    "dzongkha": "འབྲུག་ཡུལ།",
+    "english": "bhutan",
+    "domain": "country"
+  },
+  {
+    "dzongkha": "འབྲུག་པ།",
+    "english": "bhutanese",
+    "domain": "nationality"
+  },
+  {
+    "dzongkha": "འགྲོ།",
+    "english": "go",
+    "domain": "action"
+  },
+  {
+    "dzongkha": "ཡོང་།",
+    "english": "come",
+    "domain": "action"
+  },
+  {
+    "dzongkha": "ཟ།",
+    "english": "eat",
+    "domain": "action"
+  },
+  {
+    "dzongkha": "འཐུང་།",
+    "english": "drink",
+    "domain": "action"
+  },
+  {
+    "dzongkha": "ཉལ།",
+    "english": "sleep",
+    "domain": "action"
+  },
+  {
+    "dzongkha": "སད།",
+    "english": "wake up",
+    "domain": "action"
+  },
+  {
+    "dzongkha": "སྦྱང་།",
+    "english": "learn",
+    "domain": "action"
+  },
+  {
+    "dzongkha": "སྟོན།",
+    "english": "teach",
+    "domain": "action"
+  },
+  {
+    "dzongkha": "ཡག་པོ།",
+    "english": "good",
+    "domain": "adjective"
+  },
+  {
+    "dzongkha": "ང་པོ།",
+    "english": "bad",
+    "domain": "adjective"
+  },
+  {
+    "dzongkha": "ཆེན་པོ།",
+    "english": "big",
+    "domain": "adjective"
+  },
+  {
+    "dzongkha": "ཆུང་ཀུ།",
+    "english": "small",
+    "domain": "adjective"
+  },
+  {
+    "dzongkha": "གསར་པ།",
+    "english": "new",
+    "domain": "adjective"
+  },
+  {
+    "dzongkha": "རྙིང་པ།",
+    "english": "old",
+    "domain": "adjective"
+  },
+  {
+    "dzongkha": "གཅིག",
+    "english": "one",
+    "domain": "number"
+  },
+  {
+    "dzongkha": "གཉིས།",
+    "english": "two",
+    "domain": "number"
+  },
+  {
+    "dzongkha": "གསུམ།",
+    "english": "three",
+    "domain": "number"
+  },
+  {
+    "dzongkha": "བཞི།",
+    "english": "four",
+    "domain": "number"
+  },
+  {
+    "dzongkha": "ལྔ།",
+    "english": "five",
+    "domain": "number"
+  },
+  {
+    "dzongkha": "ཉིན་མ།",
+    "english": "day",
+    "domain": "time"
+  },
+  {
+    "dzongkha": "མཚན་མོ།",
+    "english": "night",
+    "domain": "time"
+  },
+  {
+    "dzongkha": "སྔ་ཚོད།",
+    "english": "morning",
+    "domain": "time"
+  },
+  {
+    "dzongkha": "ཉིན་གུང་།",
+    "english": "afternoon",
+    "domain": "time"
+  },
+  {
+    "dzongkha": "དགུང་ལོ།",
+    "english": "year",
+    "domain": "time"
+  },
+  {
+    "dzongkha": "ཟླ་བ།",
+    "english": "month",
+    "domain": "time"
+  },
+  {
+    "dzongkha": "དཀར་པོ།",
+    "english": "white",
+    "domain": "color"
+  },
+  {
+    "dzongkha": "ནག་པོ།",
+    "english": "black",
+    "domain": "color"
+  },
+  {
+    "dzongkha": "དམར་པོ།",
+    "english": "red",
+    "domain": "color"
+  },
+  {
+    "dzongkha": "སེར་པོ།",
+    "english": "yellow",
+    "domain": "color"
+  },
+  {
+    "dzongkha": "སྔོན་པོ།",
+    "english": "blue",
+    "domain": "color"
+  }
+]

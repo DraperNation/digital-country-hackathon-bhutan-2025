@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English to Dzongkha Translator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            background: white;
+            border-bottom-color: #667eea;
+            color: #667eea;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .record-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .record-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .record-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(231, 76, 60, 0.4);
+        }
+
+        .record-btn.recording {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .timer {
+            margin-top: 15px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .translate-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .translate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .translate-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .result-box h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .result-text {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            min-height: 100px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .dzongkha-text {
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .audio-controls {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .audio-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .audio-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .audio-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.processing {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .file-upload {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            text-align: center;
+            background: #f8f9ff;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            cursor: pointer;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .debug-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .results {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎤 English to Dzongkha Translator</h1>
+            <p>Reliable speech translation with file saving</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('speech')">
+                🎙️ Speech Translation
+            </div>
+            <div class="tab" onclick="switchTab('text')">
+                📝 Text Translation
+            </div>
+        </div>
+
+        <!-- Speech Translation Tab -->
+        <div id="speech-tab" class="tab-content active">
+            <div class="record-section">
+                <button id="recordBtn" class="record-btn" onclick="toggleRecording()">
+                    🎤 Click to Start Recording
+                </button>
+                <div id="timer" class="timer" style="display: none;">00:00</div>
+                <p style="margin-top: 15px; color: #666;">Click to start, click again to stop and process</p>
+            </div>
+
+            <div class="file-upload">
+                <input type="file" id="audioFile" class="file-input" accept="audio/*,video/*" onchange="handleAudioFile()">
+                <label for="audioFile" class="file-label">
+                    📁 Or upload an audio/video file
+                </label>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <button onclick="testTTS()" class="audio-btn" style="margin: 5px;">
+                    🔧 Test TTS
+                </button>
+                <button onclick="listAudioFiles()" class="audio-btn" style="margin: 5px;">
+                    📁 List Audio Files
+                </button>
+                <button onclick="testAudioPlayback()" class="audio-btn" style="margin: 5px;">
+                    🔊 Test Audio
+                </button>
+            </div>
+
+            <div class="results" id="speechResults" style="display: none;">
+                <div class="result-box">
+                    <h3>📝 English</h3>
+                    <div id="englishResult" class="result-text"></div>
+                </div>
+                <div class="result-box">
+                    <h3>🇧🇹 Dzongkha</h3>
+                    <div id="dzongkhaResult" class="result-text dzongkha-text"></div>
+                    <div class="audio-controls">
+                        <button id="playBtn" class="audio-btn" onclick="playDzongkhaAudio()" disabled>
+                            🔊 Play Audio
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="speechStatus" class="status" style="display: none;"></div>
+            
+            <div id="debugInfo" class="debug-info" style="display: none;">
+                <strong>Debug Info:</strong><br>
+                <div id="debugContent"></div>
+            </div>
+        </div>
+
+        <!-- Text Translation Tab -->
+        <div id="text-tab" class="tab-content">
+            <div class="input-section">
+                <textarea 
+                    id="textInput" 
+                    class="text-input" 
+                    placeholder="Type your English text here..."
+                    onkeypress="handleEnterKey(event)"
+                ></textarea>
+                <button onclick="translateText()" class="translate-btn" id="textTranslateBtn">
+                    🔄 Translate Text
+                </button>
+            </div>
+
+            <div class="results" id="textResults" style="display: none;">
+                <div class="result-box">
+                    <h3>📝 English</h3>
+                    <div id="textEnglishResult" class="result-text"></div>
+                </div>
+                <div class="result-box">
+                    <h3>🇧🇹 Dzongkha</h3>
+                    <div id="textDzongkhaResult" class="result-text dzongkha-text"></div>
+                    <div class="audio-controls">
+                        <button id="textPlayBtn" class="audio-btn" onclick="playTextDzongkhaAudio()" disabled>
+                            🔊 Play Audio
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="textStatus" class="status" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+        let recordingStartTime;
+        let timerInterval;
+        let currentAudioFile = null;
+        let currentTextAudioFile = null;
+
+        // Debug logging
+        function debugLog(message) {
+            console.log(message);
+            const debugContent = document.getElementById('debugContent');
+            if (debugContent) {
+                debugContent.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
+                document.getElementById('debugInfo').style.display = 'block';
+            }
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        // Timer functions
+        function startTimer() {
+            recordingStartTime = Date.now();
+            const timerEl = document.getElementById('timer');
+            timerEl.style.display = 'block';
+            
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+                const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+                const seconds = (elapsed % 60).toString().padStart(2, '0');
+                timerEl.textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('timer').style.display = 'none';
+        }
+
+        // Initialize microphone
+        async function initMicrophone() {
+            try {
+                debugLog('Requesting microphone access...');
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        sampleRate: 44100,
+                        channelCount: 1,
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    } 
+                });
+                
+                debugLog('Microphone access granted');
+                
+                const options = {};
+                
+                // Try different MIME types for compatibility
+                const mimeTypes = [
+                    'audio/webm;codecs=opus',
+                    'audio/webm',
+                    'audio/mp4',
+                    'audio/ogg;codecs=opus'
+                ];
+                
+                for (const mimeType of mimeTypes) {
+                    if (MediaRecorder.isTypeSupported(mimeType)) {
+                        options.mimeType = mimeType;
+                        debugLog(`Using MIME type: ${mimeType}`);
+                        break;
+                    }
+                }
+                
+                mediaRecorder = new MediaRecorder(stream, options);
+                
+                mediaRecorder.ondataavailable = event => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                        debugLog(`Audio chunk received: ${event.data.size} bytes`);
+                    }
+                };
+                
+                mediaRecorder.onstop = async () => {
+                    debugLog('Recording stopped, processing...');
+                    stopTimer();
+                    
+                    if (audioChunks.length > 0) {
+                        const audioBlob = new Blob(audioChunks, { 
+                            type: mediaRecorder.mimeType || 'audio/webm' 
+                        });
+                        debugLog(`Created audio blob: ${audioBlob.size} bytes`);
+                        audioChunks = [];
+                        await sendAudioForTranslation(audioBlob);
+                    } else {
+                        showStatus('speechStatus', '❌ No audio recorded. Please try again.', 'error');
+                        debugLog('No audio chunks recorded');
+                    }
+                };
+                
+                mediaRecorder.onerror = (event) => {
+                    debugLog(`MediaRecorder error: ${event.error}`);
+                };
+                
+                return true;
+            } catch (error) {
+                debugLog(`Microphone error: ${error.message}`);
+                showStatus('speechStatus', 'Error accessing microphone: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        // Toggle recording
+        async function toggleRecording() {
+            const recordBtn = document.getElementById('recordBtn');
+            
+            if (!isRecording) {
+                // Start recording
+                if (!mediaRecorder) {
+                    const initialized = await initMicrophone();
+                    if (!initialized) return;
+                }
+                
+                try {
+                    audioChunks = [];
+                    mediaRecorder.start(1000); // Collect data every second
+                    isRecording = true;
+                    
+                    recordBtn.textContent = '⏹️ Stop Recording';
+                    recordBtn.classList.add('recording');
+                    showStatus('speechStatus', '🎙️ Recording... Speak clearly!', 'processing');
+                    startTimer();
+                    debugLog('Recording started');
+                    
+                } catch (error) {
+                    debugLog(`Start recording error: ${error.message}`);
+                    showStatus('speechStatus', 'Failed to start recording: ' + error.message, 'error');
+                }
+                
+            } else {
+                // Stop recording
+                try {
+                    mediaRecorder.stop();
+                    isRecording = false;
+                    
+                    recordBtn.textContent = '🎤 Click to Start Recording';
+                    recordBtn.classList.remove('recording');
+                    showStatus('speechStatus', '⏳ Processing audio...', 'processing');
+                    debugLog('Recording stopped');
+                    
+                } catch (error) {
+                    debugLog(`Stop recording error: ${error.message}`);
+                    showStatus('speechStatus', 'Failed to stop recording: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // Handle audio file upload
+        function handleAudioFile() {
+            const fileInput = document.getElementById('audioFile');
+            const file = fileInput.files[0];
+            
+            if (file) {
+                debugLog(`File selected: ${file.name}, size: ${file.size} bytes, type: ${file.type}`);
+                showStatus('speechStatus', `⏳ Processing ${file.name}...`, 'processing');
+                sendAudioForTranslation(file);
+            }
+        }
+
+        // Send audio for translation
+        async function sendAudioForTranslation(audioBlob) {
+            try {
+                debugLog(`Preparing to send audio blob, size: ${audioBlob.size} bytes`);
+                
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.webm');
+                
+                showStatus('speechStatus', '⏳ Uploading and processing audio...', 'processing');
+                
+                const response = await fetch('/translate_audio', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                debugLog(`Response status: ${response.status}`);
+                const data = await response.json();
+                debugLog(`Response data: ${JSON.stringify(data)}`);
+                
+                if (response.ok) {
+                    document.getElementById('englishResult').textContent = data.english;
+                    document.getElementById('dzongkhaResult').textContent = data.dzongkha;
+                    document.getElementById('speechResults').style.display = 'grid';
+                    
+                    // Enable play button if audio file is available
+                    const playBtn = document.getElementById('playBtn');
+                    if (data.audio_file) {
+                        currentAudioFile = data.audio_file;
+                        playBtn.disabled = false;
+                        debugLog(`Audio file available: ${data.audio_file}`);
+                        if (data.debug_info) {
+                            debugLog(`Server debug: ${data.debug_info}`);
+                        }
+                    } else {
+                        playBtn.disabled = true;
+                        debugLog('No audio file generated');
+                        if (data.debug_info) {
+                            debugLog(`Server debug: ${data.debug_info}`);
+                        }
+                        if (data.audio_generated === false) {
+                            debugLog('Audio generation explicitly failed');
+                        }
+                    }
+                    
+                    showStatus('speechStatus', `✅ Translation completed at ${data.timestamp}`, 'success');
+                } else {
+                    showStatus('speechStatus', '❌ ' + (data.error || 'Translation failed'), 'error');
+                    debugLog(`Error response: ${data.error}`);
+                }
+            } catch (error) {
+                debugLog(`Network error: ${error.message}`);
+                showStatus('speechStatus', '❌ Network error: ' + error.message, 'error');
+            }
+        }
+
+        // Text translation
+        async function translateText() {
+            const textInput = document.getElementById('textInput');
+            const translateBtn = document.getElementById('textTranslateBtn');
+            const text = textInput.value.trim();
+            
+            if (!text) {
+                showStatus('textStatus', '❌ Please enter some text', 'error');
+                return;
+            }
+            
+            translateBtn.disabled = true;
+            translateBtn.textContent = '⏳ Translating...';
+            showStatus('textStatus', '⏳ Translating text...', 'processing');
+            debugLog(`Translating text: ${text}`);
+            
+            try {
+                const response = await fetch('/translate_text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+                
+                const data = await response.json();
+                debugLog(`Text translation response: ${JSON.stringify(data)}`);
+                
+                if (response.ok) {
+                    document.getElementById('textEnglishResult').textContent = data.english;
+                    document.getElementById('textDzongkhaResult').textContent = data.dzongkha;
+                    document.getElementById('textResults').style.display = 'grid';
+                    
+                    // Enable play button if audio file is available
+                    const textPlayBtn = document.getElementById('textPlayBtn');
+                    if (data.audio_file) {
+                        currentTextAudioFile = data.audio_file;
+                        textPlayBtn.disabled = false;
+                        debugLog(`Text audio file available: ${data.audio_file}`);
+                        if (data.debug_info) {
+                            debugLog(`Text server debug: ${data.debug_info}`);
+                        }
+                    } else {
+                        textPlayBtn.disabled = true;
+                        debugLog('No text audio file generated');
+                        if (data.debug_info) {
+                            debugLog(`Text server debug: ${data.debug_info}`);
+                        }
+                        if (data.audio_generated === false) {
+                            debugLog('Text audio generation explicitly failed');
+                        }
+                    }
+                    
+                    showStatus('textStatus', `✅ Translation completed at ${data.timestamp}`, 'success');
+                } else {
+                    showStatus('textStatus', '❌ ' + data.error, 'error');
+                }
+            } catch (error) {
+                debugLog(`Text translation error: ${error.message}`);
+                showStatus('textStatus', '❌ Network error: ' + error.message, 'error');
+            } finally {
+                translateBtn.disabled = false;
+                translateBtn.textContent = '🔄 Translate Text';
+            }
+        }
+
+        // Debug audio playback issues
+        async function debugAudioFile(audioFile) {
+            if (!audioFile) {
+                debugLog('❌ No audio file to debug');
+                return;
+            }
+            
+            try {
+                debugLog(`🔍 Debugging audio file: ${audioFile}`);
+                
+                // Get debug info from server
+                const debugResponse = await fetch(`/debug_audio/${audioFile}`);
+                const debugData = await debugResponse.json();
+                
+                debugLog(`🔍 Audio Debug Info: ${JSON.stringify(debugData, null, 2)}`);
+                
+                if (debugData.found_file) {
+                    debugLog(`✅ Found file: ${debugData.file_info.name} (${debugData.file_info.size} bytes)`);
+                    
+                    // Test different serving methods
+                    await testAudioMethods(audioFile);
+                } else {
+                    debugLog(`❌ No valid audio file found for: ${audioFile}`);
+                    debugLog('📁 Checked paths:');
+                    debugData.possible_files.forEach(file => {
+                        debugLog(`  - ${file.path}: exists=${file.exists}, size=${file.size}`);
+                    });
+                }
+                
+            } catch (error) {
+                debugLog(`❌ Audio debug error: ${error.message}`);
+            }
+        }
+        
+        // Test different audio serving methods
+        async function testAudioMethods(audioFile) {
+            const methods = [
+                { name: 'Original Method', url: `/play_audio/${audioFile}` },
+                { name: 'Simple Method', url: `/simple_audio/${audioFile}` }
+            ];
+            
+            for (const method of methods) {
+                try {
+                    debugLog(`🧪 Testing ${method.name}: ${method.url}`);
+                    
+                    // Test HEAD request first
+                    const headResponse = await fetch(method.url, { method: 'HEAD' });
+                    debugLog(`📡 ${method.name} HEAD: ${headResponse.status} ${headResponse.statusText}`);
+                    debugLog(`📋 Content-Type: ${headResponse.headers.get('content-type')}`);
+                    debugLog(`📏 Content-Length: ${headResponse.headers.get('content-length')}`);
+                    
+                    if (headResponse.ok) {
+                        // Try to play
+                        debugLog(`🔊 Attempting playback with ${method.name}...`);
+                        
+                        const audio = new Audio(method.url);
+                        
+                        let playbackSuccess = false;
+                        
+                        audio.addEventListener('loadstart', () => debugLog(`🎵 ${method.name}: Load started`));
+                        audio.addEventListener('loadedmetadata', () => {
+                            debugLog(`🎵 ${method.name}: Metadata loaded, duration: ${audio.duration}s`);
+                        });
+                        audio.addEventListener('canplay', () => {
+                            debugLog(`✅ ${method.name}: Can play`);
+                            playbackSuccess = true;
+                        });
+                        audio.addEventListener('canplaythrough', () => debugLog(`✅ ${method.name}: Can play through`));
+                        audio.addEventListener('play', () => debugLog(`🔊 ${method.name}: Started playing`));
+                        audio.addEventListener('ended', () => debugLog(`✅ ${method.name}: Finished playing`));
+                        audio.addEventListener('error', (e) => {
+                            debugLog(`❌ ${method.name} error: ${e.message || 'Unknown error'}`);
+                            if (audio.error) {
+                                debugLog(`❌ Error code: ${audio.error.code}, message: ${audio.error.message}`);
+                            }
+                        });
+                        
+                        // Try to load and play
+                        audio.load();
+                        
+                        // Wait a bit for loading
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        
+                        if (playbackSuccess) {
+                            try {
+                                await audio.play();
+                                debugLog(`✅ ${method.name}: Playback successful!`);
+                                break; // Success, stop testing other methods
+                            } catch (playError) {
+                                debugLog(`❌ ${method.name} play error: ${playError.message}`);
+                            }
+                        } else {
+                            debugLog(`❌ ${method.name}: Audio not ready for playback`);
+                        }
+                    } else {
+                        debugLog(`❌ ${method.name}: Server responded with ${headResponse.status}`);
+                    }
+                    
+                } catch (error) {
+                    debugLog(`❌ ${method.name} test error: ${error.message}`);
+                }
+            }
+        }
+        
+        // Debug current audio file
+        async function debugCurrentAudio() {
+            if (currentAudioFile) {
+                debugLog(`🔍 Debugging current speech audio: ${currentAudioFile}`);
+                await debugAudioFile(currentAudioFile);
+            } else if (currentTextAudioFile) {
+                debugLog(`🔍 Debugging current text audio: ${currentTextAudioFile}`);
+                await debugAudioFile(currentTextAudioFile);
+            } else {
+                debugLog('❌ No current audio file to debug');
+                showStatus('speechStatus', '❌ No audio file to debug', 'error');
+            }
+        }
+        
+        // Simple, direct audio playback
+        async function playDzongkhaAudio() {
+            if (!currentAudioFile) {
+                showStatus('speechStatus', '❌ No audio file available', 'error');
+                return;
+            }
+            
+            try {
+                debugLog(`🔊 Playing audio: ${currentAudioFile}`);
+                showStatus('speechStatus', '🔊 Playing audio...', 'processing');
+                
+                // Use the simple direct audio endpoint
+                const audioUrl = `/audio/${currentAudioFile}`;
+                debugLog(`🎵 Audio URL: ${audioUrl}`);
+                
+                // Create audio element and play
+                const audio = new Audio(audioUrl);
+                
+                audio.addEventListener('canplay', () => {
+                    debugLog('✅ Audio ready to play');
+                });
+                
+                audio.addEventListener('play', () => {
+                    debugLog('🔊 Audio started playing');
+                    showStatus('speechStatus', '🔊 Playing Dzongkha audio...', 'processing');
+                });
+                
+                audio.addEventListener('ended', () => {
+                    debugLog('✅ Audio finished');
+                    showStatus('speechStatus', '✅ Audio playback completed', 'success');
+                });
+                
+                audio.addEventListener('error', (e) => {
+                    debugLog(`❌ Audio error: ${e.message || audio.error?.message || 'Unknown error'}`);
+                    showStatus('speechStatus', '❌ Audio playback failed', 'error');
+                });
+                
+                // Start playback
+                await audio.play();
+                
+            } catch (error) {
+                debugLog(`❌ Playback error: ${error.message}`);
+                showStatus('speechStatus', `❌ Playback failed: ${error.message}`, 'error');
+            }
+        }
+        
+        async function playTextDzongkhaAudio() {
+            if (!currentTextAudioFile) {
+                showStatus('textStatus', '❌ No audio file available', 'error');
+                return;
+            }
+            
+            try {
+                debugLog(`🔊 Playing text audio: ${currentTextAudioFile}`);
+                showStatus('textStatus', '🔊 Playing audio...', 'processing');
+                
+                // Use the simple direct audio endpoint
+                const audioUrl = `/audio/${currentTextAudioFile}`;
+                debugLog(`🎵 Text audio URL: ${audioUrl}`);
+                
+                // Create audio element and play
+                const audio = new Audio(audioUrl);
+                
+                audio.addEventListener('canplay', () => {
+                    debugLog('✅ Text audio ready to play');
+                });
+                
+                audio.addEventListener('play', () => {
+                    debugLog('🔊 Text audio started playing');
+                    showStatus('textStatus', '🔊 Playing Dzongkha audio...', 'processing');
+                });
+                
+                audio.addEventListener('ended', () => {
+                    debugLog('✅ Text audio finished');
+                    showStatus('textStatus', '✅ Audio playback completed', 'success');
+                });
+                
+                audio.addEventListener('error', (e) => {
+                    debugLog(`❌ Text audio error: ${e.message || audio.error?.message || 'Unknown error'}`);
+                    showStatus('textStatus', '❌ Audio playback failed', 'error');
+                });
+                
+                // Start playback
+                await audio.play();
+                
+            } catch (error) {
+                debugLog(`❌ Text playback error: ${error.message}`);
+                showStatus('textStatus', `❌ Playback failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Handle Enter key in text input
+        function handleEnterKey(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                translateText();
+            }
+        }
+
+        // Show status messages
+        function showStatus(elementId, message, type) {
+            const statusElement = document.getElementById(elementId);
+            statusElement.textContent = message;
+            statusElement.className = `status ${type}`;
+            statusElement.style.display = 'block';
+            
+            debugLog(`Status (${type}): ${message}`);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            debugLog('Page loaded, initializing...');
+            
+            // Check if getUserMedia is supported
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showStatus('speechStatus', '❌ Microphone not supported in this browser', 'error');
+                debugLog('getUserMedia not supported');
+            } else {
+                debugLog('getUserMedia supported');
+                showStatus('speechStatus', '✅ Ready to record! Click the button to start.', 'success');
+            }
+        });
+
+        // Cleanup function for old files (optional)
+        async function cleanupOldFiles() {
+            try {
+                const response = await fetch('/cleanup', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                debugLog(`Cleanup response: ${JSON.stringify(data)}`);
+            } catch (error) {
+                debugLog(`Cleanup error: ${error.message}`);
+            }
+        }
+
+        // Auto cleanup every 30 minutes
+        setInterval(cleanupOldFiles, 30 * 60 * 1000);
+
+        // Test TTS functionality
+        async function testTTS() {
+            try {
+                debugLog('🔧 Testing TTS functionality...');
+                showStatus('speechStatus', '🔧 Testing TTS...', 'processing');
+                
+                const response = await fetch('/test_tts');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                debugLog(`TTS Test Result: ${JSON.stringify(data, null, 2)}`);
+                
+                // Show detailed results
+                debugLog(`📂 Output folder: ${data.output_folder}`);
+                debugLog(`📁 Folder exists: ${data.folder_exists}`);
+                debugLog(`📄 Files in output: ${data.files_in_output.length > 0 ? data.files_in_output.join(', ') : 'None'}`);
+                
+                if (data.error) {
+                    debugLog(`❌ Test error: ${data.error}`);
+                    showStatus('speechStatus', `❌ Test error: ${data.error}`, 'error');
+                    return;
+                }
+                
+                if (data.error_msg) {
+                    debugLog(`⚠️ TTS error: ${data.error_msg}`);
+                }
+                
+                debugLog(`🎵 Test file exists: ${data.test_file_exists}`);
+                debugLog(`📏 Test file size: ${data.test_file_size} bytes`);
+                
+                if (data.tts_success && data.test_file) {
+                    debugLog(`✅ TTS working! Test file: ${data.test_file}`);
+                    showStatus('speechStatus', `✅ TTS test successful! File: ${data.test_file} (${data.test_file_size} bytes)`, 'success');
+                    
+                    // Try to play the test file
+                    debugLog('🔊 Attempting to play test audio...');
+                    const testAudioUrl = `/play_audio/${data.test_file}`;
+                    
+                    try {
+                        // Test if file is accessible first
+                        const headResponse = await fetch(testAudioUrl, { method: 'HEAD' });
+                        debugLog(`📡 Audio URL response: ${headResponse.status} ${headResponse.statusText}`);
+                        debugLog(`📋 Content-Type: ${headResponse.headers.get('content-type')}`);
+                        debugLog(`📏 Content-Length: ${headResponse.headers.get('content-length')}`);
+                        
+                        if (headResponse.ok) {
+                            const testAudio = new Audio(testAudioUrl);
+                            
+                            testAudio.addEventListener('loadstart', () => debugLog('🎵 Test audio: Load started'));
+                            testAudio.addEventListener('canplay', () => debugLog('✅ Test audio: Can play'));
+                            testAudio.addEventListener('play', () => debugLog('🔊 Test audio: Started playing'));
+                            testAudio.addEventListener('ended', () => debugLog('✅ Test audio: Finished'));
+                            testAudio.addEventListener('error', (e) => {
+                                debugLog(`❌ Test audio error: ${e.message || 'Unknown error'}`);
+                                console.error('Test audio error details:', e);
+                            });
+                            
+                            await testAudio.play();
+                            showStatus('speechStatus', '🔊 Playing test audio...', 'processing');
+                            
+                        } else {
+                            debugLog(`❌ Audio file not accessible: ${headResponse.status}`);
+                            showStatus('speechStatus', `❌ Audio file not accessible: ${headResponse.status}`, 'error');
+                        }
+                        
+                    } catch (playError) {
+                        debugLog(`❌ Test audio play error: ${playError.message}`);
+                        showStatus('speechStatus', `❌ Test audio play failed: ${playError.message}`, 'error');
+                    }
+                    
+                } else {
+                    debugLog('❌ TTS test failed');
+                    const errorDetail = data.error_msg || 'Unknown error';
+                    showStatus('speechStatus', `❌ TTS test failed: ${errorDetail}`, 'error');
+                }
+                
+            } catch (error) {
+                debugLog(`❌ TTS test request error: ${error.message}`);
+                showStatus('speechStatus', '❌ TTS test error: ' + error.message, 'error');
+            }
+        }
+        
+        // List all audio files
+        async function listAudioFiles() {
+            try {
+                debugLog('Listing audio files...');
+                
+                const response = await fetch('/list_audio_files');
+                const data = await response.json();
+                
+                debugLog(`Audio Files: ${JSON.stringify(data, null, 2)}`);
+                
+                if (data.files && data.files.length > 0) {
+                    debugLog('📁 Available audio files:');
+                    data.files.forEach(file => {
+                        debugLog(`  - ${file.name} (${file.size} bytes)`);
+                    });
+                } else {
+                    debugLog('📁 No audio files found');
+                }
+                
+                debugLog(`📂 Output folder: ${data.folder}`);
+                debugLog(`📂 Folder exists: ${data.folder_exists}`);
+                
+            } catch (error) {
+                debugLog(`List files error: ${error.message}`);
+            }
+        }
+
+        // Test audio playback with a simple beep
+        async function testAudioPlayback() {
+            try {
+                debugLog('🔊 Testing audio playback...');
+                showStatus('speechStatus', '🔊 Creating test audio...', 'processing');
+                
+                // Create a simple test audio file
+                const response = await fetch('/test_audio_file');
+                const data = await response.json();
+                
+                debugLog(`Test audio response: ${JSON.stringify(data, null, 2)}`);
+                
+                if (data.success && data.filename) {
+                    debugLog(`✅ Test file created: ${data.filename} (${data.size} bytes)`);
+                    showStatus('speechStatus', '🔊 Testing audio playback...', 'processing');
+                    
+                    // Try to play it using our simple method
+                    const audioUrl = data.url;
+                    debugLog(`🎵 Test audio URL: ${audioUrl}`);
+                    
+                    // First, test if the URL is accessible
+                    try {
+                        const testResponse = await fetch(audioUrl, { method: 'HEAD' });
+                        debugLog(`📡 Audio URL test: ${testResponse.status} ${testResponse.statusText}`);
+                        debugLog(`📋 Content-Type: ${testResponse.headers.get('content-type')}`);
+                        debugLog(`📏 Content-Length: ${testResponse.headers.get('content-length')}`);
+                        
+                        if (!testResponse.ok) {
+                            throw new Error(`Audio URL not accessible: ${testResponse.status}`);
+                        }
+                    } catch (urlError) {
+                        debugLog(`❌ Audio URL test failed: ${urlError.message}`);
+                        showStatus('speechStatus', `❌ Audio URL not accessible: ${urlError.message}`, 'error');
+                        return;
+                    }
+                    
+                    // Now try to play the audio
+                    const audio = new Audio(audioUrl);
+                    
+                    let playbackStarted = false;
+                    
+                    audio.addEventListener('loadstart', () => {
+                        debugLog('🎵 Audio: Load started');
+                    });
+                    
+                    audio.addEventListener('loadedmetadata', () => {
+                        debugLog(`🎵 Audio: Metadata loaded, duration: ${audio.duration}s`);
+                    });
+                    
+                    audio.addEventListener('canplay', () => {
+                        debugLog('✅ Audio: Ready to play');
+                    });
+                    
+                    audio.addEventListener('canplaythrough', () => {
+                        debugLog('✅ Audio: Can play through');
+                    });
+                    
+                    audio.addEventListener('play', () => {
+                        debugLog('🔊 Audio: Started playing');
+                        playbackStarted = true;
+                        showStatus('speechStatus', '🔊 Playing test beep...', 'processing');
+                    });
+                    
+                    audio.addEventListener('ended', () => {
+                        debugLog('✅ Audio test completed successfully!');
+                        showStatus('speechStatus', '✅ Audio test successful! Audio system is working.', 'success');
+                    });
+                    
+                    audio.addEventListener('error', (e) => {
+                        const errorMsg = e.message || audio.error?.message || 'Unknown audio error';
+                        const errorCode = audio.error?.code || 'Unknown code';
+                        debugLog(`❌ Audio error: ${errorMsg} (Code: ${errorCode})`);
+                        
+                        // Provide specific error information
+                        let userMessage = 'Audio playback failed';
+                        if (audio.error) {
+                            switch (audio.error.code) {
+                                case 1: userMessage = 'Audio loading aborted'; break;
+                                case 2: userMessage = 'Network error loading audio'; break;
+                                case 3: userMessage = 'Audio decoding error'; break;
+                                case 4: userMessage = 'Audio format not supported'; break;
+                                default: userMessage = `Audio error (code ${audio.error.code})`;
+                            }
+                        }
+                        
+                        showStatus('speechStatus', `❌ ${userMessage}`, 'error');
+                    });
+                    
+                    // Try to start playback
+                    try {
+                        debugLog('🎵 Attempting to start audio playback...');
+                        await audio.play();
+                    } catch (playError) {
+                        debugLog(`❌ Play error: ${playError.name}: ${playError.message}`);
+                        showStatus('speechStatus', `❌ Play failed: ${playError.message}`, 'error');
+                    }
+                    
+                } else {
+                    const errorMsg = data.error || 'Unknown error creating test audio';
+                    debugLog(`❌ Failed to create test audio: ${errorMsg}`);
+                    showStatus('speechStatus', `❌ Test audio creation failed: ${errorMsg}`, 'error');
+                }
+                
+            } catch (error) {
+                debugLog(`❌ Audio test error: ${error.message}`);
+                showStatus('speechStatus', `❌ Audio test error: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
