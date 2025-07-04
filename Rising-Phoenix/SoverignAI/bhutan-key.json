@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "bhutan-464321",
+  "private_key_id": "ad693dce5340ee5fe2ecaec84a84f53ee72988ca",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDNBRdQCAOfkB/b\nuX1nDVPP8ZLFwvKJC2+maJH+D/C0zDLS+gjaYmeFZ05MwQXQURL50eW4bOvW24IN\nibv3zqNN8JukKzF7iy0dZ6ROGgFLHMYUFHtjb6ciyWkqpu6x0GafkYSwwJpmkPTH\nesxhRqtnonbC4xcVI9JncU0+u9eN009NkcGW0GqC+cQx8AQxyDdTIEsIB/IBEM67\n8md+KxZeJjueZEQm2F3bxvWWMaNyTeg21oddLGy/cDEKeTWlrIUaDxZRz120UZsa\nJ2lYWuEzRVo9YNfVb7d8HEhf1ecd0XqzRo8uzMc4c9NrpcpXaWO38h5fXZuS/pO2\n8/LR60XTAgMBAAECggEAHPBdsguaN1Ooq43V3aNL8/YtZCzNqfqAmq9NVtyj0AwN\naypP8EN48/j5BxctMue+vfSaxcWEz0x8twcnY9CPIdlB9D0EkbkQzS3BS3pFjyH9\n86elzbYHlCl0kXNZY0//VwFmBsJTs6vntqCRaMmzjWqpSNO1K7llYaSPOrkDsXOk\nTB4jrrrc7ijjhpDTKOEjGEuBiF3B4B5rXtjWNWlZPUH66AhfFuBRcHBPJ6ghZt/d\n3/TddUEMrZK/hHsjwih7llhS+W7I3TBt0forcIYBS/pbsr25gyJL8TZUTH3njYb8\nc2dIWO3Zb+6G98ou5y92/FSGCXjwPnrOmGi5dHEGAQKBgQDo5j/X6e4lUrnhDnZN\nJBCr2kWs5VaivzBxt/c7mHB/PN0f3+2Qe9Z6ogzdsnlATnSu7SwBrw3igviXQ8Yu\ns6rrnICnuXzuX5xs8W+hqhsCQymwOlpJskGUYHwOnKjCvRYgoOk31pNwoxV3nA8A\n8pLDZeYAyrZnumu8kQ3RffdH8wKBgQDhWu2z4/nucwWdfWMDBEy5oQm5HJZP1SqB\ni/IHRN1ixekFU/VcYzhEUhrs8OA1RCLjiof7siVGmlopoHkXG5V58CC74pYd0spG\n0HUjtELFt+vtPzRD39ih8NW5IYBFyVeGNa8A/zOXJJvJqqiufn2tpXzihnBTARPF\nIGIOg7RioQKBgQDWs2wnn3/q6FhzIOHuO1EjHBUfTkyPu7DtJKrGRcFviqxOtiBL\nEd6nLryto9ojbjAjEoF/C+HA7vw8dj48z2TBz4TLGjQRjBKoW+qNHkPH0iKcUy7o\nwWuzXT8AOWtaGvZLHgvhbe5959niaftq5DRn7YgbMsT02uZ270HN3lIYAQKBgQDQ\n7rW9d9sryTZmim62yFC+NeDG4As4HuFW1EHjnWRIBEeDqhCsxEzRgvH1xWmJ2Q8j\nuTdUExleORLozyAVXXybXhdrOquFIP5q4zAHl0Pk/h1di6DQYQP/OENebgH4MbDU\n/IaxPOo+8jEBqxjTFvE8glajypLvUetbcyeWX2NpoQKBgQCitRteWIqMI0WzAk8f\nE1zYudGX+C4MTbaANHBDi3617pyd/TSw9CYh2XO3Rh9ap/aMoy8GqrgPR1Tdw8lr\n/cBGKW0Sfq2XkLFvb87dLyYO1YClF4AzQbHIKARHmCY0SVBhGSayhCGGsBpWnKSJ\n0/PJrbMUduvdZY6w6tNOZ0j/+A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "bhutan-translator@bhutan-464321.iam.gserviceaccount.com",
+  "client_id": "108429144107318370163",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bhutan-translator%40bhutan-464321.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
